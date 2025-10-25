@@ -2,13 +2,13 @@
 set -euo pipefail
 
 # generate-commands.sh
-# 基于 spec-kit 架构，为 novel-writer 生成多平台命令
+# 基于 spec-kit 架构，为 article-writer 生成多平台命令
 # 支持命名空间以避免与 spec-kit 冲突
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "🔨 Novel Writer 命令构建系统"
+echo "🔨 Article Writer 命令构建系统"
 echo "================================"
 
 # 清理旧的构建产物
@@ -236,11 +236,11 @@ build_variant() {
   case $agent in
     claude)
       mkdir -p "$base_dir/.claude/commands"
-      generate_commands claude md "\$ARGUMENTS" "$base_dir/.claude/commands" "$script" "novel." "full"
+      generate_commands claude md "\$ARGUMENTS" "$base_dir/.claude/commands" "$script" "content." "full"
       ;;
     gemini)
-      mkdir -p "$base_dir/.gemini/commands/novel"
-      generate_commands gemini toml "{{args}}" "$base_dir/.gemini/commands/novel" "$script" "" ""
+      mkdir -p "$base_dir/.gemini/commands/content"
+      generate_commands gemini toml "{{args}}" "$base_dir/.gemini/commands/content" "$script" "" ""
       ;;
     cursor)
       mkdir -p "$base_dir/.cursor/commands"
@@ -268,7 +268,7 @@ build_variant() {
       ;;
     codex)
       mkdir -p "$base_dir/.codex/prompts"
-      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script" "novel-" "none"
+      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script" "content-" "none"
       ;;
     kilocode)
       mkdir -p "$base_dir/.kilocode/workflows"
@@ -359,6 +359,7 @@ tree -L 3 "$PROJECT_ROOT/dist/" 2>/dev/null || find "$PROJECT_ROOT/dist/" -type 
 
 echo
 echo "💡 提示:"
-echo "  - Claude 用户: 使用 /novel.constitution, /novel.specify 等命令"
-echo "  - Gemini 用户: 使用 /novel:constitution, /novel:specify 等命令"
-echo "  - 其他用户: 使用 /constitution, /specify 等命令"
+echo "  - Claude 用户: 使用 /content.audit, /content.write-draft 等命令"
+echo "  - Gemini 用户: 使用 /content:audit, /content:write-draft 等命令"
+echo "  - Codex 用户: 使用 /content-audit, /content-write-draft 等命令"
+echo "  - 其他用户: 使用 /audit, /write-draft 等命令"

@@ -1,6 +1,6 @@
 {
   "name": "article-writer-cn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "AI 驱动的智能写作系统 - 专注公众号/自媒体文章创作",
   "keywords": [
