@@ -1,0 +1,124 @@
+{
+  "$schema": "./workspace-config.schema.json",
+  "version": "1.0.0",
+  "workspaces": {
+    "wechat": {
+      "name": "公众号写作",
+      "description": "微信公众号文章创作工作区",
+      "features": {
+        "字数要求": "通常800-3000字",
+        "配图": "封面图必需(900x500px或2:1)",
+        "风格": "相对正式,可适度口语化",
+        "排版": "注重阅读体验,段落简短",
+        "特殊限制": "敏感词过滤,原创保护"
+      },
+      "briefTemplate": {
+        "必填字段": ["标题方向", "字数", "目标读者", "核心观点"],
+        "建议字数范围": "800-3000",
+        "默认平台": "公众号"
+      },
+      "specificationTemplate": {
+        "结构建议": "开头吸引眼球,中间段落简短(150字以内),结尾引导互动",
+        "语言风格": "专业但不生硬,适度口语化",
+        "配图要求": "封面图+2-3张插图"
+      },
+      "auditRules": {
+        "AI味目标": "< 30%",
+        "段落长度": "< 150字",
+        "敏感词检查": true,
+        "标点规范": "中文标点"
+      },
+      "publishFormats": ["markdown", "html", "秀米", "135编辑器"]
+    },
+    "video": {
+      "name": "视频脚本",
+      "description": "YouTube/B站等视频脚本创作工作区",
+      "features": {
+        "字数要求": "按视频时长(1分钟约150-180字)",
+        "结构": "口播脚本,需要标注画面提示",
+        "风格": "高度口语化,符合口播节奏",
+        "特殊要求": "分镜提示,时间轴标注"
+      },
+      "briefTemplate": {
+        "必填字段": ["视频时长", "目标平台", "受众年龄", "内容定位"],
+        "建议字数范围": "按时长计算",
+        "默认平台": "YouTube/B站"
+      },
+      "specificationTemplate": {
+        "结构建议": "Hook(前3秒)+主体+CTA",
+        "语言风格": "极度口语化,短句为主",
+        "特殊标注": "画面提示 [镜头]、音效提示 [音效]、强调提示 [重点]"
+      },
+      "auditRules": {
+        "AI味目标": "< 20% (口语化要求高)",
+        "句子长度": "< 30字 (适合口播)",
+        "敏感词检查": true,
+        "口语化程度": "高"
+      },
+      "publishFormats": ["markdown", "pdf", "分镜脚本格式"]
+    },
+    "general": {
+      "name": "通用写作",
+      "description": "博客、知乎、Medium等通用内容创作",
+      "features": {
+        "字数要求": "灵活(500-5000字)",
+        "配图": "可选",
+        "风格": "灵活,根据主题调整",
+        "排版": "Markdown标准格式"
+      },
+      "briefTemplate": {
+        "必填字段": ["主题", "目标读者", "发布平台"],
+        "建议字数范围": "1000-3000",
+        "默认平台": "知乎/博客"
+      },
+      "specificationTemplate": {
+        "结构建议": "灵活,根据内容定位调整",
+        "语言风格": "根据主题和读者决定",
+        "配图要求": "可选"
+      },
+      "auditRules": {
+        "AI味目标": "< 30%",
+        "段落长度": "灵活",
+        "敏感词检查": false,
+        "标点规范": "根据平台"
+      },
+      "publishFormats": ["markdown", "html"]
+    }
+  },
+  "autoDetectRules": {
+    "description": "自动检测工作区的规则优先级",
+    "priority": [
+      {
+        "rule": "检查brief文件中的platform字段",
+        "mapping": {
+          "公众号": "wechat",
+          "微信": "wechat",
+          "wechat": "wechat",
+          "视频": "video",
+          "YouTube": "video",
+          "B站": "video",
+          "bilibili": "video",
+          "抖音": "video"
+        }
+      },
+      {
+        "rule": "检查目录结构",
+        "mapping": {
+          "workspaces/wechat/": "wechat",
+          "workspaces/video/": "video",
+          "workspaces/general/": "general"
+        }
+      },
+      {
+        "rule": "检查specification文件中的特殊标记",
+        "mapping": {
+          "[画面]": "video",
+          "[镜头]": "video",
+          "分镜": "video",
+          "配图要求: 封面图": "wechat"
+        }
+      }
+    ],
+    "fallback": "general"
+  }
+}
