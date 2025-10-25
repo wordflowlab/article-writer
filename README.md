@@ -1,297 +1,279 @@
-# Article Writer - 基于 novel-writer 的智能写作系统
+# Article Writer - AI 驱动的智能写作系统
 
-> 从 novel-writer 分支,专注于公众号/自媒体文章创作的智能写作助手
+[![npm version](https://badge.fury.io/js/article-writer-cn.svg)](https://www.npmjs.com/package/article-writer-cn)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 项目定位
+> 🚀 专注公众号/自媒体文章创作的 AI 智能写作助手
+>
+> 在 Claude、Cursor、Gemini 等 AI 助手中直接使用斜杠命令，系统化创作高质量文章
 
-**Article Writer** 是 novel-writer 的分支版本,保留其成熟的斜杠命令架构和插件系统,但将核心流程从"小说创作"改造为"文章写作",特别针对:
-- 📱 公众号文章写作
-- 🎬 视频脚本创作
-- ✍️ 通用内容创作
+## ✨ 核心特性
 
-## 核心特性
+- 📚 **斜杠命令** - 在 Claude、Gemini、Cursor、Windsurf 等 13 个 AI 助手中直接使用
+- 🎯 **九步写作流程** - 从选题到发布的完整创作流程
+- 🤖 **智能审校** - 三遍审校机制，降低 AI 味至 30% 以下
+- 📁 **工作区管理** - 公众号/视频/通用三种工作区，自动适配规则
+- 💎 **素材库系统** - 导入个人动态(即刻/微博)，融入真实素材
+- 🔄 **跨平台** - 支持 13 个 AI 工具，Windows/Mac/Linux 全平台
+- 🔌 **插件系统** - AI 检测、素材导入等可扩展功能
 
-### 1. 两层判断机制
-- **第一层:工作区判断** - 自动识别公众号/视频/通用工作区
-- **第二层:任务类型识别** - 区分新写作/修改/审校/咨询
+## 🚀 快速开始
 
-### 2. 九步写作流程
-1. **理解需求** - 保存brief到 `_briefs/`
-2. **信息搜索** ⭐ - 多渠道调研,保存到 `_knowledge_base/`
-3. **选题讨论** ⭐ - 提供3-4个方向,等待用户选择
-4. **协作文档** - 测试任务/配图需求清单
-5. **风格学习** - 分析个人写作风格
-5.5. **素材搜索** ⭐ - 从即刻动态/历史文章提取真实素材
-6. **创作初稿** - 基于真实数据写作
-7.5. **风格转换** - 实验性功能,可选
-8. **三遍审校** ⭐ - 内容/风格/细节三模式降AI味
-9. **文章配图** ⭐ - 自动生成/获取图片
+### 1. 安装
 
-标记 ⭐ 的为核心创新功能
+```bash
+npm install -g article-writer-cn
+```
 
-### 3. 个人素材库
-- **原始数据导入** - 支持即刻/微博CSV导出
-- **主题索引管理** - 手动整理常用主题素材
-- **智能搜索引用** - AI用Grep搜索真实经历和观点
+### 2. 初始化项目
 
-### 4. 反AI检测
-- **三遍审校机制** - 系统化降低AI检测率(目标<30%)
-- **朱雀标准内置** - 基于实测0% AI浓度的写作规范
-- **对比式修改** - 提供 ❌AI化 vs ✅自然化 对比
+```bash
+# 基本用法
+content init my-article
 
-## 技术架构
+# 指定工作区类型
+content init my-article --workspace wechat    # 公众号
+content init my-article --workspace video     # 视频脚本
+content init my-article --workspace general   # 通用内容
 
-### 继承自 novel-writer
-- ✅ CLI初始化系统 (`content init`)
-- ✅ 斜杠命令注入(支持13个AI平台)
-- ✅ 插件系统 (PluginManager)
-- ✅ 文件结构管理 (`.specify/`、配置生成)
-- ✅ 反AI检测规范 (`anti-ai-detection.md`)
+# 指定 AI 平台
+content init my-article --ai claude    # Claude Code
+content init my-article --ai gemini    # Gemini CLI
+content init my-article --ai cursor    # Cursor
+```
 
-### 核心改造
-| 模块 | novel-writer | article-writer |
-|------|-------------|----------------|
-| **内容目录** | `stories/` (小说章节) | `workspaces/` (工作区管理) |
-| **核心流程** | 七步方法论(规划导向) | 九步流程(协作导向) |
-| **追踪系统** | 角色/情节追踪 | 素材库管理 |
-| **质量控制** | 一致性验证 | 三遍审校降AI味 |
-| **预设模板** | 六种写作方法 | 工作区模板(公众号/视频/通用) |
+### 3. 开始创作
 
-## 目录结构
+在 AI 助手中使用斜杠命令：
+
+```
+# 命令格式因平台而异
+/brief-save         # 大多数平台
+/novel.brief-save   # Claude Code
+/novel:brief-save   # Gemini CLI
+/novel-brief-save   # Codex CLI
+```
+
+**九步写作流程**：
+
+```
+1. /brief-save        → 保存写作需求
+2. /topic-discuss     → 选题讨论(提供3-4个方向)
+3. /research          → 信息搜索与调研
+4. /materials-search  → 搜索个人素材库
+5. /write-draft       → 创作初稿
+6. /audit             → 三遍审校(内容/风格/细节)
+7. /images            → 配图建议
+8. /final-check       → 发布前检查
+9. /publish           → 发布指南
+```
+
+## 📚 斜杠命令
+
+### 命名空间说明
+
+| AI 平台 | 命令格式 | 示例 |
+|---------|----------|------|
+| **Claude Code** | `/novel.命令名` | `/novel.write-draft` |
+| **Gemini CLI** | `/novel:命令名` | `/novel:write-draft` |
+| **Codex CLI** | `/novel-命令名` | `/novel-write-draft` |
+| **其他平台** | `/命令名` | `/write-draft` |
+
+> 💡 下表使用通用格式，实际使用时请根据您的 AI 平台添加相应前缀
+
+### 核心命令列表
+
+| 命令 | 描述 | 何时使用 |
+|------|------|----------|
+| `/brief-save` | 保存需求 | 项目开始，记录写作目标 |
+| `/topic-discuss` | 选题讨论 | 需要确定文章方向 |
+| `/research` | 信息搜索 | 需要调研资料 |
+| `/materials-search` | 素材搜索 | 需要个人真实案例 |
+| `/write-draft` | 撰写初稿 | 开始正式写作 |
+| `/audit` | 三遍审校 | 初稿完成后降 AI 味 |
+| `/images` | 配图建议 | 需要文章配图 |
+| `/final-check` | 发布检查 | 发布前最后检查 |
+| `/publish` | 发布指南 | 准备发布到平台 |
+
+### 工作区系统
+
+| 工作区 | 特点 | 适用场景 |
+|--------|------|----------|
+| **wechat** | AI味<30%，段落<150字，敏感词检测 | 公众号文章 |
+| **video** | AI味<20%，高度口语化，分镜标注 | 视频脚本/短视频 |
+| **general** | 灵活配置，SEO优化 | 博客/知乎/Medium |
+
+<details>
+<summary>📁 项目结构（点击展开）</summary>
 
 ```
 my-article/
-├── .specify/                # 配置与脚本
-│   ├── memory/
-│   │   ├── constitution.md       # 写作原则
-│   │   ├── style-reference.md    # 风格参考
-│   │   └── personal-voice.md     # 个人语料
-│   ├── scripts/                  # 支持脚本
-│   └── templates/                # 命令模板
-│
-├── .claude/commands/        # AI平台命令
-├── .cursor/commands/
-├── .gemini/commands/
-│   ... (支持13个平台)
-│
-├── workspaces/              # 工作区
-│   ├── wechat/              # 公众号工作区
-│   │   ├── CLAUDE.md        # 工作区规则
-│   │   ├── _briefs/         # 需求文档
-│   │   ├── _协作文档/        # 测试任务、配图需求
-│   │   └── articles/        # 文章输出
-│   │       └── 001-文章主题/
-│   │           ├── specification.md
-│   │           ├── tasks.md
-│   │           ├── draft.md
-│   │           ├── final.md
-│   │           └── images/
-│   ├── video/               # 视频工作区
-│   └── general/             # 通用工作区
-│
-├── materials/               # 个人素材库 ⭐
-│   ├── raw/                 # 原始数据
-│   │   ├── jike-all.csv     # 即刻动态导出
-│   │   └── weibo-posts.json
-│   ├── indexed/             # 主题索引
-│   │   ├── ai-tools.md
-│   │   ├── product-dev.md
-│   │   └── personal-views.md
-│   └── archive/             # 历史文章存档
-│
-├── _knowledge_base/         # 调研结果 ⭐
-│   └── 主题-2025-01-15.md
-│
-└── spec/                    # 写作规范
-    ├── presets/
-    │   ├── anti-ai-detection.md
-    │   ├── audit-checklist.md
-    │   └── workspace-templates/
-    └── config.json
+├── .specify/              # 配置与脚本
+│   ├── memory/            # 写作记忆
+│   ├── scripts/           # 支持脚本
+│   └── templates/         # 命令模板
+├── .claude/commands/      # Claude 命令
+├── .cursor/commands/      # Cursor 命令
+│   ... (支持 13 个平台)
+├── workspaces/            # 工作区
+│   ├── wechat/            # 公众号工作区
+│   │   └── articles/      # 文章输出
+│   ├── video/             # 视频工作区
+│   └── general/           # 通用工作区
+├── materials/             # 个人素材库
+│   ├── raw/               # 原始数据(即刻/微博导出)
+│   ├── indexed/           # 主题索引
+│   └── archive/           # 历史文章
+├── _briefs/               # 需求文档
+└── _knowledge_base/       # 调研结果
 ```
 
-## 核心命令
+</details>
 
-### 九步流程命令
+## 🔌 插件系统
 
-| 命令 | 描述 | 来源 |
-|-----|------|------|
-| `/brief-save` | 理解需求并保存brief | 改造 `/specify` |
-| `/research` | 信息搜索与知识管理 | **新增** |
-| `/topic-discuss` | 选题讨论(3-4个方向) | 改造 `/clarify` |
-| `/collab-doc` | 创建协作文档 | 改造 `/tasks` |
-| `/style-learn` | 学习个人风格 | 改造 `/constitution` |
-| `/materials-search` | 搜索个人素材库 | **新增** |
-| `/write-draft` | 创作初稿 | 改造 `/write` |
-| `/style-transform` | 风格转换实验 | **新增** (可选) |
-| `/audit` | 三遍审校机制 | 扩展 `/analyze` |
-| `/images` | 文章配图 | **新增** |
+### 已实现插件
 
-### 工作区管理命令
+#### 1. AI 味自检插件 (`ai-detector/`)
+- **功能**: 利用 AI 自身能力检测文章的 AI 生成痕迹
+- **命令**: `/ai-check [文件路径]`
+- **检测维度**: 词汇(30分)、结构(30分)、情感(20分)、口语化(20分)
+- **集成**: `/audit style` 自动调用
 
-| 命令 | 描述 |
-|-----|------|
-| `/workspace-init` | 初始化工作区(选择类型) |
-| `/workspace-switch` | 切换工作区 |
-| `/workspace-config` | 查看/编辑工作区配置 |
+#### 2. 素材导入插件 (`materials-import/`)
+- **功能**: 导入社交媒体数据(即刻/微博/Twitter)
+- **命令**: `/import-materials <source> <file>`
+- **支持格式**: CSV, JSON, Markdown
+- **输出**: 自动分类索引到 `materials/indexed/`
 
-### 素材管理命令
+## 🤖 支持的 AI 助手
 
-| 命令 | 描述 |
-|-----|------|
-| `/materials-init` | 初始化素材库 |
-| `/materials-import` | 导入CSV/JSON数据 |
-| `/materials-index` | 建立主题索引 |
+| AI 工具 | 说明 | 状态 |
+|---------|------|------|
+| **Claude Code** | Anthropic 的 AI 助手 | ✅ 推荐 |
+| **Cursor** | AI 代码编辑器 | ✅ 完整支持 |
+| **Gemini CLI** | Google 的 AI 助手 | ✅ 完整支持 |
+| **Windsurf** | Codeium 的 AI 编辑器 | ✅ 完整支持 |
+| **Roo Code** | AI 编程助手 | ✅ 完整支持 |
+| **GitHub Copilot** | GitHub 的 AI 编程助手 | ✅ 完整支持 |
+| **Qwen Code** | 阿里通义千问代码助手 | ✅ 完整支持 |
+| **OpenCode** | 开源 AI 编程工具 | ✅ 完整支持 |
+| **Codex CLI** | AI 编程助手 | ✅ 完整支持 |
+| **Kilo Code** | AI 编程工具 | ✅ 完整支持 |
+| **Auggie CLI** | AI 开发助手 | ✅ 完整支持 |
+| **CodeBuddy** | AI 编程伙伴 | ✅ 完整支持 |
+| **Amazon Q Developer** | AWS 的 AI 开发助手 | ✅ 完整支持 |
 
-## 插件系统
+> 💡 使用 `content init --all` 可以同时为所有 AI 工具生成配置
 
-### 内置插件
-1. **authentic-voice** (继承) - 个人语料管理
-2. **materials-manager** (新增) - 素材库管理
-3. **image-generator** (新增) - 配图生成
-4. **research-assistant** (新增) - 信息搜索助手
+## 🛠️ CLI 命令
 
-### 插件安装
+### `content init [name]`
+
 ```bash
-content plugins add materials-manager
-content plugins add image-generator
+content init my-article [选项]
 ```
 
-## 开发路线图
+**常用选项**：
+- `--here` - 在当前目录初始化
+- `--workspace <type>` - 选择工作区类型(wechat/video/general)
+- `--ai <type>` - 选择 AI 平台(claude/gemini/cursor等)
+- `--all` - 生成所有 AI 平台配置
 
-### 阶段1: 基础架构 (1-2周)
-- [ ] Fork novel-writer仓库
-- [ ] 重命名项目为 content-writer
-- [ ] 调整CLI命令 (`content init`)
-- [ ] 重构目录结构
-- [ ] 移除小说特定代码
+### 示例用法
 
-### 阶段2: 核心命令 (2-3周)
-- [ ] `/research` - 信息搜索
-- [ ] `/topic-discuss` - 选题讨论
-- [ ] `/materials-search` - 素材搜索
-- [ ] `/audit` - 三遍审校(三种模式)
-- [ ] `/images` - 文章配图
+```bash
+# 在当前目录初始化公众号项目
+content init --here --workspace wechat
 
-### 阶段3: 工作区系统 (1周)
-- [ ] 工作区判断逻辑
-- [ ] 公众号/视频/通用模板
+# 为 Claude Code 用户初始化
+content init my-article --ai claude
 
-### 阶段4: 插件开发 (1-2周)
-- [ ] materials-manager插件
-- [ ] image-generator插件
-- [ ] research-assistant插件
+# 同时支持所有平台
+content init my-article --all
+```
 
-### 阶段5: 测试与文档 (1周)
-- [ ] 完整流程测试
-- [ ] 使用文档
-- [ ] 最佳实践案例
+## 💡 使用场景
 
-**总计: 6-9周完成MVP**
+### 公众号文章 (wechat 工作区)
+```bash
+content init my-wechat-article --workspace wechat
+```
+- ✅ 段落自动控制在 150 字以内
+- ✅ AI 味目标 < 30%
+- ✅ 自动敏感词检测
+- ✅ 配图建议(900×500px)
 
-## 可行性评估
+### 视频脚本 (video 工作区)
+```bash
+content init my-video-script --workspace video
+```
+- ✅ 高度口语化(AI 味 < 20%)
+- ✅ 时长计算(1分钟≈150-180字)
+- ✅ Hook 设计(前 3 秒抓人)
+- ✅ 分镜标注格式
 
-### ✅ 高度可行
+### 通用内容 (general 工作区)
+```bash
+content init my-blog --workspace general
+```
+- ✅ 灵活配置
+- ✅ SEO 优化选项
+- ✅ 多平台适配
 
-**架构契合度:**
-- 斜杠命令系统: 90% 复用
-- 工作流引擎: 85% 复用
-- 插件系统: 100% 复用
-- 反AI检测规范: 75% 复用
-
-**核心差异点:**
-- 内容类型: 小说章节 → 文章(独立短篇)
-- 流程重心: 规划导向 → 协作导向
-- 质量控制: 一致性验证 → 降AI味审校
-- 素材管理: 角色追踪 → 个人动态库
-
-**开发成本:**
-- 从零开发: 3-6个月
-- 基于novel-writer: 6-9周 ✅
-- 成本节省: 50-70%
-
-## 关键创新点
+## 🎯 核心创新
 
 ### 1. 个人素材库系统
-不同于传统AI写作"完全生成",通过搜索用户的真实经历(即刻动态、历史文章)并融入新文章,实现:
+不同于传统 AI 写作"完全生成"，通过搜索用户的真实经历(即刻动态、历史文章)并融入新文章：
 - **真实性** - 案例、观点都是真实的
 - **个性化** - 文风、态度符合本人
-- **降AI味** - 真实细节替代AI编造
+- **降 AI 味** - 真实细节替代 AI 编造
 
 ### 2. 选题讨论机制
-AI不直接生成文章,而是先提供3-4个选题方向:
+AI 不直接生成文章，而是先提供 3-4 个选题方向：
 - 每个方向含标题、角度、大纲、工作量评估
-- 用户选择后再执行,避免方向错误
+- 用户选择后再执行，避免方向错误
 - 增强协作感和掌控感
 
 ### 3. 三遍审校机制
-系统化降低AI检测率(目标<30%):
+系统化降低 AI 检测率(目标<30%)：
 - **第一遍(内容)**: 事实、逻辑、结构
-- **第二遍(风格)**: 删套话、拆AI句式、加真实细节
+- **第二遍(风格)**: 删套话、拆 AI 句式、加真实细节
 - **第三遍(细节)**: 标点、排版、节奏
 
-### 4. 工作区隔离
-不同内容类型(公众号/视频)有不同规则:
-- 公众号: 需配图、重降AI味、段落短小
-- 视频: 口语化、节奏感、分镜说明
-- 通用: 灵活配置
+## 📖 与 Novel Writer 的关系
 
-## 与 novel-writer 项目矩阵的关系
+Article Writer 基于 [Novel Writer](https://github.com/wordflowlab/novel-writer) 的成熟架构开发，保留其核心优势：
+- ✅ 斜杠命令系统
+- ✅ 跨平台支持(13 个 AI 工具)
+- ✅ 插件系统
+- ✅ 反 AI 检测规范
 
-```
-WordFlowLab 项目矩阵:
+但将核心流程从"小说创作"改造为"文章写作"，特别针对公众号、视频脚本等短内容创作场景。
 
-方法论探索系列:
-  Novel-Writer ──┬─→ Novel-Writer-Skills (Claude专版)
-                 ├─→ Novel-Writer-OpenSpec (OpenSpec方法论)
-                 └─→ Article-Writer (自媒体写作分支) ⭐ 新增
+## 📈 版本历史
 
-工具实现系列:
-  WriteFlow (CLI独立版)
-  NovelWeave (VSCode扩展)
-```
+**v0.1.0** (2025-01-26)
+- ✅ 九步写作流程完整实现
+- ✅ 工作区系统(wechat/video/general)
+- ✅ AI 味自检插件
+- ✅ 素材导入插件
+- ✅ 支持 13 个 AI 平台
 
-**Article-Writer 定位:**
-- 与 Novel-Writer 并列的分支版本
-- 保留核心架构,替换领域逻辑
-- 证明 Spec-Kit 方法论在内容创作领域的通用性
+## 🤝 贡献
 
-## 预期价值
+欢迎提交 Issue 和 Pull Request！
 
-### 对用户
-- ✅ 2-3倍写作效率提升
-- ✅ AI检测率降至30%以下
-- ✅ 保持个人风格和真实性
-- ✅ 系统化的质量保障
+项目地址：[https://github.com/wordflowlab/article-writer](https://github.com/wordflowlab/article-writer)
 
-### 对项目
-- ✅ 扩展 novel-writer 使用场景
-- ✅ 验证 Spec-Kit 方法论通用性
-- ✅ 吸引自媒体创作者用户群
-- ✅ 形成完整的内容创作工具矩阵
+## 📄 许可证
 
-## 下一步行动
+MIT License
 
-如果决定执行:
+## 🙏 致谢
 
-1. **创建仓库** - Fork novel-writer 或新建 article-writer 仓库
-2. **制定详细计划** - 分解到每周任务和里程碑
-3. **优先开发P0功能** - 验证核心流程可行性
-4. **早期测试** - 用真实写作任务迭代优化
-
-**预估资源:**
-- 1个全职开发者
-- 创始人参与测试和反馈
-- 2-3个月完成可用版本
-
-## 参考文档
-
-- [详细技术方案](./technical-design.md)
-- [核心命令设计](./commands-design.md)
-- [个人素材库实现](./materials-system.md)
-- [三遍审校机制](./audit-mechanism.md)
-- [工作区系统设计](./workspace-system.md)
+本项目基于 [Novel Writer](https://github.com/wordflowlab/novel-writer) 和 [Spec Kit](https://github.com/sublayerapp/spec-kit) 架构设计，特此感谢！
 
 ---
 
-**结论: 基于 novel-writer 开发 Article Writer 不仅可行,而且是高效且有价值的选择。建议尽快启动原型验证!**
+**Article Writer** - 让 AI 成为你的写作伙伴！ ✨📝
