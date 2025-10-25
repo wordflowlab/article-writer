@@ -253,7 +253,7 @@ Article Writer 基于 [Novel Writer](https://github.com/wordflowlab/novel-writer
 
 ## 📈 版本历史
 
-**v0.1.0** (2025-01-26)
+**v0.1.0** (2025-10-26)
 - ✅ 九步写作流程完整实现
 - ✅ 工作区系统(wechat/video/general)
 - ✅ AI 味自检插件

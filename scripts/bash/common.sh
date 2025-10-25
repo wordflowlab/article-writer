@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 通用函数库
+# 通用函数库 - Article Writer
 
 # 获取项目根目录
 get_project_root() {
@@ -15,33 +15,33 @@ get_project_root() {
             fi
             current=$(dirname "$current")
         done
-        echo "错误: 未找到小说项目根目录" >&2
+        echo "错误: 未找到 article-writer 项目根目录" >&2
         exit 1
     fi
 }
 
-# 获取当前故事目录
-get_current_story() {
+# 获取当前工作区目录
+get_current_workspace() {
     PROJECT_ROOT=$(get_project_root)
-    STORIES_DIR="$PROJECT_ROOT/stories"
+    WORKSPACES_DIR="$PROJECT_ROOT/workspaces"
 
-    # 找到最新的故事目录
-    if [ -d "$STORIES_DIR" ]; then
-        latest=$(ls -t "$STORIES_DIR" 2>/dev/null | head -1)
+    # 找到最新的工作区目录
+    if [ -d "$WORKSPACES_DIR" ]; then
+        latest=$(ls -t "$WORKSPACES_DIR" 2>/dev/null | head -1)
         if [ -n "$latest" ]; then
-            echo "$STORIES_DIR/$latest"
+            echo "$WORKSPACES_DIR/$latest"
         fi
     fi
 }
 
-# 获取活跃故事名称（只返回名称，不返回路径）
-get_active_story() {
-    story_dir=$(get_current_story)
-    if [ -n "$story_dir" ]; then
-        basename "$story_dir"
+# 获取活跃工作区名称（只返回名称，不返回路径）
+get_active_workspace() {
+    workspace_dir=$(get_current_workspace)
+    if [ -n "$workspace_dir" ]; then
+        basename "$workspace_dir"
     else
-        # 如果没有故事，返回默认名称
-        echo "story-$(date +%Y%m%d)"
+        # 如果没有工作区，返回默认名称
+        echo "general"
     fi
 }
 
@@ -147,5 +147,25 @@ show_word_count_info() {
         else
             echo "✅ 符合字数要求（${min_words}-${max_words}）"
         fi
+    fi
+}
+
+# 获取最新的 brief 文件
+get_latest_brief() {
+    PROJECT_ROOT=$(get_project_root)
+    BRIEFS_DIR="$PROJECT_ROOT/_briefs"
+
+    if [ -d "$BRIEFS_DIR" ]; then
+        latest=$(ls -t "$BRIEFS_DIR"/*.md 2>/dev/null | head -1)
+        echo "$latest"
+    fi
+}
+
+# 获取最新的草稿文件
+get_latest_draft() {
+    workspace_dir=$(get_current_workspace)
+    if [ -n "$workspace_dir" ]; then
+        draft=$(find "$workspace_dir" -name "draft.md" -o -name "*-draft.md" | head -1)
+        echo "$draft"
     fi
 }
