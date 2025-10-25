@@ -48,10 +48,10 @@ content init my-article --ai cursor    # Cursor
 
 ```
 # 命令格式因平台而异
-/brief-save         # 大多数平台
-/novel.brief-save   # Claude Code
-/novel:brief-save   # Gemini CLI
-/novel-brief-save   # Codex CLI
+/brief-save           # 大多数平台
+/content.brief-save   # Claude Code
+/content:brief-save   # Gemini CLI
+/content-brief-save   # Codex CLI
 ```
 
 **九步写作流程**：
@@ -74,9 +74,9 @@ content init my-article --ai cursor    # Cursor
 
 | AI 平台 | 命令格式 | 示例 |
 |---------|----------|------|
-| **Claude Code** | `/novel.命令名` | `/novel.write-draft` |
-| **Gemini CLI** | `/novel:命令名` | `/novel:write-draft` |
-| **Codex CLI** | `/novel-命令名` | `/novel-write-draft` |
+| **Claude Code** | `/content.命令名` | `/content.write-draft` |
+| **Gemini CLI** | `/content:命令名` | `/content:write-draft` |
+| **Codex CLI** | `/content-命令名` | `/content-write-draft` |
 | **其他平台** | `/命令名` | `/write-draft` |
 
 > 💡 下表使用通用格式，实际使用时请根据您的 AI 平台添加相应前缀

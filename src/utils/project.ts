@@ -27,7 +27,7 @@ export async function findProjectRoot(startDir: string = process.cwd()): Promise
 }
 
 /**
- * 验证是否是有效的 novel-writer 项目
+ * 验证是否是有效的 article-writer 项目
  */
 export async function validateProject(projectPath: string): Promise<boolean> {
   const configPath = path.join(projectPath, '.specify', 'config.json');

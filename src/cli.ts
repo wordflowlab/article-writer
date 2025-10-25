@@ -592,7 +592,7 @@ program
       }
     } catch (error: any) {
       if (error.message === 'NOT_IN_PROJECT') {
-        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.red('\n❌ 当前目录不是 article-writer 项目'));
         console.log(chalk.gray('   请在项目根目录运行此命令\n'));
         process.exit(1);
       }
@@ -684,7 +684,7 @@ program
       console.log('');
     } catch (error: any) {
       if (error.message === 'NOT_IN_PROJECT') {
-        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.red('\n❌ 当前目录不是 article-writer 项目'));
         console.log(chalk.gray('   请在项目根目录运行此命令，或使用 novel init 创建新项目\n'));
         process.exit(1);
       }
@@ -721,7 +721,7 @@ program
       spinner.succeed(chalk.green('插件移除成功！\n'));
     } catch (error: any) {
       if (error.message === 'NOT_IN_PROJECT') {
-        console.log(chalk.red('\n❌ 当前目录不是 novel-writer 项目'));
+        console.log(chalk.red('\n❌ 当前目录不是 article-writer 项目'));
         console.log(chalk.gray('   请在项目根目录运行此命令\n'));
         process.exit(1);
       }
@@ -1194,7 +1194,7 @@ function displayUpgradeReport(
   console.log('  • 多平台支持: 所有 13 个 AI 平台的命令已更新');
 
   console.log(chalk.gray('\n📚 查看详细升级指南: docs/upgrade-guide.md'));
-  console.log(chalk.gray('   或访问: https://github.com/wordflowlab/novel-writer/blob/main/docs/upgrade-guide.md'));
+  console.log(chalk.gray('   或访问: https://github.com/wordflowlab/article-writer/blob/main/docs/upgrade-guide.md'));
 }
 
 // upgrade 命令 - 升级现有项目
@@ -1432,7 +1432,7 @@ program.on('--help', () => {
   console.log('  /relations   - 追踪角色关系变化');
   console.log('  /track       - 综合追踪与智能分析');
   console.log('');
-  console.log(chalk.gray('更多信息: https://github.com/wordflowlab/novel-writer'));
+  console.log(chalk.gray('更多信息: https://github.com/wordflowlab/article-writer'));
 });
 
 // 解析命令行参数
