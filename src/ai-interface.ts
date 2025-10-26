@@ -340,7 +340,7 @@ export class AIInterface {
    * 获取当前项目配置
    */
   async getCurrentConfig(): Promise<any> {
-    const configPath = path.join(process.cwd(), '.specify', 'config.json');
+    const configPath = path.join(process.cwd(), '.content', 'config.json');
     if (await fs.pathExists(configPath)) {
       return await fs.readJson(configPath);
     }
@@ -351,7 +351,7 @@ export class AIInterface {
    * 更新项目方法配置
    */
   async updateProjectMethod(method: string | any): Promise<void> {
-    const configPath = path.join(process.cwd(), '.specify', 'config.json');
+    const configPath = path.join(process.cwd(), '.content', 'config.json');
     if (await fs.pathExists(configPath)) {
       const config = await fs.readJson(configPath);
 

@@ -9,14 +9,14 @@ export interface ProjectInfo {
 
 /**
  * 向上查找项目根目录
- * 通过查找 .specify/config.json 来识别项目根目录
+ * 通过查找 .content/config.json 来识别项目根目录
  */
 export async function findProjectRoot(startDir: string = process.cwd()): Promise<string | null> {
   let currentDir = path.resolve(startDir);
   const root = path.parse(currentDir).root;
 
   while (currentDir !== root) {
-    const configPath = path.join(currentDir, '.specify', 'config.json');
+    const configPath = path.join(currentDir, '.content', 'config.json');
     if (await fs.pathExists(configPath)) {
       return currentDir;
     }
@@ -30,7 +30,7 @@ export async function findProjectRoot(startDir: string = process.cwd()): Promise
  * 验证是否是有效的 article-writer 项目
  */
 export async function validateProject(projectPath: string): Promise<boolean> {
-  const configPath = path.join(projectPath, '.specify', 'config.json');
+  const configPath = path.join(projectPath, '.content', 'config.json');
   return await fs.pathExists(configPath);
 }
 
@@ -61,7 +61,7 @@ export async function detectInstalledAI(projectPath: string): Promise<string[]> 
  * 获取项目信息
  */
 export async function getProjectInfo(projectPath: string): Promise<ProjectInfo | null> {
-  const configPath = path.join(projectPath, '.specify', 'config.json');
+  const configPath = path.join(projectPath, '.content', 'config.json');
 
   if (!await fs.pathExists(configPath)) {
     return null;

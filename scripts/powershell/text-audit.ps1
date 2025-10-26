@@ -12,7 +12,7 @@ $ErrorActionPreference = 'Stop'
 
 $root = Get-ProjectRoot
 $cfgProject = Join-Path $root "spec/knowledge/audit-config.json"
-$cfgTemplate = Join-Path $root ".specify/templates/knowledge/audit-config.json"
+$cfgTemplate = Join-Path $root ".content/templates/knowledge/audit-config.json"
 $cfg = if (Test-Path $cfgProject) { $cfgProject } elseif (Test-Path $cfgTemplate) { $cfgTemplate } else { '' }
 
 if (-not (Test-Path $File)) { throw "用法: text-audit.ps1 -File <路径>" }

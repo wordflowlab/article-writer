@@ -15,19 +15,19 @@ echo "================================"
 rm -rf "$PROJECT_ROOT/dist"
 mkdir -p "$PROJECT_ROOT/dist"
 
-# 路径重写函数（将相对路径转换为 .specify/ 路径）
-# 使用临时标记保护已经正确的 .specify/ 路径，避免重复添加前缀
+# 路径重写函数（将相对路径转换为 .content/ 路径）
+# 使用临时标记保护已经正确的 .content/ 路径，避免重复添加前缀
 rewrite_paths() {
   sed -E \
-    -e 's@\.specify/memory/@__SPECIFY_MEMORY__@g' \
-    -e 's@\.specify/scripts/@__SPECIFY_SCRIPTS__@g' \
-    -e 's@\.specify/templates/@__SPECIFY_TEMPLATES__@g' \
-    -e 's@(/?)memory/@.specify/memory/@g' \
-    -e 's@(/?)scripts/@.specify/scripts/@g' \
-    -e 's@(/?)templates/@.specify/templates/@g' \
-    -e 's@__SPECIFY_MEMORY__@.specify/memory/@g' \
-    -e 's@__SPECIFY_SCRIPTS__@.specify/scripts/@g' \
-    -e 's@__SPECIFY_TEMPLATES__@.specify/templates/@g'
+    -e 's@\.content/memory/@__SPECIFY_MEMORY__@g' \
+    -e 's@\.content/scripts/@__SPECIFY_SCRIPTS__@g' \
+    -e 's@\.content/templates/@__SPECIFY_TEMPLATES__@g' \
+    -e 's@(/?)memory/@.content/memory/@g' \
+    -e 's@(/?)scripts/@.content/scripts/@g' \
+    -e 's@(/?)templates/@.content/templates/@g' \
+    -e 's@__SPECIFY_MEMORY__@.content/memory/@g' \
+    -e 's@__SPECIFY_SCRIPTS__@.content/scripts/@g' \
+    -e 's@__SPECIFY_TEMPLATES__@.content/templates/@g'
 }
 
 # 核心函数：生成命令文件
@@ -146,13 +146,13 @@ copy_support_files() {
   local base_dir=$1
   local script_variant=$2
 
-  local spec_dir="$base_dir/.specify"
+  local spec_dir="$base_dir/.content"
   mkdir -p "$spec_dir"
 
   # 复制 memory 目录（如果存在）
   if [[ -d "$PROJECT_ROOT/memory" ]]; then
     cp -r "$PROJECT_ROOT/memory" "$spec_dir/"
-    echo "    📁 复制 memory/ → .specify/"
+    echo "    📁 复制 memory/ → .content/"
   fi
 
   # 复制对应的脚本变体目录
@@ -162,13 +162,13 @@ copy_support_files() {
       sh)
         if [[ -d "$PROJECT_ROOT/scripts/bash" ]]; then
           cp -r "$PROJECT_ROOT/scripts/bash" "$spec_dir/scripts/"
-          echo "    📁 复制 scripts/bash/ → .specify/scripts/"
+          echo "    📁 复制 scripts/bash/ → .content/scripts/"
         fi
         ;;
       ps)
         if [[ -d "$PROJECT_ROOT/scripts/powershell" ]]; then
           cp -r "$PROJECT_ROOT/scripts/powershell" "$spec_dir/scripts/"
-          echo "    📁 复制 scripts/powershell/ → .specify/scripts/"
+          echo "    📁 复制 scripts/powershell/ → .content/scripts/"
         fi
         ;;
     esac
@@ -186,13 +186,13 @@ copy_support_files() {
       mkdir -p "$target_dir"
       cp "$file" "$target_dir/"
     done
-    echo "    📁 复制 templates/ → .specify/templates/"
+    echo "    📁 复制 templates/ → .content/templates/"
   fi
 
   # 复制 experts 目录（如果存在）
   if [[ -d "$PROJECT_ROOT/experts" ]]; then
     cp -r "$PROJECT_ROOT/experts" "$spec_dir/"
-    echo "    📁 复制 experts/ → .specify/experts/"
+    echo "    📁 复制 experts/ → .content/experts/"
   fi
 
   # 复制 spec 目录（包括 presets、反AI检测规范等）

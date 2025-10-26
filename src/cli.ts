@@ -10,6 +10,14 @@ import { fileURLToPath } from 'url';
 import { getVersion, getVersionInfo } from './version.js';
 import { PluginManager } from './plugins/manager.js';
 import { ensureProjectRoot, getProjectInfo } from './utils/project.js';
+import {
+  displayProjectBanner,
+  selectAIAssistant,
+  selectWorkspace,
+  selectScriptType,
+  displayStep,
+  isInteractive
+} from './utils/interactive.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -97,13 +105,54 @@ program
   .command('init')
   .argument('[name]', '文章项目名称')
   .option('--here', '在当前目录初始化')
-  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q', 'claude')
+  .option('--ai <type>', '选择 AI 助手: claude | cursor | gemini | windsurf | roocode | copilot | qwen | opencode | codex | kilocode | auggie | codebuddy | q')
   .option('--all', '为所有支持的 AI 助手生成配置')
-  .option('--workspace <type>', '选择工作区类型: wechat | video | general', 'wechat')
+  .option('--workspace <type>', '选择工作区类型: wechat | video | general')
   .option('--no-git', '跳过 Git 初始化')
   .option('--plugins <names>', '预装插件，逗号分隔')
   .description('初始化一个新的文章项目')
   .action(async (name, options) => {
+    // 如果是交互式终端且没有明确指定 --ai 或 --workspace，显示交互选择
+    const shouldShowInteractive = isInteractive() && !options.all;
+    const needsAISelection = shouldShowInteractive && !options.ai;
+    const needsWorkspaceSelection = shouldShowInteractive && !options.workspace;
+
+    if (needsAISelection || needsWorkspaceSelection) {
+      // 显示项目横幅
+      displayProjectBanner();
+
+      // 交互式选择 AI 助手
+      if (needsAISelection) {
+        displayStep(1, 3, '选择 AI 助手');
+        options.ai = await selectAIAssistant(AI_CONFIGS);
+        console.log('');
+      } else {
+        // 如果用户指定了 --ai，仍使用其值
+        options.ai = options.ai;
+      }
+
+      // 交互式选择工作区类型
+      if (needsWorkspaceSelection) {
+        const stepNum = needsAISelection ? 2 : 1;
+        displayStep(stepNum, 3, '选择工作区类型');
+        options.workspace = await selectWorkspace();
+        console.log('');
+      } else {
+        // 如果用户指定了 --workspace，仍使用其值
+        options.workspace = options.workspace;
+      }
+
+      // 交互式选择脚本类型（仅在进行了交互选择时显示）
+      const finalStepNum = needsAISelection && needsWorkspaceSelection ? 3 : (needsAISelection || needsWorkspaceSelection ? 2 : 1);
+      displayStep(finalStepNum, 3, '选择脚本类型');
+      const selectedScriptType = await selectScriptType();
+      console.log('');
+    }
+
+    // 设置默认值（如果没有通过交互或参数指定）
+    if (!options.ai) options.ai = 'claude';
+    if (!options.workspace) options.workspace = 'wechat';
+
     const spinner = ora('正在初始化文章项目...').start();
 
     try {
@@ -127,12 +176,12 @@ program
 
       // 创建基础项目结构
       const baseDirs = [
-        '.specify',
-        '.specify/memory',
-        '.specify/scripts',
-        '.specify/scripts/bash',
-        '.specify/scripts/powershell',
-        '.specify/templates',
+        '.content',
+        '.content/memory',
+        '.content/scripts',
+        '.content/scripts/bash',
+        '.content/scripts/powershell',
+        '.content/templates',
         'workspaces',
         'workspaces/wechat',
         'workspaces/wechat/_briefs',
@@ -230,7 +279,7 @@ program
         version: getVersion()
       };
 
-      await fs.writeJson(path.join(projectPath, '.specify', 'config.json'), config, { spaces: 2 });
+      await fs.writeJson(path.join(projectPath, '.content', 'config.json'), config, { spaces: 2 });
 
       // 从构建产物复制 AI 配置和命令文件
       const packageRoot = path.resolve(__dirname, '..');
@@ -259,7 +308,7 @@ program
         targetAI.push(options.ai);
       }
 
-      // 复制 AI 配置目录（包含命令文件和 .specify 目录）
+      // 复制 AI 配置目录（包含命令文件和 .content 目录）
       for (const ai of targetAI) {
         const sourceDir = path.join(packageRoot, sourceMap[ai]);
         if (await fs.pathExists(sourceDir)) {
@@ -271,10 +320,10 @@ program
         }
       }
 
-      // 复制脚本文件到用户项目的 .specify/scripts 目录（构建产物已包含）
-      // 注意：.specify 目录已由上面的 fs.copy 复制，此处仅作为备份逻辑
-      if (await fs.pathExists(scriptsDir) && !await fs.pathExists(path.join(projectPath, '.specify', 'scripts'))) {
-        const userScriptsDir = path.join(projectPath, '.specify', 'scripts');
+      // 复制脚本文件到用户项目的 .content/scripts 目录（构建产物已包含）
+      // 注意：.content 目录已由上面的 fs.copy 复制，此处仅作为备份逻辑
+      if (await fs.pathExists(scriptsDir) && !await fs.pathExists(path.join(projectPath, '.content', 'scripts'))) {
+        const userScriptsDir = path.join(projectPath, '.content', 'scripts');
         await fs.copy(scriptsDir, userScriptsDir);
 
         // 设置 bash 脚本执行权限
@@ -290,17 +339,17 @@ program
         }
       }
 
-      // 复制模板文件到 .specify/templates 目录
+      // 复制模板文件到 .content/templates 目录
       const fullTemplatesDir = path.join(packageRoot, 'templates');
       if (await fs.pathExists(fullTemplatesDir)) {
-        const userTemplatesDir = path.join(projectPath, '.specify', 'templates');
+        const userTemplatesDir = path.join(projectPath, '.content', 'templates');
         await fs.copy(fullTemplatesDir, userTemplatesDir);
       }
 
-      // 复制 memory 文件到 .specify/memory 目录
+      // 复制 memory 文件到 .content/memory 目录
       const memoryDir = path.join(packageRoot, 'memory');
       if (await fs.pathExists(memoryDir)) {
-        const userMemoryDir = path.join(projectPath, '.specify', 'memory');
+        const userMemoryDir = path.join(projectPath, '.content', 'memory');
         await fs.copy(memoryDir, userMemoryDir);
       }
 
@@ -874,7 +923,7 @@ async function updateScripts(
   dryRun: boolean
 ): Promise<number> {
   const scriptsSource = path.join(packageRoot, 'scripts');
-  const scriptsDest = path.join(projectPath, '.specify', 'scripts');
+  const scriptsDest = path.join(projectPath, '.content', 'scripts');
 
   if (!await fs.pathExists(scriptsSource)) {
     console.log(chalk.yellow('  ⚠ 脚本源文件未找到'));
@@ -917,7 +966,7 @@ async function updateTemplates(
   dryRun: boolean
 ): Promise<number> {
   const templatesSource = path.join(packageRoot, 'templates');
-  const templatesDest = path.join(projectPath, '.specify', 'templates');
+  const templatesDest = path.join(projectPath, '.content', 'templates');
 
   if (!await fs.pathExists(templatesSource)) {
     console.log(chalk.yellow('  ⚠ 模板源文件未找到'));
@@ -946,7 +995,7 @@ async function updateMemory(
   dryRun: boolean
 ): Promise<number> {
   const memorySource = path.join(packageRoot, 'memory');
-  const memoryDest = path.join(projectPath, '.specify', 'memory');
+  const memoryDest = path.join(projectPath, '.content', 'memory');
 
   if (!await fs.pathExists(memorySource)) {
     console.log(chalk.yellow('  ⚠ 记忆源文件未找到'));
@@ -1033,7 +1082,7 @@ async function updateExperts(
   dryRun: boolean
 ): Promise<number> {
   const expertsSource = path.join(packageRoot, 'experts');
-  const expertsDest = path.join(projectPath, '.specify', 'experts');
+  const expertsDest = path.join(projectPath, '.content', 'experts');
 
   // 检查项目是否安装了专家模式
   if (!await fs.pathExists(expertsDest)) {
@@ -1106,28 +1155,28 @@ async function createBackup(
 
   // 备份脚本
   if (updateContent.scripts) {
-    const scriptsSource = path.join(projectPath, '.specify', 'scripts');
+    const scriptsSource = path.join(projectPath, '.content', 'scripts');
     if (await fs.pathExists(scriptsSource)) {
-      await fs.copy(scriptsSource, path.join(backupPath, '.specify', 'scripts'));
-      console.log(chalk.gray('  ✓ 备份 .specify/scripts/'));
+      await fs.copy(scriptsSource, path.join(backupPath, '.content', 'scripts'));
+      console.log(chalk.gray('  ✓ 备份 .content/scripts/'));
     }
   }
 
   // 备份模板
   if (updateContent.templates) {
-    const templatesSource = path.join(projectPath, '.specify', 'templates');
+    const templatesSource = path.join(projectPath, '.content', 'templates');
     if (await fs.pathExists(templatesSource)) {
-      await fs.copy(templatesSource, path.join(backupPath, '.specify', 'templates'));
-      console.log(chalk.gray('  ✓ 备份 .specify/templates/'));
+      await fs.copy(templatesSource, path.join(backupPath, '.content', 'templates'));
+      console.log(chalk.gray('  ✓ 备份 .content/templates/'));
     }
   }
 
   // 备份记忆
   if (updateContent.memory) {
-    const memorySource = path.join(projectPath, '.specify', 'memory');
+    const memorySource = path.join(projectPath, '.content', 'memory');
     if (await fs.pathExists(memorySource)) {
-      await fs.copy(memorySource, path.join(backupPath, '.specify', 'memory'));
-      console.log(chalk.gray('  ✓ 备份 .specify/memory/'));
+      await fs.copy(memorySource, path.join(backupPath, '.content', 'memory'));
+      console.log(chalk.gray('  ✓ 备份 .content/memory/'));
     }
   }
 
@@ -1219,7 +1268,7 @@ program
 
     try {
       // 1. 检测项目
-      const configPath = path.join(projectPath, '.specify', 'config.json');
+      const configPath = path.join(projectPath, '.content', 'config.json');
       if (!await fs.pathExists(configPath)) {
         console.log(chalk.red('❌ 当前目录不是 novel-writer 项目'));
         console.log(chalk.gray('   请在项目根目录运行此命令，或使用 novel init 创建新项目'));

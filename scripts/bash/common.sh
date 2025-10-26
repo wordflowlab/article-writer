@@ -3,13 +3,13 @@
 
 # 获取项目根目录
 get_project_root() {
-    if [ -f ".specify/config.json" ]; then
+    if [ -f ".content/config.json" ]; then
         pwd
     else
-        # 向上查找包含 .specify 的目录
+        # 向上查找包含 .content 的目录
         current=$(pwd)
         while [ "$current" != "/" ]; do
-            if [ -f "$current/.specify/config.json" ]; then
+            if [ -f "$current/.content/config.json" ]; then
                 echo "$current"
                 return 0
             fi

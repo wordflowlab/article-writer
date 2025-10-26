@@ -14,9 +14,9 @@ if [ -z "$FILE_PATH" ] || [ ! -f "$FILE_PATH" ]; then
   exit 1
 fi
 
-# 选择配置：优先项目 spec/knowledge，其次 .specify/templates/knowledge
+# 选择配置：优先项目 spec/knowledge，其次 .content/templates/knowledge
 CFG_PROJECT="$PROJECT_ROOT/spec/knowledge/audit-config.json"
-CFG_TEMPLATE="$PROJECT_ROOT/.specify/templates/knowledge/audit-config.json"
+CFG_TEMPLATE="$PROJECT_ROOT/.content/templates/knowledge/audit-config.json"
 if [ -f "$CFG_PROJECT" ]; then
   CFG="$CFG_PROJECT"
 elif [ -f "$CFG_TEMPLATE" ]; then

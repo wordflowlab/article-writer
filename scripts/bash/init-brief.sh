@@ -21,13 +21,13 @@ BRIEF_FILE="$BRIEFS_DIR/brief-$TIMESTAMP.md"
 TEMPLATE=""
 case "$WORKSPACE_TYPE" in
     wechat)
-        TEMPLATE="$PROJECT_ROOT/.specify/templates/brief-templates/wechat-brief-template.md"
+        TEMPLATE="$PROJECT_ROOT/.content/templates/brief-templates/wechat-brief-template.md"
         ;;
     video)
-        TEMPLATE="$PROJECT_ROOT/.specify/templates/brief-templates/video-brief-template.md"
+        TEMPLATE="$PROJECT_ROOT/.content/templates/brief-templates/video-brief-template.md"
         ;;
     *)
-        TEMPLATE="$PROJECT_ROOT/.specify/templates/brief-templates/general-brief-template.md"
+        TEMPLATE="$PROJECT_ROOT/.content/templates/brief-templates/general-brief-template.md"
         ;;
 esac
 

@@ -21,13 +21,13 @@ $BriefFile = Join-Path $BriefsDir "brief-$Timestamp.md"
 $Template = ""
 switch ($WorkspaceType) {
     "wechat" {
-        $Template = Join-Path $ProjectRoot ".specify/templates/brief-templates/wechat-brief-template.md"
+        $Template = Join-Path $ProjectRoot ".content/templates/brief-templates/wechat-brief-template.md"
     }
     "video" {
-        $Template = Join-Path $ProjectRoot ".specify/templates/brief-templates/video-brief-template.md"
+        $Template = Join-Path $ProjectRoot ".content/templates/brief-templates/video-brief-template.md"
     }
     default {
-        $Template = Join-Path $ProjectRoot ".specify/templates/brief-templates/general-brief-template.md"
+        $Template = Join-Path $ProjectRoot ".content/templates/brief-templates/general-brief-template.md"
     }
 }
 

@@ -108,7 +108,7 @@ content init my-article --ai cursor    # Cursor
 
 ```
 my-article/
-├── .specify/              # 配置与脚本
+├── .content/              # 配置与脚本
 │   ├── memory/            # 写作记忆
 │   ├── scripts/           # 支持脚本
 │   └── templates/         # 命令模板
