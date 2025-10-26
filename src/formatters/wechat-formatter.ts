@@ -325,6 +325,10 @@ export class WechatFormatter {
     class WechatRenderer extends Renderer {
       heading(token: Tokens.Heading): string {
         const text = this.parser.parseInline(token.tokens);
+        // 跳过一级标题,避免与微信公众号标题冲突
+        if (token.depth === 1) {
+          return '';
+        }
         const tag = `h${token.depth}`;
         return self.styledContent(tag, text);
       }
@@ -451,7 +455,7 @@ export class WechatFormatter {
   }
 
   /**
-   * 导出为完整 HTML 文件
+   * 导出为完整 HTML 文件(带一键复制功能)
    */
   public async exportHtml(markdown: string, title: string = '微信文章'): Promise<string> {
     const content = await this.format(markdown);
@@ -461,21 +465,212 @@ export class WechatFormatter {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
+  <title>${title} - 微信公众号预览</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .toolbar h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      flex: 1;
+    }
+    .copy-btn {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+    .copy-btn.success {
+      background: #10b981;
+      color: white;
+    }
+    .status {
+      color: white;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.2);
+      display: none;
+    }
+    .status.show {
+      display: block;
+    }
+    .preview-container {
+      background: white;
+      margin: 20px;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
     pre {
       overflow-x: auto;
     }
+    .instructions {
+      background: #fff9e6;
+      border-left: 4px solid #fbbf24;
+      padding: 16px 20px;
+      margin: 20px;
+      border-radius: 8px;
+      color: #92400e;
+      line-height: 1.6;
+    }
+    .instructions h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #78350f;
+    }
+    .instructions ol {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin: 6px 0;
+    }
+    .instructions code {
+      background: rgba(251, 191, 36, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
-  ${content}
+  <div class="toolbar">
+    <h1>📱 ${title}</h1>
+    <button class="copy-btn" id="copy-btn" onclick="copyToWechat()">
+      <span id="btn-icon">📋</span>
+      <span id="btn-text">一键复制到微信</span>
+    </button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="instructions">
+    <h3>💡 使用说明</h3>
+    <ol>
+      <li>点击上方 <strong>"一键复制到微信"</strong> 按钮</li>
+      <li>打开 <strong>微信公众号后台</strong> 编辑器</li>
+      <li>在编辑器中按 <code>Ctrl+V</code> (Mac: <code>Cmd+V</code>) 粘贴</li>
+      <li>检查格式,完成发布!</li>
+    </ol>
+  </div>
+
+  <div class="preview-container" id="article-content">
+    ${content}
+  </div>
+
+  <script>
+    async function copyToWechat() {
+      const btn = document.getElementById('copy-btn');
+      const btnIcon = document.getElementById('btn-icon');
+      const btnText = document.getElementById('btn-text');
+      const status = document.getElementById('status');
+      const content = document.getElementById('article-content');
+
+      try {
+        // 获取格式化后的 HTML
+        const html = content.innerHTML;
+        const text = content.innerText;
+
+        // 使用 Clipboard API 复制带格式的内容
+        if (navigator.clipboard && window.ClipboardItem) {
+          const blob = new Blob([html], { type: 'text/html' });
+          const textBlob = new Blob([text], { type: 'text/plain' });
+          const item = new ClipboardItem({
+            'text/html': blob,
+            'text/plain': textBlob
+          });
+
+          await navigator.clipboard.write([item]);
+        } else {
+          // 降级方案:仅复制纯文本
+          await navigator.clipboard.writeText(text);
+        }
+
+        // 成功提示
+        btn.classList.add('success');
+        btnIcon.textContent = '✅';
+        btnText.textContent = '复制成功!';
+        status.textContent = '已复制到剪贴板,请打开微信公众号后台粘贴';
+        status.classList.add('show');
+
+        // 3秒后恢复
+        setTimeout(() => {
+          btn.classList.remove('success');
+          btnIcon.textContent = '📋';
+          btnText.textContent = '一键复制到微信';
+          status.classList.remove('show');
+        }, 3000);
+
+      } catch (err) {
+        console.error('复制失败:', err);
+        btnIcon.textContent = '❌';
+        btnText.textContent = '复制失败';
+        status.textContent = '复制失败,请手动选择内容复制';
+        status.style.background = 'rgba(239, 68, 68, 0.9)';
+        status.classList.add('show');
+
+        setTimeout(() => {
+          btnIcon.textContent = '📋';
+          btnText.textContent = '一键复制到微信';
+          status.classList.remove('show');
+          status.style.background = 'rgba(255,255,255,0.2)';
+        }, 3000);
+      }
+    }
+
+    // 键盘快捷键: Ctrl/Cmd + Shift + C
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        copyToWechat();
+      }
+    });
+
+    // 页面加载完成提示
+    window.addEventListener('load', () => {
+      console.log('✅ 微信公众号预览已加载');
+      console.log('💡 快捷键: Ctrl/Cmd + Shift + C 快速复制');
+    });
+  </script>
 </body>
 </html>`;
   }

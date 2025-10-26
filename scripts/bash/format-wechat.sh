@@ -109,11 +109,6 @@ formatMarkdown(markdown, title, options).then(html => {
   console.log('📄 输出文件:', '$OUTPUT_FILE');
   console.log('🎨 使用主题:', options.theme);
   console.log('🎨 主题色:', options.primaryColor);
-  console.log('');
-  console.log('💡 下一步:');
-  console.log('   1. 在浏览器中打开 $OUTPUT_FILE 预览效果');
-  console.log('   2. 复制富文本内容');
-  console.log('   3. 粘贴到微信公众号编辑器');
 }).catch(err => {
   console.error('错误: 格式化失败');
   console.error(err.message);
@@ -121,27 +116,43 @@ formatMarkdown(markdown, title, options).then(html => {
 });
 "
 
-# 检查是否设置了自动预览
-if [ -f "$CONFIG_FILE" ]; then
-  AUTO_PREVIEW=$(node -p "try { const c = require('$CONFIG_FILE'); c.formatting?.autoPreview || false } catch(e) { false }" 2>/dev/null || echo "false")
+# 等待文件写入完成
+sleep 0.5
 
-  if [ "$AUTO_PREVIEW" = "true" ] && [ -f "$OUTPUT_FILE" ]; then
+# 检查输出文件是否生成
+if [ -f "$OUTPUT_FILE" ]; then
+  echo ""
+  echo "🌐 正在打开浏览器..."
+
+  # 跨平台打开浏览器
+  OPENED=false
+  if command -v open >/dev/null 2>&1; then
+    # macOS
+    open "$OUTPUT_FILE" && OPENED=true
+  elif command -v xdg-open >/dev/null 2>&1; then
+    # Linux
+    xdg-open "$OUTPUT_FILE" 2>/dev/null && OPENED=true
+  elif command -v start >/dev/null 2>&1; then
+    # Windows (Git Bash)
+    start "$OUTPUT_FILE" && OPENED=true
+  fi
+
+  if [ "$OPENED" = true ]; then
     echo ""
-    echo "🌐 正在打开浏览器预览..."
-
-    # 跨平台打开浏览器
-    if command -v open >/dev/null 2>&1; then
-      # macOS
-      open "$OUTPUT_FILE"
-    elif command -v xdg-open >/dev/null 2>&1; then
-      # Linux
-      xdg-open "$OUTPUT_FILE"
-    elif command -v start >/dev/null 2>&1; then
-      # Windows (Git Bash)
-      start "$OUTPUT_FILE"
-    else
-      echo "⚠️  无法自动打开浏览器,请手动打开: $OUTPUT_FILE"
-    fi
+    echo "💡 使用说明:"
+    echo "   1. 点击页面上的'一键复制到微信'按钮"
+    echo "   2. 打开微信公众号后台编辑器"
+    echo "   3. 按 Ctrl+V (Mac: Cmd+V) 粘贴"
+    echo "   4. 检查格式,完成发布!"
+    echo ""
+    echo "⌨️  快捷键: Ctrl/Cmd + Shift + C"
+  else
+    echo "⚠️  无法自动打开浏览器,请手动打开: $OUTPUT_FILE"
+    echo ""
+    echo "💡 下一步:"
+    echo "   1. 在浏览器中打开 $OUTPUT_FILE"
+    echo "   2. 点击'一键复制到微信'按钮"
+    echo "   3. 粘贴到微信公众号编辑器"
   fi
 fi
 
