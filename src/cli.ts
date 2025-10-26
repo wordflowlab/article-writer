@@ -1440,6 +1440,291 @@ program
     }
   });
 
+// materials 命令组 - 素材库管理
+program
+  .command('materials')
+  .description('素材库管理命令')
+  .action(() => {
+    console.log(chalk.cyan('\n📦 素材库管理命令:\n'));
+    console.log(chalk.yellow('  content materials import <file>') + ' - 导入素材文件');
+    console.log(chalk.yellow('  content materials index') + ' - 生成素材索引');
+    console.log(chalk.yellow('  content materials list') + ' - 列出所有素材');
+    console.log('\n' + chalk.gray('在 AI 助手中使用 /materials-search 命令搜索素材'));
+  });
+
+// materials:import 命令 - 导入素材
+program
+  .command('materials:import <file>')
+  .option('-t, --type <type>', '素材类型: jike | weibo | twitter | custom', 'custom')
+  .option('--topic <topic>', '主题标签（可选）')
+  .description('导入社交媒体素材到 materials/raw/')
+  .action(async (file, options) => {
+    const spinner = ora('正在导入素材...').start();
+
+    try {
+      // 尝试查找项目根目录,如果不在项目中则使用当前目录
+      let projectRoot: string;
+      try {
+        projectRoot = await ensureProjectRoot();
+      } catch (e) {
+        projectRoot = process.cwd();
+      }
+      const materialsRawDir = path.join(projectRoot, 'materials', 'raw');
+      await fs.ensureDir(materialsRawDir);
+
+      // 检查源文件是否存在
+      if (!await fs.pathExists(file)) {
+        spinner.fail(`文件不存在: ${file}`);
+        process.exit(1);
+      }
+
+      // 读取源文件
+      const fileExt = path.extname(file);
+      const fileName = path.basename(file);
+      let targetFileName = fileName;
+
+      // 根据类型添加前缀
+      if (options.type !== 'custom') {
+        const timestamp = new Date().toISOString().split('T')[0];
+        const baseName = path.basename(file, fileExt);
+        targetFileName = `${options.type}-${baseName}-${timestamp}${fileExt}`;
+      }
+
+      // 复制文件到 materials/raw/
+      const targetPath = path.join(materialsRawDir, targetFileName);
+      await fs.copy(file, targetPath);
+
+      spinner.succeed(`素材已导入: ${targetFileName}`);
+
+      console.log(chalk.cyan('\n📝 导入信息:'));
+      console.log(chalk.gray(`  类型: ${options.type}`));
+      console.log(chalk.gray(`  文件: ${targetFileName}`));
+      if (options.topic) {
+        console.log(chalk.gray(`  主题: ${options.topic}`));
+      }
+      console.log(chalk.gray(`  位置: materials/raw/${targetFileName}`));
+
+      console.log(chalk.yellow('\n💡 下一步:'));
+      console.log(chalk.gray('  1. 运行 `content materials index` 生成索引'));
+      console.log(chalk.gray('  2. 在 AI 中使用 /materials-search 搜索素材'));
+
+    } catch (error) {
+      spinner.fail('导入失败');
+      console.error(chalk.red(String(error)));
+      process.exit(1);
+    }
+  });
+
+// materials:index 命令 - 生成素材索引
+program
+  .command('materials:index')
+  .option('-f, --force', '强制重新生成索引')
+  .description('扫描 materials/raw/ 并生成主题索引')
+  .action(async (options) => {
+    const spinner = ora('正在生成素材索引...').start();
+
+    try {
+      // 尝试查找项目根目录,如果不在项目中则使用当前目录
+      let projectRoot: string;
+      try {
+        projectRoot = await ensureProjectRoot();
+      } catch (e) {
+        projectRoot = process.cwd();
+      }
+      const materialsRawDir = path.join(projectRoot, 'materials', 'raw');
+      const materialsIndexedDir = path.join(projectRoot, 'materials', 'indexed');
+      await fs.ensureDir(materialsIndexedDir);
+
+      // 扫描 raw 目录下所有文件
+      const files = await fs.readdir(materialsRawDir);
+      const materialFiles = files.filter(f =>
+        f.endsWith('.csv') || f.endsWith('.json') || f.endsWith('.md')
+      );
+
+      if (materialFiles.length === 0) {
+        spinner.warn('未找到素材文件');
+        console.log(chalk.gray('\n使用 `content materials import <file>` 导入素材'));
+        return;
+      }
+
+      // 为每个文件生成索引
+      const index: Record<string, string[]> = {};
+
+      for (const file of materialFiles) {
+        const filePath = path.join(materialsRawDir, file);
+        const content = await fs.readFile(filePath, 'utf-8');
+
+        // 简单的关键词提取（实际应该更智能）
+        const keywords = extractKeywords(content, file);
+        keywords.forEach(kw => {
+          if (!index[kw]) index[kw] = [];
+          if (!index[kw].includes(file)) {
+            index[kw].push(file);
+          }
+        });
+      }
+
+      // 保存索引文件
+      const indexPath = path.join(materialsIndexedDir, 'topics-index.json');
+      await fs.writeJson(indexPath, index, { spaces: 2 });
+
+      // 生成可读的 Markdown 索引
+      const mdIndexPath = path.join(materialsIndexedDir, 'topics-index.md');
+      let mdContent = '# 素材主题索引\n\n';
+      mdContent += `> 生成时间: ${new Date().toISOString()}\n`;
+      mdContent += `> 素材文件数: ${materialFiles.length}\n`;
+      mdContent += `> 主题关键词数: ${Object.keys(index).length}\n\n`;
+      mdContent += '---\n\n';
+
+      Object.entries(index)
+        .sort((a, b) => b[1].length - a[1].length)
+        .forEach(([topic, files]) => {
+          mdContent += `## ${topic} (${files.length})\n\n`;
+          files.forEach(f => {
+            mdContent += `- \`${f}\`\n`;
+          });
+          mdContent += '\n';
+        });
+
+      await fs.writeFile(mdIndexPath, mdContent, 'utf-8');
+
+      spinner.succeed('索引生成完成');
+
+      console.log(chalk.cyan('\n📊 索引统计:'));
+      console.log(chalk.gray(`  素材文件: ${materialFiles.length} 个`));
+      console.log(chalk.gray(`  主题关键词: ${Object.keys(index).length} 个`));
+      console.log(chalk.gray(`  索引文件: materials/indexed/topics-index.json`));
+      console.log(chalk.gray(`  Markdown: materials/indexed/topics-index.md`));
+
+    } catch (error) {
+      spinner.fail('索引生成失败');
+      console.error(chalk.red(String(error)));
+      process.exit(1);
+    }
+  });
+
+// materials:list 命令 - 列出所有素材
+program
+  .command('materials:list')
+  .option('-t, --type <type>', '按类型过滤: csv | json | md')
+  .description('列出 materials/raw/ 中的所有素材文件')
+  .action(async (options) => {
+    try {
+      // 尝试查找项目根目录,如果不在项目中则使用当前目录
+      let projectRoot: string;
+      try {
+        projectRoot = await ensureProjectRoot();
+      } catch (e) {
+        projectRoot = process.cwd();
+      }
+      const materialsRawDir = path.join(projectRoot, 'materials', 'raw');
+
+      if (!await fs.pathExists(materialsRawDir)) {
+        console.log(chalk.yellow('\n⚠️  素材目录不存在'));
+        return;
+      }
+
+      const files = await fs.readdir(materialsRawDir);
+      let materialFiles = files.filter(f =>
+        f.endsWith('.csv') || f.endsWith('.json') || f.endsWith('.md')
+      );
+
+      // 按类型过滤
+      if (options.type) {
+        materialFiles = materialFiles.filter(f => f.endsWith(`.${options.type}`));
+      }
+
+      if (materialFiles.length === 0) {
+        console.log(chalk.yellow('\n⚠️  未找到素材文件'));
+        console.log(chalk.gray('使用 `content materials import <file>` 导入素材'));
+        return;
+      }
+
+      console.log(chalk.cyan(`\n📦 素材文件列表 (${materialFiles.length}个):\n`));
+
+      for (const file of materialFiles) {
+        const filePath = path.join(materialsRawDir, file);
+        const stats = await fs.stat(filePath);
+        const sizeKB = (stats.size / 1024).toFixed(1);
+        const ext = path.extname(file).substring(1).toUpperCase();
+
+        console.log(`  ${chalk.green('●')} ${file}`);
+        console.log(chalk.gray(`    类型: ${ext} | 大小: ${sizeKB} KB | 修改: ${stats.mtime.toISOString().split('T')[0]}`));
+      }
+
+      console.log(chalk.gray('\n使用 /materials-search 命令在 AI 中搜索素材'));
+
+    } catch (error) {
+      console.error(chalk.red('列出素材失败:'), error);
+      process.exit(1);
+    }
+  });
+
+// 辅助函数：从文件内容提取关键词
+function extractKeywords(content: string, fileName: string): string[] {
+  const keywords: string[] = [];
+
+  // 从文件名提取
+  const nameMatch = fileName.match(/^(jike|weibo|twitter)-(.+)-\d{4}/);
+  if (nameMatch) {
+    keywords.push(nameMatch[1]); // 平台类型
+  }
+
+  // CSV 文件：提取"话题"列
+  if (fileName.endsWith('.csv')) {
+    const lines = content.split('\n');
+    const header = lines[0]?.split(',');
+    const topicIndex = header?.findIndex(h => h.includes('话题') || h.includes('topic'));
+
+    if (topicIndex !== undefined && topicIndex >= 0) {
+      lines.slice(1).forEach(line => {
+        const cols = line.split(',');
+        if (cols[topicIndex]) {
+          const topic = cols[topicIndex].trim().replace(/^"|"$/g, '');
+          if (topic && !keywords.includes(topic)) {
+            keywords.push(topic);
+          }
+        }
+      });
+    }
+  }
+
+  // JSON 文件：提取 topics 字段
+  if (fileName.endsWith('.json')) {
+    try {
+      const data = JSON.parse(content);
+      const items = Array.isArray(data) ? data : [data];
+
+      items.forEach((item: any) => {
+        if (item.topics && Array.isArray(item.topics)) {
+          item.topics.forEach((topic: string) => {
+            if (!keywords.includes(topic)) {
+              keywords.push(topic);
+            }
+          });
+        }
+      });
+    } catch (e) {
+      // JSON 解析失败，跳过
+    }
+  }
+
+  // Markdown 文件：提取二级标题作为主题
+  if (fileName.endsWith('.md')) {
+    const headings = content.match(/^##\s+(.+)$/gm);
+    if (headings) {
+      headings.forEach(h => {
+        const topic = h.replace(/^##\s+/, '').trim();
+        if (!keywords.includes(topic)) {
+          keywords.push(topic);
+        }
+      });
+    }
+  }
+
+  return keywords;
+}
+
 // info 命令 - 查看方法信息（保留简单版本）
 program
   .command('info')

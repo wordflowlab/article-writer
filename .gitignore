@@ -54,6 +54,10 @@ _briefs/*
 _knowledge_base/*
 !_knowledge_base/.gitkeep
 
+# Runtime state (should not be committed)
+memory/*
+!memory/README.md
+
 # Keep directory structure examples
 !workspaces/**/.gitkeep
 

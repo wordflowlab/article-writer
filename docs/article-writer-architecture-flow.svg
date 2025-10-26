@@ -1,0 +1,380 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 2100" font-family="'PingFang SC', 'Microsoft YaHei', Arial, sans-serif">
+  <!-- 定义样式 -->
+  <defs>
+    <style>
+      .phase-box { fill: #E3F2FD; stroke: #1976D2; stroke-width: 3; }
+      .sub-box { fill: #FFF3E0; stroke: #F57C00; stroke-width: 2; }
+      .command-box { fill: #E8F5E9; stroke: #388E3C; stroke-width: 2; }
+      .code-box { fill: #F3E5F5; stroke: #7B1FA2; stroke-width: 2; }
+      .tracking-box { fill: #FCE4EC; stroke: #C2185B; stroke-width: 2; }
+      .knowledge-box { fill: #FFF9C4; stroke: #F9A825; stroke-width: 2; }
+      .workspace-box { fill: #E1F5FE; stroke: #0277BD; stroke-width: 2; }
+      .title { font-size: 22px; font-weight: bold; fill: #1565C0; }
+      .subtitle { font-size: 16px; font-weight: bold; fill: #E65100; }
+      .text { font-size: 13px; fill: #424242; }
+      .small-text { font-size: 11px; fill: #616161; }
+      .tiny-text { font-size: 9px; fill: #757575; }
+      .command { font-size: 13px; fill: #2E7D32; font-weight: bold; }
+      .arrow { stroke: #616161; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .dashed-arrow { stroke: #9E9E9E; stroke-width: 1.5; stroke-dasharray: 5,5; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#616161" />
+    </marker>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="800" y="40" text-anchor="middle" class="title" style="font-size: 32px;">Article Writer AI智能写作完整架构流程</text>
+  <text x="800" y="75" text-anchor="middle" class="text" style="font-size: 16px; fill: #666;">九步写作工作流 × 个人素材库 × 三遍审校机制 × 多工作区管理 × 反AI检测</text>
+
+  <!-- ==================== 第一行：九步写作流程（前5步） ==================== -->
+  
+  <!-- 第一步：保存需求 -->
+  <rect x="50" y="110" width="260" height="240" rx="10" class="phase-box"/>
+  <text x="180" y="135" text-anchor="middle" class="title">第一步：保存需求</text>
+  <text x="180" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">Brief管理</text>
+  
+  <rect x="65" y="170" width="230" height="65" rx="5" class="command-box"/>
+  <text x="180" y="190" text-anchor="middle" class="command">/brief-save</text>
+  <text x="75" y="207" class="small-text">• 理解写作需求并保存</text>
+  <text x="75" y="221" class="small-text">• 补充关键信息(字数/平台/风格)</text>
+  
+  <rect x="65" y="245" width="230" height="80" rx="5" class="sub-box"/>
+  <text x="180" y="263" text-anchor="middle" class="subtitle" style="font-size: 12px;">Brief标准格式</text>
+  <text x="75" y="278" class="tiny-text">• 主题/目标读者/字数要求</text>
+  <text x="75" y="290" class="tiny-text">• 发布平台/风格要求</text>
+  <text x="75" y="302" class="tiny-text">• 质量要求(AI检测&lt;30%)</text>
+  <text x="75" y="314" class="tiny-text">→ 保存到 _briefs/*.md</text>
+
+  <!-- 第二步：信息搜索 -->
+  <rect x="340" y="110" width="260" height="240" rx="10" class="phase-box"/>
+  <text x="470" y="135" text-anchor="middle" class="title">第二步：信息搜索</text>
+  <text x="470" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">知识库构建</text>
+  
+  <rect x="355" y="170" width="230" height="65" rx="5" class="command-box"/>
+  <text x="470" y="190" text-anchor="middle" class="command">/research ⭐</text>
+  <text x="365" y="207" class="small-text">• 多渠道信息搜索</text>
+  <text x="365" y="221" class="small-text">• 官方→媒体→社区优先级</text>
+  
+  <rect x="355" y="245" width="230" height="80" rx="5" class="sub-box"/>
+  <text x="470" y="263" text-anchor="middle" class="subtitle" style="font-size: 12px;">信息验证机制</text>
+  <text x="365" y="278" class="tiny-text">• 交叉验证(≥2个来源)</text>
+  <text x="365" y="290" class="tiny-text">• 时间戳管理</text>
+  <text x="365" y="302" class="tiny-text">• 可信度评分</text>
+  <text x="365" y="314" class="tiny-text">→ 保存到 _knowledge_base/*.md</text>
+
+  <!-- 第三步：选题讨论 -->
+  <rect x="630" y="110" width="260" height="240" rx="10" class="phase-box"/>
+  <text x="760" y="135" text-anchor="middle" class="title">第三步：选题讨论</text>
+  <text x="760" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">方向确认</text>
+  
+  <rect x="645" y="170" width="230" height="65" rx="5" class="command-box"/>
+  <text x="760" y="190" text-anchor="middle" class="command">/topic-discuss</text>
+  <text x="655" y="207" class="small-text">• 提供3-4个选题方向</text>
+  <text x="655" y="221" class="small-text">• 等待用户选择(不自动执行)</text>
+  
+  <rect x="645" y="245" width="230" height="80" rx="5" class="sub-box"/>
+  <text x="760" y="263" text-anchor="middle" class="subtitle" style="font-size: 12px;">选题包含</text>
+  <text x="655" y="278" class="tiny-text">• 吸引人的标题+核心角度</text>
+  <text x="655" y="290" class="tiny-text">• 大纲预览+字数分配</text>
+  <text x="655" y="302" class="tiny-text">• 工作量评估(⭐1-5)</text>
+  <text x="655" y="314" class="tiny-text">• 优势与挑战分析</text>
+
+  <!-- 第四步：素材搜索 -->
+  <rect x="920" y="110" width="280" height="240" rx="10" class="phase-box"/>
+  <text x="1060" y="135" text-anchor="middle" class="title">第四步：素材搜索 ⭐⭐</text>
+  <text x="1060" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">真实素材融入</text>
+  
+  <rect x="935" y="170" width="250" height="65" rx="5" class="command-box"/>
+  <text x="1060" y="190" text-anchor="middle" class="command">/materials-search</text>
+  <text x="945" y="207" class="small-text">• 从即刻/微博CSV搜索关键词(Grep)</text>
+  <text x="945" y="221" class="small-text">• 读取主题索引(indexed/*.md)</text>
+  
+  <rect x="935" y="245" width="250" height="80" rx="5" class="sub-box"/>
+  <text x="1060" y="263" text-anchor="middle" class="subtitle" style="font-size: 12px;">核心价值 ⭐</text>
+  <text x="945" y="278" class="tiny-text" style="fill: #F57C00;">✓ 用真实经历替代AI编造</text>
+  <text x="945" y="290" class="tiny-text" style="fill: #F57C00;">✓ 改写融入(禁止直接复制)</text>
+  <text x="945" y="302" class="tiny-text">• 展示素材+使用场景建议</text>
+  <text x="945" y="314" class="tiny-text">• 每篇文章最多3-5条素材</text>
+
+  <!-- 第五步：撰写初稿 -->
+  <rect x="1230" y="110" width="270" height="240" rx="10" class="phase-box"/>
+  <text x="1365" y="135" text-anchor="middle" class="title">第五步：撰写初稿</text>
+  <text x="1365" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">基于素材创作</text>
+  
+  <rect x="1245" y="170" width="240" height="65" rx="5" class="command-box"/>
+  <text x="1365" y="190" text-anchor="middle" class="command">/write-draft</text>
+  <text x="1255" y="207" class="small-text">• 加载全部上下文</text>
+  <text x="1255" y="221" class="small-text">• 符合anti-ai-detection规范</text>
+  
+  <rect x="1245" y="245" width="240" height="80" rx="5" class="sub-box"/>
+  <text x="1365" y="263" text-anchor="middle" class="subtitle" style="font-size: 12px;">查询顺序</text>
+  <text x="1255" y="278" class="tiny-text">1. constitution.md(写作原则)</text>
+  <text x="1255" y="290" class="tiny-text">2. brief + knowledge_base</text>
+  <text x="1255" y="302" class="tiny-text">3. materials(真实素材)</text>
+  <text x="1255" y="314" class="tiny-text">→ 输出 articles/*/draft.md</text>
+
+  <!-- ==================== 第二行：三遍审校机制 ==================== -->
+  
+  <!-- 第六步：内容审校 -->
+  <rect x="50" y="390" width="340" height="280" rx="10" class="tracking-box"/>
+  <text x="220" y="420" text-anchor="middle" class="title" style="fill: #C2185B;">第六步：内容审校(第一遍)</text>
+  
+  <rect x="70" y="440" width="300" height="60" rx="5" class="command-box"/>
+  <text x="220" y="460" text-anchor="middle" class="command">/audit content</text>
+  <text x="80" y="477" class="small-text">事实准确、逻辑清晰、结构合理</text>
+  
+  <rect x="70" y="510" width="300" height="135" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
+  <text x="80" y="530" class="small-text" font-weight="bold">检查清单：</text>
+  <text x="90" y="545" class="tiny-text">✓ 事实准确性(数据/时间/产品名称)</text>
+  <text x="90" y="558" class="tiny-text">✓ 逻辑一致性(论点论据对应)</text>
+  <text x="90" y="571" class="tiny-text">✓ 结构合理性(开头hook+论证+结尾)</text>
+  <text x="90" y="584" class="tiny-text">✓ 真实性验证(标记AI编造内容)</text>
+  <text x="90" y="597" class="tiny-text">✓ 来源溯源(检查knowledge_base)</text>
+  
+  <text x="80" y="617" class="small-text" font-weight="bold">输出：</text>
+  <text x="90" y="632" class="tiny-text">• 问题定位【位置+问题+建议+来源】</text>
+
+  <!-- 第七步：风格审校（核心） -->
+  <rect x="420" y="390" width="420" height="280" rx="10" class="tracking-box"/>
+  <text x="630" y="420" text-anchor="middle" class="title" style="fill: #C2185B;">第七步：风格审校(第二遍) ⭐⭐⭐</text>
+  <text x="630" y="440" text-anchor="middle" class="subtitle" style="font-size: 13px; fill: #C2185B;">降AI味核心机制</text>
+  
+  <rect x="440" y="455" width="380" height="60" rx="5" class="command-box"/>
+  <text x="630" y="475" text-anchor="middle" class="command">/audit style</text>
+  <text x="450" y="492" class="small-text">删除AI痕迹，增加真实感和个性化</text>
+  
+  <rect x="440" y="525" width="380" height="120" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
+  <text x="450" y="545" class="small-text" font-weight="bold">六大改造策略：</text>
+  <text x="460" y="560" class="tiny-text" style="fill: #F57C00;">1. 删除AI套话("在当今时代"、"综上所述"等)</text>
+  <text x="460" y="573" class="tiny-text" style="fill: #F57C00;">2. 拆解AI句式("不仅...而且..."、长排比句)</text>
+  <text x="460" y="586" class="tiny-text">3. 替换书面词汇("显著提升"→具体数字)</text>
+  <text x="460" y="599" class="tiny-text">4. 口语化改造(长句拆短、加口语词)</text>
+  <text x="460" y="612" class="tiny-text">5. 加入真实细节(抽象→具体场景)</text>
+  <text x="460" y="625" class="tiny-text">6. 增强个性化(从personal-voice.md提取)</text>
+  
+  <text x="630" y="657" text-anchor="middle" class="small-text" style="fill: #D32F2F; font-weight: bold;">目标：AI检测率从80% → 小于30%</text>
+
+  <!-- 第八步：细节打磨 -->
+  <rect x="870" y="390" width="340" height="280" rx="10" class="tracking-box"/>
+  <text x="1040" y="420" text-anchor="middle" class="title" style="fill: #C2185B;">第八步：细节打磨(第三遍)</text>
+  
+  <rect x="890" y="440" width="300" height="60" rx="5" class="command-box"/>
+  <text x="1040" y="460" text-anchor="middle" class="command">/audit detail</text>
+  <text x="900" y="477" class="small-text">标点、排版、节奏优化</text>
+  
+  <rect x="890" y="510" width="300" height="135" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
+  <text x="900" y="530" class="small-text" font-weight="bold">检查清单：</text>
+  <text x="910" y="545" class="tiny-text">✓ 句子长度控制(标记&gt;30字长句)</text>
+  <text x="910" y="558" class="tiny-text">✓ 段落长度优化(手机阅读3-5行)</text>
+  <text x="910" y="571" class="tiny-text">✓ 标点自然化(减少逗号连接)</text>
+  <text x="910" y="584" class="tiny-text">✓ 节奏变化(长短句搭配)</text>
+  <text x="910" y="597" class="tiny-text">✓ 避免超过100字的段落</text>
+  
+  <text x="900" y="617" class="small-text" font-weight="bold">输出：</text>
+  <text x="910" y="632" class="tiny-text">• 长度统计+拆分建议+节奏优化</text>
+
+  <!-- 第九步：配图与发布 -->
+  <rect x="1240" y="390" width="270" height="280" rx="10" class="phase-box"/>
+  <text x="1375" y="420" text-anchor="middle" class="title">第九步：配图与发布</text>
+  
+  <rect x="1255" y="440" width="240" height="60" rx="5" class="command-box"/>
+  <text x="1375" y="460" text-anchor="middle" class="command">/images</text>
+  <text x="1265" y="477" class="small-text">• 分析配图需求(5-8张)</text>
+  
+  <rect x="1255" y="510" width="240" height="70" rx="5" class="sub-box"/>
+  <text x="1375" y="530" text-anchor="middle" class="subtitle" style="font-size: 12px;">配图类型</text>
+  <text x="1265" y="547" class="tiny-text">• 产品界面截图(3-4张)</text>
+  <text x="1265" y="560" class="tiny-text">• 对比图表(1-2张)</text>
+  <text x="1265" y="573" class="tiny-text">• 使用场景示意图(1-2张)</text>
+  
+  <rect x="1255" y="590" width="240" height="55" rx="5" class="command-box"/>
+  <text x="1375" y="610" text-anchor="middle" class="command">/final-check</text>
+  <text x="1265" y="627" class="small-text">• 发布前最后检查</text>
+  <text x="1375" y="645" text-anchor="middle" class="small-text" style="fill: #4CAF50;">✅ 准备发布 final.md</text>
+
+  <!-- ==================== 第三行：个人素材库系统 ==================== -->
+  
+  <!-- 个人素材库 -->
+  <rect x="50" y="720" width="480" height="280" rx="10" class="knowledge-box"/>
+  <text x="290" y="750" text-anchor="middle" class="title" style="fill: #F57F17;">个人素材库系统 ⭐ 核心创新</text>
+  
+  <rect x="70" y="770" width="440" height="210" rx="5" style="fill: white; stroke: #F9A825; stroke-width: 1.5;"/>
+  <text x="80" y="792" class="small-text" font-weight="bold">materials/ 目录结构：</text>
+  
+  <text x="90" y="810" class="tiny-text">1. raw/ - 原始数据(不可编辑)</text>
+  <text x="100" y="824" class="tiny-text" style="font-size: 8px;">• jike-all.csv(即刻动态导出)</text>
+  <text x="100" y="836" class="tiny-text" style="font-size: 8px;">• weibo-posts.json(微博导出)</text>
+  <text x="100" y="848" class="tiny-text" style="font-size: 8px;">→ 使用Grep工具搜索关键词</text>
+  
+  <text x="90" y="868" class="tiny-text">2. indexed/ - 主题索引(手动整理)</text>
+  <text x="100" y="882" class="tiny-text" style="font-size: 8px;">• ai-tools.md(AI工具相关素材)</text>
+  <text x="100" y="894" class="tiny-text" style="font-size: 8px;">• product-dev.md(产品开发经验)</text>
+  <text x="100" y="906" class="tiny-text" style="font-size: 8px;">• personal-views.md(个人观点库)</text>
+  <text x="100" y="918" class="tiny-text" style="font-size: 8px;">→ 直接读取相关章节</text>
+  
+  <text x="90" y="938" class="tiny-text">3. archive/ - 历史文章存档</text>
+  <text x="100" y="952" class="tiny-text" style="font-size: 8px;">• 按年/月组织的已发布文章</text>
+  
+  <text x="290" y="975" text-anchor="middle" class="small-text" style="fill: #F57F17; font-weight: bold;">核心价值：真实性 × 个性化 × 降AI味</text>
+
+  <!-- 知识管理系统 -->
+  <rect x="560" y="720" width="480" height="280" rx="10" class="knowledge-box"/>
+  <text x="800" y="750" text-anchor="middle" class="title" style="fill: #F57F17;">知识管理系统</text>
+  
+  <rect x="580" y="770" width="440" height="210" rx="5" style="fill: white; stroke: #F9A825; stroke-width: 1.5;"/>
+  <text x="590" y="792" class="small-text" font-weight="bold">_knowledge_base/ - 调研结果</text>
+  <text x="600" y="810" class="tiny-text">• 主题-YYYY-MM-DD.md</text>
+  <text x="600" y="824" class="tiny-text">• 包含：元信息/核心信息/竞品对比/用户评价</text>
+  <text x="600" y="838" class="tiny-text">• 信息源优先级：官方&gt;媒体&gt;社区</text>
+  <text x="600" y="852" class="tiny-text">• 交叉验证(≥2个来源)</text>
+  
+  <text x="590" y="872" class="small-text" font-weight="bold">_briefs/ - 写作需求</text>
+  <text x="600" y="888" class="tiny-text">• 项目编号-主题-brief.md</text>
+  <text x="600" y="902" class="tiny-text">• 标准格式：主题/读者/字数/平台/风格/质量</text>
+  
+  <text x="590" y="922" class="small-text" font-weight="bold">memory/ - 写作记忆</text>
+  <text x="600" y="938" class="tiny-text">• constitution.md(写作原则)</text>
+  <text x="600" y="952" class="tiny-text">• personal-voice.md(个人语料/语言习惯)</text>
+  <text x="600" y="966" class="tiny-text">• style-reference.md(风格参考)</text>
+
+  <!-- 工作区系统 -->
+  <rect x="1070" y="720" width="480" height="280" rx="10" class="workspace-box"/>
+  <text x="1310" y="750" text-anchor="middle" class="title" style="fill: #0277BD;">多工作区管理系统</text>
+  
+  <rect x="1090" y="770" width="440" height="210" rx="5" style="fill: white; stroke: #0277BD; stroke-width: 1.5;"/>
+  <text x="1100" y="792" class="small-text" font-weight="bold">workspaces/ 三种工作区：</text>
+  
+  <text x="1110" y="810" class="tiny-text" font-weight="bold">1. wechat/ - 公众号工作区 ⭐</text>
+  <text x="1120" y="824" class="tiny-text" style="font-size: 8px;">• AI味&lt;30%，段落&lt;150字</text>
+  <text x="1120" y="836" class="tiny-text" style="font-size: 8px;">• 敏感词检测</text>
+  <text x="1120" y="848" class="tiny-text" style="font-size: 8px;">• 配图建议(900×500px)</text>
+  
+  <text x="1110" y="868" class="tiny-text" font-weight="bold">2. video/ - 视频脚本工作区</text>
+  <text x="1120" y="882" class="tiny-text" style="font-size: 8px;">• AI味&lt;20%，高度口语化</text>
+  <text x="1120" y="894" class="tiny-text" style="font-size: 8px;">• 时长计算(1分钟≈150-180字)</text>
+  <text x="1120" y="906" class="tiny-text" style="font-size: 8px;">• Hook设计(前3秒抓人)</text>
+  <text x="1120" y="918" class="tiny-text" style="font-size: 8px;">• 分镜标注格式</text>
+  
+  <text x="1110" y="938" class="tiny-text" font-weight="bold">3. general/ - 通用内容工作区</text>
+  <text x="1120" y="952" class="tiny-text" style="font-size: 8px;">• 灵活配置、SEO优化</text>
+  <text x="1120" y="964" class="tiny-text" style="font-size: 8px;">• 适用：博客/知乎/Medium</text>
+
+  <!-- ==================== 第四行：两层判断系统与插件系统 ==================== -->
+  
+  <!-- 两层判断系统 -->
+  <rect x="50" y="1050" width="500" height="260" rx="10" class="phase-box"/>
+  <text x="300" y="1080" text-anchor="middle" class="title" style="font-size: 20px;">两层判断系统 ⭐ 智能路由</text>
+  
+  <rect x="70" y="1100" width="460" height="190" rx="5" class="sub-box"/>
+  <text x="300" y="1120" text-anchor="middle" class="subtitle" style="font-size: 13px;">第一层：工作区判断(根目录CLAUDE.md)</text>
+  <text x="80" y="1137" class="small-text">• 检测当前目录位置(pwd命令)</text>
+  <text x="80" y="1152" class="small-text">• 判断是否在workspaces/wechat|video|general/</text>
+  <text x="80" y="1167" class="small-text">• 加载对应工作区的CLAUDE.md配置</text>
+  
+  <text x="300" y="1189" text-anchor="middle" class="subtitle" style="font-size: 13px;">第二层：任务类型识别(工作区CLAUDE.md)</text>
+  <text x="80" y="1206" class="small-text">A. 新写作任务(有完整brief) → 完整9步流程</text>
+  <text x="80" y="1221" class="small-text">B. 新写作任务(无brief) → 先补充brief</text>
+  <text x="80" y="1236" class="small-text">C. 修改已有文章 → 简化流程</text>
+  <text x="80" y="1251" class="small-text">D. 文章审校/降AI味 → 跳转/audit命令</text>
+  <text x="80" y="1266" class="small-text">E. 快速咨询 → 直接回答(不创建文件)</text>
+
+  <!-- 插件系统 -->
+  <rect x="580" y="1050" width="460" height="260" rx="10" class="phase-box"/>
+  <text x="810" y="1080" text-anchor="middle" class="title" style="font-size: 20px;">插件系统</text>
+  
+  <rect x="600" y="1100" width="420" height="190" rx="5" class="sub-box"/>
+  <text x="810" y="1120" text-anchor="middle" class="subtitle" style="font-size: 13px;">核心插件</text>
+  
+  <text x="610" y="1140" class="small-text" font-weight="bold">1. materials-manager - 素材库管理</text>
+  <text x="620" y="1155" class="tiny-text">• 导入社交媒体数据(即刻/微博/Twitter)</text>
+  <text x="620" y="1168" class="tiny-text">• CSV/JSON/Markdown格式支持</text>
+  <text x="620" y="1181" class="tiny-text">• 自动分类索引到indexed/</text>
+  
+  <text x="610" y="1201" class="small-text" font-weight="bold">2. ai-detector - AI味自检</text>
+  <text x="620" y="1216" class="tiny-text">• 利用AI自身能力检测AI生成痕迹</text>
+  <text x="620" y="1229" class="tiny-text">• 检测维度：词汇/结构/情感/口语化</text>
+  <text x="620" y="1242" class="tiny-text">• /audit style自动调用</text>
+  
+  <text x="610" y="1262" class="small-text" font-weight="bold">3. image-generator - 配图生成(可选)</text>
+  <text x="620" y="1277" class="tiny-text">• 集成火山引擎图片生成API</text>
+
+  <!-- 反AI检测规范 -->
+  <rect x="1070" y="1050" width="480" height="260" rx="10" class="tracking-box"/>
+  <text x="1310" y="1080" text-anchor="middle" class="title" style="fill: #C2185B; font-size: 20px;">反AI检测规范库</text>
+  
+  <rect x="1090" y="1100" width="440" height="190" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
+  <text x="1100" y="1122" class="small-text" font-weight="bold">spec/presets/anti-ai-detection/</text>
+  
+  <text x="1110" y="1142" class="tiny-text" font-weight="bold">1. 套话库(8大类)</text>
+  <text x="1120" y="1157" class="tiny-text" style="font-size: 8px;">"在当今时代"、"综上所述"、"值得注意的是"...</text>
+  
+  <text x="1110" y="1175" class="tiny-text" font-weight="bold">2. AI句式识别规则</text>
+  <text x="1120" y="1190" class="tiny-text" style="font-size: 8px;">"不仅...而且..."、"不是...而是..."、长排比句...</text>
+  
+  <text x="1110" y="1208" class="tiny-text" font-weight="bold">3. 书面词汇替换库(200+)</text>
+  <text x="1120" y="1223" class="tiny-text" style="font-size: 8px;">"显著提升"→具体数字、"充分利用"→"用好"...</text>
+  
+  <text x="1110" y="1241" class="tiny-text" font-weight="bold">4. 审核配置(audit-config.json)</text>
+  <text x="1120" y="1256" class="tiny-text" style="font-size: 8px;">连接词/空话/陈词滥调/句长控制...</text>
+  
+  <text x="1310" y="1285" text-anchor="middle" class="small-text" style="fill: #C2185B; font-weight: bold;">自动被/audit命令引用</text>
+
+  <!-- ==================== 箭头连接 ==================== -->
+  
+  <!-- 主流程箭头（第一行） -->
+  <path d="M 310 230 L 340 230" class="arrow"/>
+  <path d="M 600 230 L 630 230" class="arrow"/>
+  <path d="M 890 230 L 920 230" class="arrow"/>
+  <path d="M 1200 230 L 1230 230" class="arrow"/>
+  
+  <!-- 第一行到第二行的箭头 -->
+  <path d="M 1365 350 L 1365 370 Q 1365 390 1330 390" class="arrow"/>
+  
+  <!-- 第二行审校流程箭头 -->
+  <path d="M 390 530 L 420 530" class="arrow"/>
+  <path d="M 840 530 L 870 530" class="arrow"/>
+  <path d="M 1210 530 L 1240 530" class="arrow"/>
+  
+  <!-- 素材库到write-draft的虚线箭头 -->
+  <path d="M 290 720 Q 780 650 1365 350" class="dashed-arrow"/>
+  <text x="780" y="650" text-anchor="middle" class="tiny-text" style="fill: #9E9E9E;">真实素材融入</text>
+  
+  <!-- 知识库到research的虚线箭头 -->
+  <path d="M 800 770 Q 635 450 470 350" class="dashed-arrow"/>
+  
+  <!-- 工作区系统到根目录的虚线箭头 -->
+  <path d="M 1310 1000 Q 1310 1025 300 1050" class="dashed-arrow"/>
+  
+  <!-- 审校规范到audit的虚线箭头 -->
+  <path d="M 1310 1100 Q 980 900 630 670" class="dashed-arrow"/>
+  
+  <!-- 循环箭头（发现问题，返回调整） -->
+  <path d="M 1500 530 Q 1630 680 1630 900 Q 1630 1300 800 1400 Q 100 1400 100 900 Q 100 400 180 270" class="dashed-arrow"/>
+  <text x="1100" y="1380" text-anchor="middle" class="small-text" style="fill: #9E9E9E;">发现问题，基于反馈重新调整优化</text>
+  
+  <!-- 继续写作箭头 -->
+  <path d="M 1500 450 Q 1580 450 1580 560 Q 1580 650 1500 650" class="dashed-arrow"/>
+  <text x="1640" y="550" class="small-text" style="fill: #9E9E9E;">继续下一篇</text>
+
+  <!-- ==================== 底部说明 ==================== -->
+  
+  <rect x="50" y="1360" width="1500" height="330" rx="10" style="fill: #FFFDE7; stroke: #F9A825; stroke-width: 2;"/>
+  <text x="800" y="1395" text-anchor="middle" class="title" style="fill: #F57F17;">核心设计原则与价值总结</text>
+  
+  <text x="80" y="1430" class="text" font-weight="bold" style="fill: #E65100;">✅ 四大核心原则：</text>
+  <text x="100" y="1448" class="small-text">1. 真实性优先：基于个人素材库(即刻/微博动态)，用真实经历替代AI编造，增强可信度和个性化</text>
+  <text x="100" y="1464" class="small-text">2. 系统化降AI味：三遍审校机制(内容→风格→细节)，目标AI检测率小于30%，有明确的检查清单和对比输出</text>
+  <text x="100" y="1480" class="small-text">3. 智能流程引导：两层判断系统(工作区+任务类型)，AI不瞎猜，流程可预测，避免方向错误</text>
+  <text x="100" y="1496" class="small-text">4. 多工作区适配：公众号/视频/通用三种工作区，自动应用对应规则(字数/段落/AI味标准/敏感词检测)</text>
+  
+  <text x="80" y="1528" class="text" font-weight="bold" style="fill: #1565C0;">⭐ 九步写作流程：</text>
+  <text x="100" y="1546" class="small-text">brief-save(保存需求) → research(信息搜索) → topic-discuss(选题讨论) → materials-search(素材搜索) ⭐</text>
+  <text x="100" y="1562" class="small-text">→ write-draft(撰写初稿) → audit content(内容审校) → audit style(风格审校-降AI味核心) ⭐⭐⭐ → audit detail(细节打磨)</text>
+  <text x="100" y="1578" class="small-text">→ images+final-check(配图与发布)</text>
+  
+  <text x="80" y="1610" class="text" font-weight="bold" style="fill: #2E7D32;">🎯 核心创新点：</text>
+  <text x="100" y="1628" class="small-text">• 个人素材库系统：导入即刻/微博CSV，Grep搜索真实经历，改写融入文章(禁止直接复制)，真实性×个性化×降AI味</text>
+  <text x="100" y="1644" class="small-text">• 三遍审校机制：内容(事实逻辑)→风格(删套话/改句式/加真实细节)→细节(标点排版节奏)，系统化降低AI检测率至30%以下</text>
+  <text x="100" y="1660" class="small-text">• 选题讨论机制：AI提供3-4个方向(标题/角度/大纲/工作量评估)，等待用户选择，避免方向错误，增强协作感和掌控感</text>
+</svg>
