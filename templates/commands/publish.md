@@ -1,27 +1,34 @@
 ---
-description: 准备发布(生成各平台格式)
+description: 准备发布(生成各平台格式,自动生成微信富文本)
 argument-hint: [平台] [项目路径] - 平台: wechat|zhihu|all
-allowed-tools: Read(//workspaces/**/draft.md), Write(//workspaces/**/publish/**)
+allowed-tools: Read(//workspaces/**/draft.md, //.content/config.json), Write(//workspaces/**/publish/**), Bash({SCRIPT})
+scripts:
+  - name: format-wechat
+    path: {SCRIPT}
 ---
 
 # 发布准备
 
 ## 功能说明
 
-将文章转换为各平台所需格式,生成发布文件。
+将文章转换为各平台所需格式,自动生成微信公众号富文本 HTML。
 
 ---
 
 ## 支持平台
 
-### 1. 公众号 (WeChat)
+### 1. 公众号 (WeChat) ⭐️ 自动格式化
 
-**格式要求:**
-- Markdown格式(135编辑器/秀米转换)
-- 图片外链或本地上传
-- 特殊样式代码
+**自动生成:**
+- ✅ 微信富文本 HTML (可直接复制到公众号后台)
+- ✅ 应用配置的主题样式
+- ✅ 代码高亮
+- ✅ 图片样式优化
+- ✅ HTML 预览文件
 
-**输出文件**: `publish/wechat.md`
+**输出文件**:
+- `publish/wechat.html` - 可在浏览器预览的完整 HTML
+- `publish/wechat.md` - Markdown 原文(备份)
 
 ### 2. 知乎 (Zhihu)
 
@@ -122,30 +129,107 @@ workspaces/wechat/articles/001-claude-code-评测/
 
 ---
 
+## 执行流程
+
+### 第 1 步: 定位文章文件
+
+1. 在当前工作区目录下查找 `draft.md` 或最新的文章文件
+2. 确认文章路径,例如: `workspaces/wechat/articles/my-article/draft.md`
+
+### 第 2 步: 创建发布目录
+
+```bash
+mkdir -p workspaces/wechat/articles/my-article/publish
+```
+
+### 第 3 步: 生成微信格式化 HTML
+
+调用格式化脚本:
+
+```bash
+bash .content/scripts/bash/format-wechat.sh \
+  workspaces/wechat/articles/my-article/draft.md \
+  workspaces/wechat/articles/my-article/publish/wechat.html
+```
+
+**配置说明**:
+
+格式化会自动读取 `.content/config.json` 中的 `formatting` 配置:
+
+```json
+{
+  "formatting": {
+    "theme": "default",              // 主题: default | grace | simple
+    "primaryColor": "#3f51b5",       // 主题色
+    "fontSize": "16px",              // 字体大小
+    "isUseIndent": false,            // 首行缩进
+    "isUseJustify": false,           // 两端对齐
+    "isShowLineNumber": false,       // 代码行号
+    "citeStatus": true,              // 脚注
+    "autoPreview": false             // 自动打开浏览器预览
+  }
+}
+```
+
+### 第 4 步: 生成其他平台格式(可选)
+
+- 知乎格式: 直接复制 Markdown 原文
+- 其他平台: 根据需要调整
+
+### 第 5 步: 生成元信息
+
+创建 `metadata.json`:
+
+```json
+{
+  "title": "文章标题(从draft.md提取)",
+  "author": "用户名",
+  "date": "2025-01-26",
+  "wordCount": 3005,
+  "readTime": "8分钟",
+  "platforms": ["wechat", "zhihu"]
+}
+```
+
+---
+
 ## 输出示例
 
 ```
 ✅ 发布文件已生成！
 
-📦 输出目录: workspaces/wechat/articles/001-*/publish/
+📦 输出目录: workspaces/wechat/articles/my-article/publish/
 
 📄 生成文件:
-- wechat.md (公众号格式, 3005字)
-- zhihu.md (知乎格式, 3005字)
+- wechat.html (微信富文本预览, 可在浏览器打开)
+- wechat.md (Markdown原文备份)
+- zhihu.md (知乎格式)
 - metadata.json (元信息)
-- images/ (4张图片)
+
+🎨 格式化配置:
+- 主题: default
+- 主题色: #3f51b5
+- 字体: 16px
 
 📋 元信息:
 - 标题: Claude Code vs Cursor: 5个真实场景深度对比
-- 标签: AI编程, Claude Code, Cursor, 工具评测
+- 字数: 3005字
 - 预计阅读时间: 8分钟
 
 💡 下一步:
-1. 复制对应平台的.md文件内容
-2. 在平台编辑器中粘贴
-3. 上传图片(如需)
-4. 预览检查
+
+**微信公众号发布**:
+1. 在浏览器中打开 `publish/wechat.html` 查看效果
+2. 在 HTML 页面中全选(Cmd/Ctrl+A)并复制
+3. 粘贴到微信公众号编辑器
+4. 检查格式和图片
 5. 发布!
+
+**知乎发布**:
+1. 复制 `publish/zhihu.md` 内容
+2. 粘贴到知乎编辑器
+3. 上传图片
+4. 发布!
 
 🎉 恭喜完成整个写作流程！
 ```

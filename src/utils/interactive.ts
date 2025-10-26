@@ -123,6 +123,90 @@ export function displayStep(step: number, total: number, message: string): void 
 }
 
 /**
+ * Select formatting theme interactively (for wechat workspace)
+ */
+export async function selectFormattingTheme(): Promise<{
+  theme: string;
+  primaryColor: string;
+}> {
+  const themeChoices = [
+    {
+      name: `${chalk.cyan('default'.padEnd(12))} ${chalk.dim('(经典样式 - 适合大多数场景)')}`,
+      value: 'default',
+      short: 'default'
+    },
+    {
+      name: `${chalk.cyan('grace'.padEnd(12))} ${chalk.dim('(优雅样式 - 圆角阴影效果)')}`,
+      value: 'grace',
+      short: 'grace'
+    },
+    {
+      name: `${chalk.cyan('simple'.padEnd(12))} ${chalk.dim('(简洁样式 - 扁平化设计)')}`,
+      value: 'simple',
+      short: 'simple'
+    }
+  ];
+
+  const themeAnswer = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'theme',
+      message: chalk.bold('选择微信文章主题:'),
+      choices: themeChoices,
+      default: 'default'
+    }
+  ]);
+
+  const colorChoices = [
+    {
+      name: `${chalk.hex('#3f51b5')('■')} 靛蓝 (默认)`,
+      value: '#3f51b5',
+      short: '靛蓝'
+    },
+    {
+      name: `${chalk.hex('#1976d2')('■')} 蓝色`,
+      value: '#1976d2',
+      short: '蓝色'
+    },
+    {
+      name: `${chalk.hex('#388e3c')('■')} 绿色`,
+      value: '#388e3c',
+      short: '绿色'
+    },
+    {
+      name: `${chalk.hex('#d32f2f')('■')} 红色`,
+      value: '#d32f2f',
+      short: '红色'
+    },
+    {
+      name: `${chalk.hex('#f57c00')('■')} 橙色`,
+      value: '#f57c00',
+      short: '橙色'
+    },
+    {
+      name: `${chalk.hex('#000000')('■')} 黑色`,
+      value: '#000000',
+      short: '黑色'
+    }
+  ];
+
+  const colorAnswer = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'color',
+      message: chalk.bold('选择主题色:'),
+      choices: colorChoices,
+      default: '#3f51b5'
+    }
+  ]);
+
+  return {
+    theme: themeAnswer.theme,
+    primaryColor: colorAnswer.color
+  };
+}
+
+/**
  * Check if running in interactive terminal
  */
 export function isInteractive(): boolean {

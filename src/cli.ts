@@ -15,6 +15,7 @@ import {
   selectAIAssistant,
   selectWorkspace,
   selectScriptType,
+  selectFormattingTheme,
   displayStep,
   isInteractive
 } from './utils/interactive.js';
@@ -153,6 +154,16 @@ program
     if (!options.ai) options.ai = 'claude';
     if (!options.workspace) options.workspace = 'wechat';
 
+    // 如果是 wechat 工作区,询问格式化主题
+    let formattingTheme = { theme: 'default', primaryColor: '#3f51b5' };
+    if (shouldShowInteractive && options.workspace === 'wechat') {
+      console.log('');
+      console.log(chalk.cyan('📝 微信文章格式化配置'));
+      console.log('');
+      formattingTheme = await selectFormattingTheme();
+      console.log('');
+    }
+
     const spinner = ora('正在初始化文章项目...').start();
 
     try {
@@ -276,7 +287,18 @@ program
         ai: options.ai,
         workspace: options.workspace || 'wechat',
         created: new Date().toISOString(),
-        version: getVersion()
+        version: getVersion(),
+        formatting: {
+          theme: formattingTheme.theme,
+          primaryColor: formattingTheme.primaryColor,
+          fontSize: '16px',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          isUseIndent: false,
+          isUseJustify: false,
+          isShowLineNumber: false,
+          citeStatus: true,
+          autoPreview: false
+        }
       };
 
       await fs.writeJson(path.join(projectPath, '.content', 'config.json'), config, { spaces: 2 });
