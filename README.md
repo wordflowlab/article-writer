@@ -71,6 +71,8 @@ content init my-article --ai cursor    # Cursor
 9. /publish        → 发布指南
 ```
 
+> 📊 **[完整架构流程图](docs/article-writer-architecture-flow.svg)** - 查看九步写作流程、素材库系统、三遍审校机制、工作区管理等完整架构
+
 ### 🕷️ 文档爬虫增强 (v0.5.0 新增)
 
 `/research` 命令现在支持自动爬取完整文档站：

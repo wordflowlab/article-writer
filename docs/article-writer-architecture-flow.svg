@@ -174,24 +174,27 @@
   <text x="900" y="617" class="small-text" font-weight="bold">输出：</text>
   <text x="910" y="632" class="tiny-text">• 长度统计+拆分建议+节奏优化</text>
 
-  <!-- 第九步：配图与发布 -->
+  <!-- 第九步：配图、检查与发布 -->
   <rect x="1240" y="390" width="270" height="280" rx="10" class="phase-box"/>
-  <text x="1375" y="420" text-anchor="middle" class="title">第九步：配图与发布</text>
-  
-  <rect x="1255" y="440" width="240" height="60" rx="5" class="command-box"/>
+  <text x="1375" y="420" text-anchor="middle" class="title">第九步：配图、检查与发布</text>
+
+  <rect x="1255" y="440" width="240" height="50" rx="5" class="command-box"/>
   <text x="1375" y="460" text-anchor="middle" class="command">/images</text>
-  <text x="1265" y="477" class="small-text">• 分析配图需求(5-8张)</text>
-  
-  <rect x="1255" y="510" width="240" height="70" rx="5" class="sub-box"/>
-  <text x="1375" y="530" text-anchor="middle" class="subtitle" style="font-size: 12px;">配图类型</text>
-  <text x="1265" y="547" class="tiny-text">• 产品界面截图(3-4张)</text>
-  <text x="1265" y="560" class="tiny-text">• 对比图表(1-2张)</text>
-  <text x="1265" y="573" class="tiny-text">• 使用场景示意图(1-2张)</text>
-  
-  <rect x="1255" y="590" width="240" height="55" rx="5" class="command-box"/>
-  <text x="1375" y="610" text-anchor="middle" class="command">/check</text>
-  <text x="1265" y="627" class="small-text">• 发布前最后检查</text>
-  <text x="1375" y="645" text-anchor="middle" class="small-text" style="fill: #4CAF50;">✅ 准备发布 final.md</text>
+  <text x="1265" y="475" class="small-text">• 分析配图需求(5-8张)</text>
+
+  <rect x="1255" y="500" width="240" height="60" rx="5" class="sub-box"/>
+  <text x="1375" y="518" text-anchor="middle" class="subtitle" style="font-size: 11px;">配图类型</text>
+  <text x="1265" y="533" class="tiny-text">• 产品界面截图(3-4张)</text>
+  <text x="1265" y="545" class="tiny-text">• 对比图表(1-2张)</text>
+  <text x="1265" y="557" class="tiny-text">• 使用场景示意图(1-2张)</text>
+
+  <rect x="1255" y="570" width="240" height="45" rx="5" class="command-box"/>
+  <text x="1375" y="590" text-anchor="middle" class="command">/check</text>
+  <text x="1265" y="605" class="small-text">• 发布前最后检查</text>
+
+  <rect x="1255" y="625" width="240" height="45" rx="5" class="command-box"/>
+  <text x="1375" y="645" text-anchor="middle" class="command">/publish</text>
+  <text x="1375" y="660" text-anchor="middle" class="small-text" style="fill: #4CAF50;">✅ 发布指南</text>
 
   <!-- ==================== 第三行：个人素材库系统 ==================== -->
   
@@ -260,24 +263,24 @@
   <text x="1120" y="952" class="tiny-text" style="font-size: 8px;">• 灵活配置、SEO优化</text>
   <text x="1120" y="964" class="tiny-text" style="font-size: 8px;">• 适用：博客/知乎/Medium</text>
 
-  <!-- ==================== 第四行：两层判断系统与插件系统 ==================== -->
+  <!-- ==================== 第四行：工作区配置系统与插件系统 ==================== -->
   
-  <!-- 两层判断系统 -->
+  <!-- 工作区配置系统 -->
   <rect x="50" y="1050" width="500" height="260" rx="10" class="phase-box"/>
-  <text x="300" y="1080" text-anchor="middle" class="title" style="font-size: 20px;">两层判断系统 ⭐ 智能路由</text>
-  
+  <text x="300" y="1080" text-anchor="middle" class="title" style="font-size: 20px;">工作区配置系统 ⭐ 智能适配</text>
+
   <rect x="70" y="1100" width="460" height="190" rx="5" class="sub-box"/>
-  <text x="300" y="1120" text-anchor="middle" class="subtitle" style="font-size: 13px;">第一层：工作区判断(根目录CLAUDE.md)</text>
-  <text x="80" y="1137" class="small-text">• 检测当前目录位置(pwd命令)</text>
-  <text x="80" y="1152" class="small-text">• 判断是否在workspaces/wechat|video|general/</text>
-  <text x="80" y="1167" class="small-text">• 加载对应工作区的CLAUDE.md配置</text>
-  
-  <text x="300" y="1189" text-anchor="middle" class="subtitle" style="font-size: 13px;">第二层：任务类型识别(工作区CLAUDE.md)</text>
-  <text x="80" y="1206" class="small-text">A. 新写作任务(有完整brief) → 完整9步流程</text>
-  <text x="80" y="1221" class="small-text">B. 新写作任务(无brief) → 先补充brief</text>
-  <text x="80" y="1236" class="small-text">C. 修改已有文章 → 简化流程</text>
-  <text x="80" y="1251" class="small-text">D. 文章审校/降AI味 → 跳转/review命令</text>
-  <text x="80" y="1266" class="small-text">E. 快速咨询 → 直接回答(不创建文件)</text>
+  <text x="300" y="1120" text-anchor="middle" class="subtitle" style="font-size: 13px;">工作区检测与配置加载</text>
+  <text x="80" y="1137" class="small-text">• 通过 /specify 命令检测工作区类型</text>
+  <text x="80" y="1152" class="small-text">• 加载对应预设配置 (spec/presets/workspaces/*.md)</text>
+  <text x="80" y="1167" class="small-text">• 自动应用工作区特定规则和模板</text>
+
+  <text x="300" y="1189" text-anchor="middle" class="subtitle" style="font-size: 13px;">九步写作流程执行</text>
+  <text x="80" y="1206" class="small-text">A. 新写作任务(有brief) → 完整9步流程</text>
+  <text x="80" y="1221" class="small-text">B. 新写作任务(无brief) → 先执行 /specify</text>
+  <text x="80" y="1236" class="small-text">C. 修改已有文章 → 从 /review 开始</text>
+  <text x="80" y="1251" class="small-text">D. 文章审校/降AI味 → 直接使用 /review</text>
+  <text x="80" y="1266" class="small-text">E. 快速咨询 → 直接对话(不创建文件)</text>
 
   <!-- 插件系统 -->
   <rect x="580" y="1050" width="460" height="260" rx="10" class="phase-box"/>
@@ -365,13 +368,13 @@
   <text x="80" y="1430" class="text" font-weight="bold" style="fill: #E65100;">✅ 四大核心原则：</text>
   <text x="100" y="1448" class="small-text">1. 真实性优先：基于个人素材库(即刻/微博动态)，用真实经历替代AI编造，增强可信度和个性化</text>
   <text x="100" y="1464" class="small-text">2. 系统化降AI味：三遍审校机制(内容→风格→细节)，目标AI检测率小于30%，有明确的检查清单和对比输出</text>
-  <text x="100" y="1480" class="small-text">3. 智能流程引导：两层判断系统(工作区+任务类型)，AI不瞎猜，流程可预测，避免方向错误</text>
+  <text x="100" y="1480" class="small-text">3. 智能流程引导：工作区配置系统自动适配，流程可预测，避免方向错误</text>
   <text x="100" y="1496" class="small-text">4. 多工作区适配：公众号/视频/通用三种工作区，自动应用对应规则(字数/段落/AI味标准/敏感词检测)</text>
-  
+
   <text x="80" y="1528" class="text" font-weight="bold" style="fill: #1565C0;">⭐ 九步写作流程：</text>
-  <text x="100" y="1546" class="small-text">specify(定义需求) → research(信息搜索) → topic(选题讨论) → collect(素材收集) ⭐</text>
+  <text x="100" y="1546" class="small-text">specify(定义需求) → topic(选题讨论) → research(信息搜索) → collect(素材收集) ⭐</text>
   <text x="100" y="1562" class="small-text">→ write(撰写初稿) → review content(内容审校) → review style(风格审校-降AI味核心) ⭐⭐⭐ → review detail(细节打磨)</text>
-  <text x="100" y="1578" class="small-text">→ images+check(配图与发布)</text>
+  <text x="100" y="1578" class="small-text">→ images(配图建议) → check(发布检查) → publish(发布指南)</text>
   
   <text x="80" y="1610" class="text" font-weight="bold" style="fill: #2E7D32;">🎯 核心创新点：</text>
   <text x="100" y="1628" class="small-text">• 个人素材库系统：导入即刻/微博CSV，Grep搜索真实经历，改写融入文章(禁止直接复制)，真实性×个性化×降AI味</text>
