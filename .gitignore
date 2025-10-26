@@ -58,6 +58,10 @@ _knowledge_base/*
 memory/*
 !memory/README.md
 
+# User configuration presets (should not be committed)
+# Main config.json is tracked as template, but user-specific presets are not
+**/.content/config-*.json
+
 # Keep directory structure examples
 !workspaces/**/.gitkeep
 
