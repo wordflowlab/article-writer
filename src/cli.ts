@@ -498,7 +498,7 @@ node_modules/
         }
       }
 
-      spinner.succeed(chalk.green(`小说项目 "${name}" 创建成功！`));
+      spinner.succeed(chalk.green(`文章项目 "${name}" 创建成功！`));
 
       // 显示后续步骤
       console.log('\n' + chalk.cyan('接下来:'));
@@ -525,40 +525,52 @@ node_modules/
       }[options.ai] || 'AI 助手';
 
       if (options.all) {
-        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目（Claude Code、Cursor、Gemini、Windsurf、Roo Code、GitHub Copilot、Qwen Code、OpenCode、Codex CLI、Kilo Code、Auggie CLI、CodeBuddy、Amazon Q Developer）')}`);
+        console.log(`  2. ${chalk.white('在任意 AI 助手中打开项目')}`);
       } else {
         console.log(`  2. ${chalk.white(`在 ${aiName} 中打开项目`)}`);
       }
       console.log(`  3. 使用以下斜杠命令开始创作:`);
 
-      console.log('\n' + chalk.yellow('     📝 七步方法论:'));
-      console.log(`     ${chalk.cyan('/constitution')} - 创建创作宪法，定义核心原则`);
-      console.log(`     ${chalk.cyan('/specify')}      - 定义故事规格，明确要创造什么`);
-      console.log(`     ${chalk.cyan('/clarify')}      - 澄清关键决策点，明确模糊之处`);
-      console.log(`     ${chalk.cyan('/plan')}         - 制定技术方案，决定如何创作`);
-      console.log(`     ${chalk.cyan('/tasks')}        - 分解执行任务，生成可执行清单`);
-      console.log(`     ${chalk.cyan('/write')}        - AI 辅助写作章节内容`);
-      console.log(`     ${chalk.cyan('/analyze')}      - 综合验证分析，确保质量一致`);
+      console.log('\n' + chalk.yellow('     📝 九步写作流程:'));
+      console.log(`     ${chalk.cyan('/brief-save')}        - 保存写作需求`);
+      console.log(`     ${chalk.cyan('/topic-discuss')}     - 选题讨论（提供3-4个方向）`);
+      console.log(`     ${chalk.cyan('/research')}          - 信息搜索与调研 ⭐ 支持文档爬取`);
+      console.log(`     ${chalk.cyan('/materials-search')}  - 搜索个人素材库`);
+      console.log(`     ${chalk.cyan('/write-draft')}       - 创作初稿`);
+      console.log(`     ${chalk.cyan('/audit')}             - 三遍审校（降低AI味）`);
+      console.log(`     ${chalk.cyan('/images')}            - 配图建议`);
+      console.log(`     ${chalk.cyan('/final-check')}       - 发布前检查`);
+      console.log(`     ${chalk.cyan('/publish')}           - 发布指南`);
 
-      console.log('\n' + chalk.yellow('     📊 追踪管理命令:'));
-      console.log(`     ${chalk.cyan('/plot-check')}  - 检查情节一致性`);
-      console.log(`     ${chalk.cyan('/timeline')}    - 管理故事时间线`);
-      console.log(`     ${chalk.cyan('/relations')}   - 追踪角色关系`);
-      console.log(`     ${chalk.cyan('/world-check')} - 验证世界观设定`);
-      console.log(`     ${chalk.cyan('/track')}       - 综合追踪与智能分析`);
+      console.log('\n' + chalk.yellow('     🔧 实用工具:'));
+      console.log(`     ${chalk.cyan('/format-config')}     - 微信格式化配置`);
 
       // 如果安装了插件，显示插件命令
       if (options.plugins) {
         const installedPlugins = options.plugins.split(',').map((p: string) => p.trim());
-        if (installedPlugins.includes('translate')) {
-          console.log('\n' + chalk.yellow('     🌍 翻译插件:'));
-          console.log(`     ${chalk.cyan('/translate')}   - 中英文翻译`);
-          console.log(`     ${chalk.cyan('/polish')}      - 英文润色`);
+        if (installedPlugins.includes('ai-detector')) {
+          console.log('\n' + chalk.yellow('     🤖 AI检测插件:'));
+          console.log(`     ${chalk.cyan('/ai-check')}   - 检测AI生成痕迹`);
+        }
+        if (installedPlugins.includes('materials-import')) {
+          console.log('\n' + chalk.yellow('     💎 素材导入插件:'));
+          console.log(`     ${chalk.cyan('/import-materials')} - 导入即刻/微博数据`);
         }
       }
 
-      console.log('\n' + chalk.gray('推荐流程: constitution → specify → clarify → plan → tasks → write → analyze'));
+      console.log('\n' + chalk.gray('推荐流程: brief-save → research → topic-discuss → write-draft → audit → publish'));
       console.log(chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
+      
+      // 显示工作区提示
+      if (options.workspace) {
+        const workspaceNames = {
+          'wechat': '公众号',
+          'video': '视频脚本',
+          'general': '通用内容'
+        };
+        const wsName = workspaceNames[options.workspace as keyof typeof workspaceNames] || options.workspace;
+        console.log('\n' + chalk.blue(`📁 工作区: ${wsName} (workspaces/${options.workspace}/)`));
+      }
 
     } catch (error) {
       spinner.fail(chalk.red('项目初始化失败'));
@@ -1769,26 +1781,29 @@ program.on('--help', () => {
   console.log('');
   console.log(chalk.yellow('使用示例:'));
   console.log('');
-  console.log('  $ novel init my-story           # 创建新项目');
-  console.log('  $ novel init --here              # 在当前目录初始化');
-  console.log('  $ novel check                    # 检查环境');
-  console.log('  $ novel info                     # 查看写作方法');
+  console.log('  $ content init my-article              # 创建新项目');
+  console.log('  $ content init --here                  # 在当前目录初始化');
+  console.log('  $ content init --workspace wechat      # 指定工作区（公众号）');
+  console.log('  $ content init --ai claude             # 指定AI平台');
+  console.log('  $ content check                        # 检查环境');
   console.log('');
-  console.log(chalk.cyan('核心创作命令:'));
-  console.log('  /method      - 智能选择写作方法（推荐先执行）');
-  console.log('  /style       - 设定创作风格和准则');
-  console.log('  /story       - 创建故事大纲（使用选定方法）');
-  console.log('  /outline     - 规划章节结构（基于方法模板）');
-  console.log('  /track-init  - 初始化追踪系统');
-  console.log('  /write       - AI 辅助章节创作（自动更新追踪）');
+  console.log(chalk.cyan('核心写作命令（在AI助手中使用）:'));
+  console.log('  /brief-save        - 保存写作需求');
+  console.log('  /topic-discuss     - 选题讨论（提供3-4个方向）');
+  console.log('  /research          - 信息搜索与调研 ⭐ 支持文档爬取');
+  console.log('  /materials-search  - 搜索个人素材库');
+  console.log('  /write-draft       - 创作初稿');
+  console.log('  /audit             - 三遍审校（降低AI味）');
+  console.log('  /images            - 配图建议');
+  console.log('  /final-check       - 发布前检查');
+  console.log('  /publish           - 发布指南');
   console.log('');
-  console.log(chalk.cyan('追踪管理命令:'));
-  console.log('  /plot-check  - 智能检查情节发展一致性');
-  console.log('  /timeline    - 管理和验证时间线');
-  console.log('  /relations   - 追踪角色关系变化');
-  console.log('  /track       - 综合追踪与智能分析');
+  console.log(chalk.cyan('工具命令:'));
+  console.log('  /format-config  - 微信格式化样式配置');
+  console.log('  /ai-check       - AI 生成痕迹检测（插件）');
   console.log('');
-  console.log(chalk.gray('更多信息: https://github.com/wordflowlab/article-writer'));
+  console.log(chalk.gray('文档: https://github.com/wordflowlab/article-writer'));
+  console.log(chalk.gray('爬虫指南: docs/crawler-guide.md'));
 });
 
 // 解析命令行参数

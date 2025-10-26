@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] - 2025-10-26
+
+### Fixed
+
+- 修复 `content init` 命令后显示的命令提示（从 novel-writer 命令改为 article-writer 命令）
+- 修复 `content --help` 输出的示例命令
+- 更新提示信息从"小说项目"改为"文章项目"
+- 更新推荐流程提示
+
 ## [0.5.0] - 2025-10-26
 
 ### Added - 文档爬虫系统 🚀
