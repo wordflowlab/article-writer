@@ -51,8 +51,14 @@ materials/archive/*
 _briefs/*
 !_briefs/.gitkeep
 
-_knowledge_base/*
-!_knowledge_base/.gitkeep
+# Knowledge base (爬虫系统生成的数据，不提交到仓库)
+_knowledge_base/raw/*
+_knowledge_base/indexed/*
+_knowledge_base/cache/*
+!_knowledge_base/raw/.gitkeep
+!_knowledge_base/indexed/.gitkeep
+!_knowledge_base/cache/.gitkeep
+!_knowledge_base/README.md
 
 # Runtime state (should not be committed)
 memory/*
