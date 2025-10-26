@@ -253,12 +253,73 @@ Article Writer 基于 [Novel Writer](https://github.com/wordflowlab/novel-writer
 
 ## 📈 版本历史
 
+**v0.2.0** (2025-10-26)
+- ✅ 交互式启动界面（箭头键选择）
+- ✅ 改用 `.content/` 配置目录
+- ✅ 改进用户体验和文档
+
 **v0.1.0** (2025-10-26)
 - ✅ 九步写作流程完整实现
 - ✅ 工作区系统(wechat/video/general)
 - ✅ AI 味自检插件
 - ✅ 素材导入插件
 - ✅ 支持 13 个 AI 平台
+
+## 🌐 项目矩阵
+
+WordFlowLab 围绕 AI 辅助写作展开多维度探索，采用不同方法论和技术栈的开源项目组合：
+
+### 内容创作系列
+
+| 项目 | 内容类型 | 核心流程 | 适用场景 |
+|------|---------|----------|----------|
+| **[Article-Writer](https://github.com/wordflowlab/article-writer)** 🆕 | 文章/脚本 | 九步写作流程，工作区管理 | 公众号/视频脚本/自媒体，降低 AI 味 |
+| **[Novel-Writer](https://github.com/wordflowlab/novel-writer)** ⭐ | 小说创作 | 七步方法论，追踪系统 | 长篇小说创作，跨 13 个 AI 工具 |
+| **[Novel-Writer-OpenSpec](https://github.com/wordflowlab/novel-writer-openspec)** | 小说创作 | OpenSpec 规格分离 | 需要规格化管理和团队协作 |
+| **[Novel-Writer-Skills](https://github.com/wordflowlab/novel-writer-skills)** | 小说创作 | Agent Skills 集成 | 专为 Claude Code 深度优化 |
+
+### 工具实现系列
+
+| 项目 | 类型 | 技术基础 | 说明 |
+|------|------|----------|------|
+| **[WriteFlow](https://github.com/wordflowlab/writeflow)** | CLI 工具 | 模仿 Claude Code 架构 | 独立 CLI，为技术型作家设计 |
+| **[NovelWeave](https://github.com/wordflowlab/novelweave)** | VSCode 扩展 | Fork: Cline → Roo Code → Kilo Code | 可视化编辑器，星尘织梦 |
+
+### 技术演进路径
+
+```
+内容创作分支:
+  Novel-Writer (小说主线) ──┬─→ Novel-Writer-Skills (Claude Code 专版)
+                          ├─→ Novel-Writer-OpenSpec (OpenSpec 探索版)
+                          └─→ Article-Writer (文章/脚本分支) 🆕
+
+独立工具分支:
+  WriteFlow (CLI 独立版)
+  NovelWeave (VSCode 扩展版)
+```
+
+### 选择建议
+
+根据您的创作需求选择合适的工具：
+
+| 创作需求 | 推荐项目 | 理由 |
+|---------|---------|------|
+| 📱 **公众号文章** | [Article-Writer](https://github.com/wordflowlab/article-writer) | 九步流程，段落控制，敏感词检测 |
+| 🎬 **视频脚本** | [Article-Writer](https://github.com/wordflowlab/article-writer) | 口语化优化，时长计算，Hook 设计 |
+| 📖 **长篇小说** | [Novel-Writer](https://github.com/wordflowlab/novel-writer) | 七步方法论，多线索追踪 |
+| 🌟 **新手入门** | [NovelWeave](https://github.com/wordflowlab/novelweave) | 可视化编辑器，VSCode 扩展 |
+| 💻 **Claude Code 用户** | [Novel-Writer-Skills](https://github.com/wordflowlab/novel-writer-skills) | Agent Skills 深度集成 |
+| 📋 **规格化管理** | [Novel-Writer-OpenSpec](https://github.com/wordflowlab/novel-writer-openspec) | OpenSpec 方法论 |
+| 🚀 **技术探索** | [WriteFlow](https://github.com/wordflowlab/writeflow) | CLI 工具开发 |
+
+**快速决策**：
+- **写公众号/自媒体** → Article-Writer（降低 AI 味，段落控制）
+- **拍视频/写脚本** → Article-Writer（口语化，分镜标注）
+- **写长篇小说** → Novel-Writer（情节追踪，角色管理）
+- **用 Claude Code** → Novel-Writer-Skills（深度集成）
+- **完全新手** → NovelWeave（可视化最友好）
+
+> 💡 **多矩阵、多方法论组合开源**：探索 AI 写作的不同可能性，欢迎根据需求选择合适的工具！
 
 ## 🤝 贡献
 
