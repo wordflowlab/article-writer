@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2025-10-26
+
+### Fixed
+
+- 修复 `/brief-save` 命令的选项标注问题
+- 添加明确的 (a) (b) (c) (d) 选项标注，提升用户体验
+- 强调动态生成选项，避免使用固定模板
+- 要求选项内容与用户需求高度匹配
+- 添加上下文相关的选项生成指导原则
+
 ## [0.5.1] - 2025-10-26
 
 ### Fixed
