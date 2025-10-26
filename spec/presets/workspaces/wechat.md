@@ -76,11 +76,11 @@
 
 **执行流程**:
 ```
-/brief-save → /research → /topic-discuss → /materials-search → /write-draft → /audit → /images → /final-check
+/specify → /research → /topic → /collect → /write → /review → /images → /check
 ```
 
 **注意事项**:
-- ⭐ `/topic-discuss` 必须执行，等待用户选择
+- ⭐ `/topic` 必须执行，等待用户选择
 - ⭐ 选题讨论后，等待用户确认再继续
 - ⭐ 不要跳过任何步骤
 
@@ -94,11 +94,11 @@
 
 **执行流程**:
 ```
-/brief-save（AI 补充详细信息）→ /topic-discuss → /materials-search → /write-draft → /audit → /images
+/specify（AI 补充详细信息）→ /topic → /collect → /write → /review → /images
 ```
 
 **注意事项**:
-- `/brief-save` 时，AI 要主动询问补充信息：
+- `/specify` 时，AI 要主动询问补充信息：
   - 目标读者是谁？
   - 期望字数？
   - 文章定位（干货/经验/观点/评测）？
@@ -114,13 +114,13 @@
 
 **执行流程**:
 ```
-Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
+Read 原文 → 理解修改需求 → 修改 → /review style（可选）
 ```
 
 **注意事项**:
 - 不走完整九步流程
 - 只执行修改相关步骤
-- 如果修改较大，建议执行 `/audit style` 降 AI 味
+- 如果修改较大，建议执行 `/review style` 降 AI 味
 
 ---
 
@@ -132,7 +132,7 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 **执行流程**:
 ```
-/audit content → /audit style → /audit detail
+/review content → /review style → /review detail
 ```
 
 **注意事项**:
@@ -190,7 +190,7 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 ## 九步完整流程说明
 
-### 1. /brief-save - 保存需求
+### 1. /specify - 保存需求
 
 **功能**: 将用户需求结构化保存
 
@@ -219,7 +219,7 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 ---
 
-### 3. /topic-discuss - 选题讨论 ⭐
+### 3. /topic - 选题讨论 ⭐
 
 **⭐ 核心原则**: 必须执行，必须等待用户选择
 
@@ -242,12 +242,12 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 **注意事项**:
 - 提供选题后，**必须停止**，等待用户输入
-- 不要继续执行后续步骤（如 /write-draft）
+- 不要继续执行后续步骤（如 /write）
 - 不要假设用户会选择某个选题
 
 ---
 
-### 4. /materials-search - 搜索个人素材库
+### 4. /collect - 搜索个人素材库
 
 **功能**: 搜索用户的真实素材（即刻/微博/Twitter 动态）
 
@@ -263,7 +263,7 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 ---
 
-### 5. /write-draft - 创作初稿
+### 5. /write - 创作初稿
 
 **功能**: 基于选题和素材创作初稿
 
@@ -277,20 +277,20 @@ Read 原文 → 理解修改需求 → 修改 → /audit style（可选）
 
 ---
 
-### 6-8. /audit - 三遍审校 ⭐
+### 6-8. /review - 三遍审校 ⭐
 
-**第一遍: /audit content**
+**第一遍: /review content**
 - 检查事实准确性
 - 检查逻辑严密性
 - 检查结构完整性
 
-**第二遍: /audit style ⭐**
+**第二遍: /review style ⭐**
 - **降 AI 味核心步骤**
 - 加载反 AI 检测规则库
 - 系统化识别套话、句式、书面语
 - 目标：AI 检测率 < 30%
 
-**第三遍: /audit detail**
+**第三遍: /review detail**
 - 检查标点符号
 - 检查格式一致性
 - 检查段落长度
@@ -332,7 +332,7 @@ Claude Code 的界面设计简洁直观。
 ❌ 用户说"写一篇文章"，AI 直接生成
 
 **正确做法**:
-✅ 用户说"写一篇文章"，AI 执行 `/topic-discuss`，提供 3-4 个选题，等待用户选择
+✅ 用户说"写一篇文章"，AI 执行 `/topic`，提供 3-4 个选题，等待用户选择
 
 **为什么**:
 - 避免方向错误导致大量返工
@@ -346,7 +346,7 @@ Claude Code 的界面设计简洁直观。
 **原则**: 使用真实素材替代 100% AI 生成
 
 **实施方法**:
-1. `/materials-search` 搜索相关素材
+1. `/collect` 搜索相关素材
 2. 改写融入文章（不直接复制）
 3. 保留真实细节（时间、数字、具体场景）
 

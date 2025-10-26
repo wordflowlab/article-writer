@@ -248,16 +248,16 @@ bash .content/scripts/bash/format-wechat.sh \
 ## 9步流程回顾
 
 ```
-✅ 1. /brief-save      - 理解需求保存brief
+✅ 1. /specify      - 理解需求保存brief
 ✅ 2. /research        - 信息调研
-✅ 3. /topic-discuss   - 讨论选题(用户选择)
-✅ 4. /materials-search - 搜索真实素材
-✅ 5. /write-draft     - 撰写初稿
-✅ 6. /audit content   - 内容审校
-✅ 7. /audit style     - 风格审校(降AI味)
-✅ 8. /audit detail    - 细节审校
+✅ 3. /topic   - 讨论选题(用户选择)
+✅ 4. /collect - 搜索真实素材
+✅ 5. /write     - 撰写初稿
+✅ 6. /review content   - 内容审校
+✅ 7. /review style     - 风格审校(降AI味)
+✅ 8. /review detail    - 细节审校
 ✅ 9. /images          - 配图建议
-✅ 10. /final-check    - 最终检查(可选)
+✅ 10. /check    - 最终检查(可选)
 ✅ 11. /publish        - 发布准备
 
 🎉 全流程完成！

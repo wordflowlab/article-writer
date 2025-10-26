@@ -62,13 +62,13 @@ article-writer/
 │       └── research-assistant - 信息搜索
 │
 ├── 斜杠命令 (重构)
-│   ├── brief-save.md - 保存需求
+│   ├── specify.md - 保存需求
 │   ├── research.md - 信息搜索 ⭐
-│   ├── topic-discuss.md - 选题讨论 ⭐
+│   ├── topic.md - 选题讨论 ⭐
 │   ├── collab-doc.md - 协作文档
 │   ├── style-learn.md - 风格学习
-│   ├── materials-search.md - 素材搜索 ⭐
-│   ├── write-draft.md - 创作初稿
+│   ├── collect.md - 素材搜索 ⭐
+│   ├── write.md - 创作初稿
 │   ├── audit.md - 三遍审校 ⭐
 │   └── images.md - 文章配图 ⭐
 │
@@ -161,9 +161,9 @@ interface WorkspaceDetection {
 ### A. 新写作任务(有完整brief)
 **识别特征:** 用户提供了详细的写作需求/商单brief
 **执行流程:** 完整9步流程
-1. `/brief-save` 保存brief
+1. `/specify` 保存brief
 2. `/research` 信息搜索
-3. `/topic-discuss` 选题讨论
+3. `/topic` 选题讨论
 ... (完整流程)
 
 ### B. 新写作任务(无brief只有需求)
@@ -183,7 +183,7 @@ interface WorkspaceDetection {
 ### D. 文章审校/降AI味
 **识别特征:** 用户说"审校"、"降低AI味"、"检查质量"
 **执行流程:** 跳转审校命令
-1. 直接调用 `/audit` 命令
+1. 直接调用 `/review` 命令
 2. 询问审校模式(content/style/detail)
 3. 输出修改建议
 
@@ -230,7 +230,7 @@ materials/
 **方法A: 搜索原始CSV (推荐)**
 
 ```bash
-# scripts/bash/materials-search.sh
+# scripts/bash/collect.sh
 #!/bin/bash
 
 MATERIALS_DIR="materials/raw"
@@ -257,13 +257,13 @@ echo "  output_mode: 'content'"
 echo "  -n: true  # 显示行号"
 ```
 
-**命令模板 (`/materials-search`)**
+**命令模板 (`/collect`)**
 
 ```markdown
 ---
 description: 从个人素材库搜索真实经历和观点
 scripts:
-  sh: .specify/scripts/bash/materials-search.sh
+  sh: .specify/scripts/bash/collect.sh
 ---
 
 # 个人素材库搜索
@@ -636,7 +636,7 @@ allowed-tools: Read(//workspaces/**/articles/**), Write(//workspaces/**/articles
 用户可以一次性执行全部三遍审校:
 
 ```
-/audit all
+/review all
 ```
 
 AI将依次执行 content → style → detail,中间暂停让用户确认修改。
@@ -915,22 +915,22 @@ content materials stats
 ```
 [用户需求]
     ↓
-[brief-save] → _briefs/项目名-brief.md
+[specify] → _briefs/项目名-brief.md
     ↓
 [research] → WebSearch → _knowledge_base/主题-日期.md
     ↓
-[topic-discuss] → 读取: brief + knowledge_base
+[topic] → 读取: brief + knowledge_base
                  → 输出: 3-4个选题 + 大纲
     ↓
 [用户选择选题2]
     ↓
 [collab-doc] → _协作文档/项目名-协作文档.md
     ↓
-[materials-search] → Grep: materials/raw/*.csv
+[collect] → Grep: materials/raw/*.csv
                     → Read: materials/indexed/*.md
                     → 输出: 相关素材列表
     ↓
-[write-draft] → 读取: brief + knowledge + materials
+[write] → 读取: brief + knowledge + materials
                → 输出: articles/001-主题/draft.md
     ↓
 [audit style] → 读取: draft.md
@@ -983,13 +983,13 @@ COMMANDS=(
 # article-writer 改造
 TEMPLATES_DIR="templates/commands"
 COMMANDS=(
-  "brief-save"
+  "specify"
   "research"
-  "topic-discuss"
+  "topic"
   "collab-doc"
   "style-learn"
-  "materials-search"
-  "write-draft"
+  "collect"
+  "write"
   "audit"
   "images"
 )
@@ -1006,7 +1006,7 @@ class MaterialsPlugin extends Plugin {
   async install() {
     // 1. 复制插件文件
     await this.copyFiles([
-      { source: 'commands/materials-search.md', target: '.claude/commands/' },
+      { source: 'commands/collect.md', target: '.claude/commands/' },
       { source: 'commands/materials-import.md', target: '.claude/commands/' }
     ])
 
@@ -1099,7 +1099,7 @@ AI执行 `/research` 时,先检查缓存:
 ### 7.1 单元测试
 
 ```typescript
-// tests/commands/materials-search.test.ts
+// tests/commands/collect.test.ts
 describe('MaterialsSearch', () => {
   it('should search CSV by keywords', async () => {
     const result = await materialsSearch('高德|扫街榜')
@@ -1125,12 +1125,12 @@ content init test-article --workspace wechat
 cd test-article/workspaces/wechat
 
 # 模拟用户输入
-echo "写一篇关于Claude Code的文章" | claude /brief-save
+echo "写一篇关于Claude Code的文章" | claude /specify
 claude /research
-claude /topic-discuss  # 选择选题1
-claude /materials-search
-claude /write-draft
-claude /audit style
+claude /topic  # 选择选题1
+claude /collect
+claude /write
+claude /review style
 claude /images
 
 # 验证输出
@@ -1172,7 +1172,7 @@ cd my-blog
 content materials import ~/Downloads/jike-export.csv
 
 # 在AI助手中使用
-# Claude Code: /brief-save, /research, /topic-discuss...
+# Claude Code: /specify, /research, /topic...
 ```
 
 ---

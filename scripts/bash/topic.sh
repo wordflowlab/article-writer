@@ -16,7 +16,7 @@ fi
 
 if [ -z "$BRIEF_FILE" ] || [ ! -f "$BRIEF_FILE" ]; then
     echo "❌ 错误: 未找到 brief 文件"
-    echo "用法: topic-discuss.sh [brief文件路径]"
+    echo "用法: topic.sh [brief文件路径]"
     exit 1
 fi
 

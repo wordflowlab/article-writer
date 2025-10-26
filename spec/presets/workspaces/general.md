@@ -86,7 +86,7 @@
 ### 默认完整流程
 
 ```
-/brief-save → /research → /topic-discuss → /materials-search → /write-draft → /audit → /images（可选） → /final-check
+/specify → /research → /topic → /collect → /write → /review → /images（可选） → /check
 ```
 
 ### 灵活调整原则
@@ -94,14 +94,14 @@
 **用户可跳过的步骤**:
 - `/research` - 如不需要调研（纯经验分享）
 - `/images` - 如不需要配图（纯文字文章）
-- `/final-check` - 如时间紧急
+- `/check` - 如时间紧急
 
 **必须执行的步骤**:
-- ✅ `/brief-save` - 必须明确需求
-- ✅ `/topic-discuss` - 必须讨论选题（不自作主张）
-- ✅ `/write-draft` - 必须有初稿
-- ✅ `/audit content` - 必须检查事实和逻辑
-- ✅ `/audit style` - 必须降 AI 味
+- ✅ `/specify` - 必须明确需求
+- ✅ `/topic` - 必须讨论选题（不自作主张）
+- ✅ `/write` - 必须有初稿
+- ✅ `/review content` - 必须检查事实和逻辑
+- ✅ `/review style` - 必须降 AI 味
 
 ---
 
@@ -109,16 +109,16 @@
 
 | 步骤 | 公众号 | 通用工作区 |
 |------|--------|-----------|
-| /brief-save | 必须 | 必须 |
+| /specify | 必须 | 必须 |
 | /research | 可选 | 可选 |
-| /topic-discuss | 必须 | 必须 |
-| /materials-search | 必须 | 推荐 |
-| /write-draft | 必须 | 必须 |
-| /audit content | 必须 | 必须 |
-| /audit style | 必须 | 必须 |
-| /audit detail | 必须 | 必须 |
+| /topic | 必须 | 必须 |
+| /collect | 必须 | 推荐 |
+| /write | 必须 | 必须 |
+| /review content | 必须 | 必须 |
+| /review style | 必须 | 必须 |
+| /review detail | 必须 | 必须 |
 | /images | 必须(5-8张) | **可选** |
-| /final-check | 必须 | 可选 |
+| /check | 必须 | 可选 |
 
 ---
 
@@ -129,7 +129,7 @@
 **原则**: 根据用户需求调整，不强制统一标准
 
 **实施方法**:
-- 在 `/brief-save` 时询问用户特殊要求
+- 在 `/specify` 时询问用户特殊要求
 - 根据目标平台调整质量标准
 - 技术文档 vs 观点文章的差异化处理
 
@@ -247,7 +247,7 @@
 
 ## 审校差异
 
-### /audit style 的灵活调整
+### /review style 的灵活调整
 
 **根据文章类型调整 AI 味标准**:
 
@@ -259,7 +259,7 @@
 | 个人经验 | < 25% | 高 | 禁止 |
 
 **实施方法**:
-在 `/audit style` 时，根据 brief.md 中的文章类型调整标准。
+在 `/review style` 时，根据 brief.md 中的文章类型调整标准。
 
 ---
 

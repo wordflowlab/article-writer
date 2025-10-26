@@ -41,12 +41,12 @@ content init my-article
 ### 2. 完成写作流程
 
 ```bash
-/brief-save      # 保存需求
+/specify      # 保存需求
 /research        # 调研
-/write-draft     # 写初稿
-/audit           # 审校
+/write     # 写初稿
+/review           # 审校
 /images          # 配图
-/final-check     # 最终检查
+/check     # 最终检查
 ```
 
 ### 3. 发布并自动格式化

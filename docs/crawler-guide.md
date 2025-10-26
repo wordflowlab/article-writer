@@ -220,7 +220,7 @@ AI 会自动：
 爬取完成后，在写作时 AI 会自动搜索知识库：
 
 ```
-/write-draft
+/write
 ```
 
 AI 会自动在 `_knowledge_base/indexed/` 中搜索相关内容并引用。

@@ -43,7 +43,7 @@ AI会检测以下特征:
 ### 方式1: 在audit命令中自动调用
 
 ```bash
-/audit style
+/review style
 ```
 
 AI会自动使用此插件分析AI味。
@@ -323,4 +323,4 @@ AI味等级: ⭐⭐⭐ (中等)
 
 ## 与audit命令的集成
 
-`/audit style` 会自动调用此插件,并将结果整合到审校报告中。
+`/review style` 会自动调用此插件,并将结果整合到审校报告中。

@@ -4,15 +4,15 @@
 
 | 步骤 | 命令 | 来源 | 优先级 | 开发工作量 |
 |-----|------|------|--------|----------|
-| 1 | `/brief-save` | 改造 `/specify` | P0 | 1天 |
+| 1 | `/specify` | 改造 `/specify` | P0 | 1天 |
 | 2 | `/research` | **新增** | P0 | 3天 |
-| 3 | `/topic-discuss` | 改造 `/clarify` | P0 | 2天 |
+| 3 | `/topic` | 改造 `/clarify` | P0 | 2天 |
 | 4 | `/collab-doc` | 改造 `/tasks` | P1 | 1天 |
 | 5 | `/style-learn` | 改造 `/constitution` | P1 | 1天 |
-| 5.5 | `/materials-search` | **新增** | P0 | 2天 |
-| 6 | `/write-draft` | 改造 `/write` | P0 | 2天 |
+| 5.5 | `/collect` | **新增** | P0 | 2天 |
+| 6 | `/write` | 改造 `/write` | P0 | 2天 |
 | 7.5 | `/style-transform` | **新增** | P2 | 2天 |
-| 8 | `/audit` | 扩展 `/analyze` | P0 | 4天 |
+| 8 | `/review` | 扩展 `/analyze` | P0 | 4天 |
 | 9 | `/images` | **新增** | P1 | 3天 |
 
 **总计开发时间: 21天 (P0+P1),考虑测试和调试,预计30天完成**
@@ -21,7 +21,7 @@
 
 ## 命令详细设计
 
-### 1. `/brief-save` - 理解需求并保存brief
+### 1. `/specify` - 理解需求并保存brief
 
 **改造自:** `/specify`
 
@@ -224,7 +224,7 @@ Claude Code 使用体验与对比评测
 
    💡 下一步:
    1. /research - 开始信息调研
-   2. /topic-discuss - 讨论选题方向
+   2. /topic - 讨论选题方向
 
    或者输入 "continue" 自动执行后续流程
    ```
@@ -259,7 +259,7 @@ model: claude-sonnet-4-5-20250929
 
 ---
 
-### 3. `/topic-discuss` - 选题讨论
+### 3. `/topic` - 选题讨论
 
 **改造自:** `/clarify`
 
@@ -520,7 +520,7 @@ scripts:
 💡 下一步:
 1. /collab-doc - 创建测试任务清单
 2. 完成测试后,提供数据
-3. /write-draft - 开始写作
+3. /write - 开始写作
 
 或输入 "continue" 继续流程
 ```
@@ -528,7 +528,7 @@ scripts:
 
 ---
 
-### 4. `/materials-search` - 搜索个人素材库
+### 4. `/collect` - 搜索个人素材库
 
 **新增命令**
 
@@ -539,7 +539,7 @@ description: 从个人素材库搜索真实经历和观点
 argument-hint: [关键词] [--source raw|indexed]
 allowed-tools: Grep(//materials/**), Read(//materials/**), Bash(ls:materials/*)
 scripts:
-  sh: .specify/scripts/bash/materials-search.sh
+  sh: .specify/scripts/bash/collect.sh
 ---
 ```
 
@@ -553,7 +553,7 @@ scripts:
 
 ---
 
-### 5. `/audit` - 三遍审校机制
+### 5. `/review` - 三遍审校机制
 
 **扩展自:** `/analyze`
 
@@ -564,7 +564,7 @@ description: 三遍审校 - 系统化降低AI检测率
 argument-hint: [模式:content|style|detail|all] [文件路径]
 allowed-tools: Read(//articles/**), Write(//articles/**), Bash(wc:*)
 scripts:
-  sh: .specify/scripts/bash/audit-check.sh
+  sh: .specify/scripts/bash/review-check.sh
 model: claude-sonnet-4-5-20250929
 ---
 ```
@@ -828,13 +828,13 @@ ossutil cp images/*.png oss://my-bucket/article-001/
 ### 标准流程(新写作任务)
 
 ```
-/brief-save → /research → /topic-discuss → (用户选择)
+/specify → /research → /topic → (用户选择)
   ↓
 /collab-doc → (用户完成测试任务)
   ↓
-/materials-search → /write-draft
+/collect → /write
   ↓
-/audit content → /audit style → /audit detail
+/review content → /review style → /review detail
   ↓
 /images → 完成
 ```
@@ -842,17 +842,17 @@ ossutil cp images/*.png oss://my-bucket/article-001/
 ### 快速流程(无需测试)
 
 ```
-/brief-save → /topic-discuss → (用户选择)
+/specify → /topic → (用户选择)
   ↓
-/materials-search → /write-draft
+/collect → /write
   ↓
-/audit style → /audit detail → /images → 完成
+/review style → /review detail → /images → 完成
 ```
 
 ### 修改流程(已有文章)
 
 ```
-/audit style → /audit detail → 完成
+/review style → /review detail → 完成
 ```
 
 ---
@@ -860,27 +860,27 @@ ossutil cp images/*.png oss://my-bucket/article-001/
 ## 命令之间的数据传递
 
 ```
-/brief-save
+/specify
   ↓ 生成: _briefs/项目名-brief.md
   ↓
 /research
   ↓ 读取: _briefs/*.md
   ↓ 生成: _knowledge_base/主题-日期.md
   ↓
-/topic-discuss
+/topic
   ↓ 读取: _briefs/*.md + _knowledge_base/*.md
   ↓ 输出: 选题列表(不保存,等用户选择)
   ↓
-/materials-search
+/collect
   ↓ 读取: articles/*/specification.md (提取关键词)
   ↓ 搜索: materials/raw/*.csv + materials/indexed/*.md
-  ↓ 输出: 素材列表(供write-draft使用)
+  ↓ 输出: 素材列表(供write使用)
   ↓
-/write-draft
+/write
   ↓ 读取: brief + knowledge_base + materials搜索结果
   ↓ 生成: articles/*/draft.md
   ↓
-/audit
+/review
   ↓ 读取: draft.md
   ↓ 更新: draft.md (应用修改后)
   ↓

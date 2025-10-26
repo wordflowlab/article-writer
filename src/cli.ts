@@ -532,15 +532,15 @@ node_modules/
       console.log(`  3. 使用以下斜杠命令开始创作:`);
 
       console.log('\n' + chalk.yellow('     📝 九步写作流程:'));
-      console.log(`     ${chalk.cyan('/brief-save')}        - 保存写作需求`);
-      console.log(`     ${chalk.cyan('/topic-discuss')}     - 选题讨论（提供3-4个方向）`);
-      console.log(`     ${chalk.cyan('/research')}          - 信息搜索与调研 ⭐ 支持文档爬取`);
-      console.log(`     ${chalk.cyan('/materials-search')}  - 搜索个人素材库`);
-      console.log(`     ${chalk.cyan('/write-draft')}       - 创作初稿`);
-      console.log(`     ${chalk.cyan('/audit')}             - 三遍审校（降低AI味）`);
-      console.log(`     ${chalk.cyan('/images')}            - 配图建议`);
-      console.log(`     ${chalk.cyan('/final-check')}       - 发布前检查`);
-      console.log(`     ${chalk.cyan('/publish')}           - 发布指南`);
+      console.log(`     ${chalk.cyan('/specify')}        - 定义创作需求`);
+      console.log(`     ${chalk.cyan('/topic')}          - 选题讨论（提供3-4个方向）`);
+      console.log(`     ${chalk.cyan('/research')}       - 信息搜索与调研 ⭐ 支持文档爬取`);
+      console.log(`     ${chalk.cyan('/collect')}        - 搜索个人素材库`);
+      console.log(`     ${chalk.cyan('/write')}          - 创作初稿`);
+      console.log(`     ${chalk.cyan('/review')}         - 三遍审校（降低AI味）`);
+      console.log(`     ${chalk.cyan('/images')}         - 配图建议`);
+      console.log(`     ${chalk.cyan('/check')}          - 发布前检查`);
+      console.log(`     ${chalk.cyan('/publish')}        - 发布指南`);
 
       console.log('\n' + chalk.yellow('     🔧 实用工具:'));
       console.log(`     ${chalk.cyan('/format-config')}     - 微信格式化配置`);
@@ -558,7 +558,7 @@ node_modules/
         }
       }
 
-      console.log('\n' + chalk.gray('推荐流程: brief-save → research → topic-discuss → write-draft → audit → publish'));
+      console.log('\n' + chalk.gray('推荐流程: specify → topic → research → collect → write → review → images → check → publish'));
       console.log(chalk.dim('提示: 斜杠命令在 AI 助手内部使用，不是在终端中'));
       
       // 显示工作区提示
@@ -1483,7 +1483,7 @@ program
     console.log(chalk.yellow('  content materials import <file>') + ' - 导入素材文件');
     console.log(chalk.yellow('  content materials index') + ' - 生成素材索引');
     console.log(chalk.yellow('  content materials list') + ' - 列出所有素材');
-    console.log('\n' + chalk.gray('在 AI 助手中使用 /materials-search 命令搜索素材'));
+    console.log('\n' + chalk.gray('在 AI 助手中使用 /collect 命令搜索素材'));
   });
 
 // materials:import 命令 - 导入素材
@@ -1540,7 +1540,7 @@ program
 
       console.log(chalk.yellow('\n💡 下一步:'));
       console.log(chalk.gray('  1. 运行 `content materials index` 生成索引'));
-      console.log(chalk.gray('  2. 在 AI 中使用 /materials-search 搜索素材'));
+      console.log(chalk.gray('  2. 在 AI 中使用 /collect 搜索素材'));
 
     } catch (error) {
       spinner.fail('导入失败');
@@ -1686,7 +1686,7 @@ program
         console.log(chalk.gray(`    类型: ${ext} | 大小: ${sizeKB} KB | 修改: ${stats.mtime.toISOString().split('T')[0]}`));
       }
 
-      console.log(chalk.gray('\n使用 /materials-search 命令在 AI 中搜索素材'));
+      console.log(chalk.gray('\n使用 /collect 命令在 AI 中搜索素材'));
 
     } catch (error) {
       console.error(chalk.red('列出素材失败:'), error);
@@ -1788,15 +1788,15 @@ program.on('--help', () => {
   console.log('  $ content check                        # 检查环境');
   console.log('');
   console.log(chalk.cyan('核心写作命令（在AI助手中使用）:'));
-  console.log('  /brief-save        - 保存写作需求');
-  console.log('  /topic-discuss     - 选题讨论（提供3-4个方向）');
-  console.log('  /research          - 信息搜索与调研 ⭐ 支持文档爬取');
-  console.log('  /materials-search  - 搜索个人素材库');
-  console.log('  /write-draft       - 创作初稿');
-  console.log('  /audit             - 三遍审校（降低AI味）');
-  console.log('  /images            - 配图建议');
-  console.log('  /final-check       - 发布前检查');
-  console.log('  /publish           - 发布指南');
+  console.log('  /specify        - 定义创作需求');
+  console.log('  /topic          - 选题讨论（提供3-4个方向）');
+  console.log('  /research       - 信息搜索与调研 ⭐ 支持文档爬取');
+  console.log('  /collect        - 搜索个人素材库');
+  console.log('  /write          - 创作初稿');
+  console.log('  /review         - 三遍审校（降低AI味）');
+  console.log('  /images         - 配图建议');
+  console.log('  /check          - 发布前检查');
+  console.log('  /publish        - 发布指南');
   console.log('');
   console.log(chalk.cyan('工具命令:'));
   console.log('  /format-config  - 微信格式化样式配置');

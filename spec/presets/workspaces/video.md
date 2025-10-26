@@ -128,13 +128,13 @@
 
 **执行流程**:
 ```
-/brief-save → /research → /topic-discuss → /materials-search → /write-draft → /audit → /final-check
+/specify → /research → /topic → /collect → /write → /review → /check
 ```
 
 **差异**:
 - ❌ **不执行 /images**（视频不需要配图）
-- ✅ `/write-draft` 输出包含分镜标注
-- ✅ `/audit style` 加强口语化审校
+- ✅ `/write` 输出包含分镜标注
+- ✅ `/review style` 加强口语化审校
 
 ---
 
@@ -142,10 +142,10 @@
 
 **执行流程**:
 ```
-/brief-save（AI 补充）→ /topic-discuss → /materials-search → /write-draft → /audit
+/specify（AI 补充）→ /topic → /collect → /write → /review
 ```
 
-**brief-save 时额外询问**:
+**specify 时额外询问**:
 - 目标平台？（抖音/B站/视频号）
 - 视频时长？（3分钟/5分钟/10分钟）
 - 风格？（口播/剧情/混剪）
@@ -316,7 +316,7 @@ Claude Code 的优势在理解力。
 
 ## 审校差异
 
-### /audit style 加强口语化
+### /review style 加强口语化
 
 **视频脚本的 style 审校更严格**:
 

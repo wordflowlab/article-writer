@@ -81,18 +81,18 @@
 ### Week 3-4: P0命令开发
 
 **优先级P0命令**(关键路径):
-1. `/brief-save` (1天)
+1. `/specify` (1天)
 2. `/research` (3天) ⭐
-3. `/topic-discuss` (2天)
-4. `/materials-search` (2天) ⭐
-5. `/write-draft` (2天)
+3. `/topic` (2天)
+4. `/collect` (2天) ⭐
+5. `/write` (2天)
 
 **开发顺序:**
 
-#### Day 1-2: `/brief-save`
+#### Day 1-2: `/specify`
 ```markdown
 任务:
-- [ ] 编写命令模板 `templates/commands/brief-save.md`
+- [ ] 编写命令模板 `templates/commands/specify.md`
 - [ ] 创建支持脚本 `scripts/bash/init-brief.sh`
 - [ ] 实现brief标准格式
 - [ ] 测试: 从用户描述生成brief
@@ -121,10 +121,10 @@
 ✅ 缓存检查 - 避免重复搜索
 ```
 
-#### Day 6-7: `/topic-discuss`
+#### Day 6-7: `/topic`
 ```markdown
 任务:
-- [ ] 编写命令模板 `templates/commands/topic-discuss.md`
+- [ ] 编写命令模板 `templates/commands/topic.md`
 - [ ] 实现选题生成逻辑
 - [ ] 设计选题格式(标题/角度/大纲)
 - [ ] 实现"等待用户选择"机制
@@ -136,10 +136,10 @@
 ✅ 用户选择后继续流程
 ```
 
-#### Day 8-9: `/materials-search` ⭐ (关键)
+#### Day 8-9: `/collect` ⭐ (关键)
 ```markdown
 任务:
-- [ ] 编写命令模板 `templates/commands/materials-search.md`
+- [ ] 编写命令模板 `templates/commands/collect.md`
 - [ ] 实现CSV搜索逻辑(Grep)
 - [ ] 实现主题索引读取(Read)
 - [ ] 创建素材展示格式
@@ -152,7 +152,7 @@
 ✅ 提供改写示例(禁止直接复制)
 ```
 
-#### Day 10-11: `/write-draft`
+#### Day 10-11: `/write`
 ```markdown
 任务:
 - [ ] 改造 `/write` 命令模板
@@ -169,7 +169,7 @@
 
 ---
 
-### Week 5: P0命令 - `/audit` (4天)
+### Week 5: P0命令 - `/review` (4天)
 
 **最重要的命令,需要重点打磨**
 
@@ -445,7 +445,7 @@ npm publish
 
 ### 高风险项
 
-#### 1. `/audit` 命令的降AI味效果 (P0)
+#### 1. `/review` 命令的降AI味效果 (P0)
 
 **风险:** 三遍审校后AI检测率仍>30%
 
@@ -577,7 +577,7 @@ npm publish
 ### 第一周目标
 - ✅ CLI改造完成(`content init`可用)
 - ✅ 目录结构重构完成
-- ✅ 第一个命令原型(`/brief-save`)可运行
+- ✅ 第一个命令原型(`/specify`)可运行
 
 ### 第一个月目标
 - ✅ P0命令全部完成

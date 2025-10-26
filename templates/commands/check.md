@@ -1,7 +1,7 @@
 ---
 description: 发布前最终检查清单
 argument-hint: [项目路径]
-allowed-tools: Read(//workspaces/**/*), Write(//workspaces/**/final-checklist.md)
+allowed-tools: Read(//workspaces/**/*), Write(//workspaces/**/checklist.md)
 ---
 
 # 最终检查
@@ -56,7 +56,7 @@ allowed-tools: Read(//workspaces/**/*), Write(//workspaces/**/final-checklist.md
 
 ## 输出
 
-**文件**: `workspaces/*/articles/001-*/final-checklist.md`
+**文件**: `workspaces/*/articles/001-*/checklist.md`
 
 ```
 ✅ 最终检查完成

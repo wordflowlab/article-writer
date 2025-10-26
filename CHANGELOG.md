@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2025-10-27
+
+### Changed - 命令重命名 🔄
+
+**参考 [spec-kit](https://github.com/sublayerapp/spec-kit) 设计理念,优化命令名称:**
+
+| 旧命令 | 新命令 | 说明 |
+|--------|--------|------|
+| `/brief-save` | `/specify` | 定义创作需求 |
+| `/topic-discuss` | `/topic` | 选题讨论 |
+| `/materials-search` | `/collect` | 素材收集 |
+| `/write-draft` | `/write` | 撰写初稿 |
+| `/audit` | `/review` | 内容审校 |
+| `/final-check` | `/check` | 发布前检查 |
+
+**保持不变:**
+- `/research` - 信息调研
+- `/images` - 配图建议
+- `/publish` - 发布指南
+
+**新工作流程:**
+```
+/specify → /topic → /research → /collect → /write → /review → /images → /check → /publish
+```
+
+**设计理念:**
+- ✅ 命令简洁统一(都是简短英文单词)
+- ✅ 与 spec-kit 保持一致(`/specify` 作为第一步)
+- ✅ 更符合国际化习惯
+- ✅ 易于记忆和输入
+
+### Removed
+
+- ❌ **不再支持旧命令别名** - 旧命令名已完全移除
+
+**迁移指南:**
+如果您有自定义脚本或文档引用了旧命令,请更新为新命令名。
+
 ## [0.5.2] - 2025-10-26
 
 ### Fixed

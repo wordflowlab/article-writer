@@ -3,7 +3,7 @@ description: 理解写作需求并保存brief
 argument-hint: [需求描述或brief文件路径]
 allowed-tools: Write(//_briefs/**), Read(//*)
 scripts:
-  sh: .specify/scripts/bash/init-brief.sh
+  sh: .specify/scripts/bash/specify.sh
 ---
 
 # 理解需求并保存Brief
@@ -330,7 +330,7 @@ Read spec/presets/workspaces/wechat.md
       适合: brief 中标注"需要调研"或需要搜集资料
       说明: 搜索官方文档、用户评价、技术评测等
 
-   b) /topic-discuss - 讨论选题方向
+   b) /topic - 讨论选题方向
       适合: 已有调研数据或无需调研的创作
       说明: 我会提供 3-4 个差异化的选题方向供您选择
 

@@ -15,7 +15,7 @@
 | **工作区系统** | P0 | 5天 | ✅ 已完成 | [prd-01-workspace-system.md](./prd-01-workspace-system.md) |
 | **套话库和句式库** | P0 | 3天 | ✅ 已完成 | [prd-02-anti-ai-library.md](./prd-02-anti-ai-library.md) |
 | **个人素材库系统** | P0 | 2天 | ✅ 已完成 | [prd-03-materials-system.md](./prd-03-materials-system.md) |
-| **选题讨论机制** | P1 | 1天 | ✅ 已完成 | [prd-04-topic-discussion.md](./prd-04-topic-discussion.md) |
+| **选题讨论机制** | P1 | 1天 | ✅ 已完成 | [prd-04-topicion.md](./prd-04-topicion.md) |
 | **配图系统** | P1 | 3天 | ✅ 已完成 | [prd-05-image-system.md](./prd-05-image-system.md) |
 
 **总工作量**: 14 天 → **已完成: 14天 (100%)**

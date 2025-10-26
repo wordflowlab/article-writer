@@ -458,6 +458,6 @@ AI味等级: {{stars}} ({{level}})
 
 ## 与其他命令的集成
 
-- `/audit style` 会自动调用此检测
-- `/write-draft` 完成后可手动调用检测初稿
-- `/final-check` 发布前最后检测一次
+- `/review style` 会自动调用此检测
+- `/write` 完成后可手动调用检测初稿
+- `/check` 发布前最后检测一次

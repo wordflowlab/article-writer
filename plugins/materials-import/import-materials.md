@@ -310,8 +310,8 @@ materials/indexed/topics/
    - 查看 materials/indexed/index.json 查看总览
 
 2. **开始使用**:
-   - /materials-search "Claude Code" - 搜索相关素材
-   - /write-draft - 写作时自动调用素材
+   - /collect "Claude Code" - 搜索相关素材
+   - /write - 写作时自动调用素材
 
 3. **持续导入**:
    - 定期导出最新数据并导入
@@ -433,16 +433,16 @@ materials/indexed/topics/
 检查:
 1. index.json 是否正确生成
 2. 主题分类是否准确 (可能分错类)
-3. 使用 /materials-search 搜索关键词测试
+3. 使用 /collect 搜索关键词测试
 ```
 
 ---
 
 ## 与其他命令的集成
 
-- `/materials-search` 会自动读取 indexed/ 目录
-- `/write-draft` 可以提示用户先导入素材
-- `/brief-save` 可以建议用户导入相关主题的素材
+- `/collect` 会自动读取 indexed/ 目录
+- `/write` 可以提示用户先导入素材
+- `/specify` 可以建议用户导入相关主题的素材
 
 ---
 

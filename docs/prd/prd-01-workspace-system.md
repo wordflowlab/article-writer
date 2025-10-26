@@ -138,7 +138,7 @@
 **功能描述**:
 在核心命令模板中添加工作区检测逻辑（不使用 CLAUDE.md）
 
-**实现位置**: `templates/commands/brief-save.md` 等核心命令
+**实现位置**: `templates/commands/specify.md` 等核心命令
 
 **核心逻辑**:
 
@@ -266,13 +266,13 @@
 用户已提供详细需求文档
 
 **执行流程**:
-/brief-save → /research → /topic-discuss → /materials-search → /write-draft → /audit → /images → /final-check
+/specify → /research → /topic → /collect → /write → /audit → /images → /check
 
 ### B. 新写作任务（无 brief 只有需求）
 用户只提供简短描述
 
 **执行流程**:
-/brief-save（AI 补充）→ /topic-discuss → /materials-search → /write-draft → /audit → /images
+/specify（AI 补充）→ /topic → /collect → /write → /audit → /images
 
 ### C. 修改已有文章
 用户要求修改已发布文章
@@ -306,11 +306,11 @@ Read 原文 → 理解需求 → 修改 → /audit style
 
 ## 九步流程说明
 
-1. **/brief-save** - 保存需求
+1. **/specify** - 保存需求
 2. **/research** - 信息搜索（如需要）
-3. **/topic-discuss** - 选题讨论（⭐ 必做，等待用户选择）
-4. **/materials-search** - 搜索个人素材库
-5. **/write-draft** - 创作初稿
+3. **/topic** - 选题讨论（⭐ 必做，等待用户选择）
+4. **/collect** - 搜索个人素材库
+5. **/write** - 创作初稿
 6. **/audit content** - 内容审校
 7. **/audit style** - 风格审校（⭐ 降 AI 味核心）
 8. **/audit detail** - 细节打磨
@@ -378,7 +378,7 @@ Read 原文 → 理解需求 → 修改 → /audit style
 
 ### 新写作任务流程
 
-/brief-save → /topic-discuss → /materials-search → /write-draft → /audit content → /audit style → /audit detail
+/specify → /topic → /collect → /write → /audit content → /audit style → /audit detail
 
 **差异**:
 - ❌ **不执行 /images**（视频不需要配图）
@@ -490,7 +490,7 @@ Read 原文 → 理解需求 → 修改 → /audit style
 
 默认使用完整 9 步流程，但支持用户自定义：
 
-/brief-save → /research → /topic-discuss → /materials-search → /write-draft → /audit → /images（可选）
+/specify → /research → /topic → /collect → /write → /audit → /images（可选）
 
 **用户可跳过的步骤**:
 - /research（如不需要调研）
@@ -601,7 +601,7 @@ cd workspaces/video/
 📋 **任务类型**: 新写作任务
 🎯 **执行流程**: 9 步完整流程
 
-准备开始第一步：/brief-save
+准备开始第一步：/specify
 ```
 
 ---
@@ -626,7 +626,7 @@ article-writer/
 │   └── current-workspace.json   # 当前工作区状态
 ├── templates/
 │   └── commands/                # 命令模板（包含工作区检测逻辑）
-│       ├── brief-save.md
+│       ├── specify.md
 │       └── ...
 ├── workspaces/                  # 工作区目录
 │   ├── wechat/                  # 公众号工作区
@@ -650,8 +650,8 @@ article-writer/
 
 #### Step 2: 更新命令模板（Day 3）
 
-1. 更新 `templates/commands/brief-save.md` - 添加工作区检测逻辑
-2. 更新 `templates/commands/write-draft.md` - 读取工作区配置
+1. 更新 `templates/commands/specify.md` - 添加工作区检测逻辑
+2. 更新 `templates/commands/write.md` - 读取工作区配置
 3. 更新 `templates/commands/audit.md` - 应用工作区规则
 4. 嵌入任务类型判断逻辑
 

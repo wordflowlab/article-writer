@@ -67,13 +67,13 @@ content materials index ai-tools
 
 **方法 A: 直接搜索原始 CSV（推荐）**
 ```bash
-/materials-search "Claude Code|Cursor"
+/collect "Claude Code|Cursor"
 ```
 AI 使用 Grep 工具在 CSV 中搜索关键词
 
 **方法 B: 查看主题索引**
 ```bash
-/materials-search --index ai-tools
+/collect --index ai-tools
 ```
 AI 读取 `materials/indexed/ai-tools.md`
 
@@ -129,7 +129,7 @@ materials/
 
 #### Day 2: 搜索和索引
 
-1. 实现 `/materials-search` 命令
+1. 实现 `/collect` 命令
 2. 集成 Grep 搜索
 3. 实现主题索引生成
 4. 添加改写融入指导
@@ -151,7 +151,7 @@ materials/
 
 **测试用例 2: 搜索素材**
 ```
-✅ 执行: /materials-search "Claude Code"
+✅ 执行: /collect "Claude Code"
 ✅ 预期:
    - 搜索所有 raw/*.csv
    - 返回匹配的动态

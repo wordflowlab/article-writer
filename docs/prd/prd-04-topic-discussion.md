@@ -33,7 +33,7 @@
 
 ### 2.1 选题生成
 
-**/topic-discuss 命令输出格式**:
+**/topic 命令输出格式**:
 
 ```
 📝 基于您的需求，我准备了 4 个选题方向：
@@ -101,7 +101,7 @@
 
 提供选题后，**必须停止**，等待用户输入。
 
-不要继续执行后续步骤（如 /write-draft）。
+不要继续执行后续步骤（如 /write）。
 
 不要假设用户会选择某个选题。
 ```
@@ -120,7 +120,7 @@
 💡 下一步:
 1. /collab-doc - 创建测试任务清单
 2. 完成测试后，提供数据
-3. /write-draft - 开始写作
+3. /write - 开始写作
 
 或输入 "continue" 继续流程
 ```
@@ -133,7 +133,7 @@
 
 #### Day 1: 更新命令模板
 
-1. 修改 `templates/commands/topic-discuss.md`
+1. 修改 `templates/commands/topic.md`
 2. 增强选题格式（大纲预览、工作量评估）
 3. 添加"强制等待"说明
 4. 测试 AI 是否真的等待
@@ -146,7 +146,7 @@
 
 **测试用例: 强制等待**
 ```
-✅ 执行: /topic-discuss
+✅ 执行: /topic
 ✅ 预期:
    - AI 输出 3-4 个选题
    - AI 停止，不继续执行
@@ -179,7 +179,7 @@
 - 验证方法说明
 
 ✅ **命令模板完善**
-- `templates/commands/topic-discuss.md` 已包含所有PRD要求
+- `templates/commands/topic.md` 已包含所有PRD要求
 - 包含4个差异化示例方向
 - 包含用户选择后的处理流程
 - 包含Q&A和常见问题处理
@@ -194,8 +194,8 @@
 ### 6.3 文件变更
 
 **Modified**:
-- `templates/commands/topic-discuss.md` - 增强选题格式和等待机制
-- `docs/prd/prd-04-topic-discussion.md` - 更新状态为已完成
+- `templates/commands/topic.md` - 增强选题格式和等待机制
+- `docs/prd/prd-04-topicion.md` - 更新状态为已完成
 
 ---
 

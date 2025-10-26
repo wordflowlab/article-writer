@@ -3,7 +3,7 @@ description: 撰写文章初稿
 argument-hint: [项目编号或specification路径]
 allowed-tools: Read(//*), Write(//workspaces/**/draft.md)
 scripts:
-  sh: .specify/scripts/bash/write-draft.sh
+  sh: .specify/scripts/bash/write.sh
 ---
 
 # 撰写初稿
@@ -30,17 +30,17 @@ scripts:
 
 ### 方式1: 指定项目编号
 ```bash
-/write-draft 001
+/write 001
 ```
 
 ### 方式2: 指定specification路径
 ```bash
-/write-draft workspaces/wechat/articles/001-claude-code-评测/specification.md
+/write workspaces/wechat/articles/001-claude-code-评测/specification.md
 ```
 
 ### 方式3: 自动推断
 ```bash
-/write-draft
+/write
 ```
 
 ---
@@ -227,7 +227,7 @@ workspaces/wechat/articles/001-claude-code-评测/draft.md
 2. AI编程助手实战评测: Claude Code 和 Cursor 哪个更适合你?
 3. 用数据说话: Claude Code 与 Cursor 的真实使用体验对比
 
-[待 /audit 后最终确定]
+[待 /review 后最终确定]
 
 ---
 
@@ -347,7 +347,7 @@ c) 先查看初稿内容
 ⭐ 推荐: 选择 a) 自动三遍审校
    理由: 系统化审校能最大化降低 AI 味,提升文章质量
 
-⚠️ 请输入 a/b/c 或直接输入审校命令(如 /audit content),我将继续优化文章
+⚠️ 请输入 a/b/c 或直接输入审校命令(如 /review content),我将继续优化文章
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -536,7 +536,7 @@ Cursor 可能是更好的选择。
 
 ## 脚本支持
 
-可选的bash脚本 `.specify/scripts/bash/write-draft.sh` 可以:
+可选的bash脚本 `.specify/scripts/bash/write.sh` 可以:
 - 检查必需文件是否存在(specification.md等)
 - 创建draft.md文件骨架
 - 初始化字数统计

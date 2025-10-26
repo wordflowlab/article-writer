@@ -1,4 +1,4 @@
-# 保存写作需求到 brief 文件
+# 定义创作需求并保存到 brief 文件
 param(
     [string]$ProjectRoot = "."
 )

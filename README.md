@@ -51,24 +51,24 @@ content init my-article --ai cursor    # Cursor
 
 ```
 # 命令格式因平台而异
-/brief-save           # 大多数平台
-/content.brief-save   # Claude Code
-/content:brief-save   # Gemini CLI
-/content-brief-save   # Codex CLI
+/specify           # 大多数平台
+/content.specify   # Claude Code
+/content:specify   # Gemini CLI
+/content-specify   # Codex CLI
 ```
 
 **九步写作流程**：
 
 ```
-1. /brief-save        → 保存写作需求
-2. /topic-discuss     → 选题讨论(提供3-4个方向)
-3. /research          → 信息搜索与调研 ⭐ 支持文档爬取
-4. /materials-search  → 搜索个人素材库
-5. /write-draft       → 创作初稿
-6. /audit             → 三遍审校(内容/风格/细节)
-7. /images            → 配图建议
-8. /final-check       → 发布前检查
-9. /publish           → 发布指南
+1. /specify        → 定义创作需求
+2. /topic          → 选题讨论(提供3-4个方向)
+3. /research       → 信息搜索与调研 ⭐ 支持文档爬取
+4. /collect        → 搜索个人素材库
+5. /write          → 创作初稿
+6. /review         → 三遍审校(内容/风格/细节)
+7. /images         → 配图建议
+8. /check          → 发布前检查
+9. /publish        → 发布指南
 ```
 
 ### 🕷️ 文档爬虫增强 (v0.5.0 新增)
@@ -97,10 +97,10 @@ AI 会从知识库中查找准确的技术信息，大幅减少错误和编造�
 
 | AI 平台 | 命令格式 | 示例 |
 |---------|----------|------|
-| **Claude Code** | `/content.命令名` | `/content.write-draft` |
-| **Gemini CLI** | `/content:命令名` | `/content:write-draft` |
-| **Codex CLI** | `/content-命令名` | `/content-write-draft` |
-| **其他平台** | `/命令名` | `/write-draft` |
+| **Claude Code** | `/content.命令名` | `/content.write` |
+| **Gemini CLI** | `/content:命令名` | `/content:write` |
+| **Codex CLI** | `/content-命令名` | `/content-write` |
+| **其他平台** | `/命令名` | `/write` |
 
 > 💡 下表使用通用格式，实际使用时请根据您的 AI 平台添加相应前缀
 
@@ -108,14 +108,14 @@ AI 会从知识库中查找准确的技术信息，大幅减少错误和编造�
 
 | 命令 | 描述 | 何时使用 |
 |------|------|----------|
-| `/brief-save` | 保存需求 | 项目开始，记录写作目标 |
-| `/topic-discuss` | 选题讨论 | 需要确定文章方向 |
+| `/specify` | 定义需求 | 项目开始，记录创作目标 |
+| `/topic` | 选题讨论 | 需要确定文章方向 |
 | `/research` | 信息搜索 | 需要调研资料 |
-| `/materials-search` | 素材搜索 | 需要个人真实案例 |
-| `/write-draft` | 撰写初稿 | 开始正式写作 |
-| `/audit` | 三遍审校 | 初稿完成后降 AI 味 |
+| `/collect` | 素材收集 | 需要个人真实案例 |
+| `/write` | 撰写初稿 | 开始正式写作 |
+| `/review` | 三遍审校 | 初稿完成后降 AI 味 |
 | `/images` | 配图建议 | 需要文章配图 |
-| `/final-check` | 发布检查 | 发布前最后检查 |
+| `/check` | 发布检查 | 发布前最后检查 |
 | `/publish` | 发布指南 | 准备发布到平台 |
 
 ### 工作区系统

@@ -35,7 +35,7 @@
   <text x="180" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">Brief管理</text>
   
   <rect x="65" y="170" width="230" height="65" rx="5" class="command-box"/>
-  <text x="180" y="190" text-anchor="middle" class="command">/brief-save</text>
+  <text x="180" y="190" text-anchor="middle" class="command">/specify</text>
   <text x="75" y="207" class="small-text">• 理解写作需求并保存</text>
   <text x="75" y="221" class="small-text">• 补充关键信息(字数/平台/风格)</text>
   
@@ -69,7 +69,7 @@
   <text x="760" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">方向确认</text>
   
   <rect x="645" y="170" width="230" height="65" rx="5" class="command-box"/>
-  <text x="760" y="190" text-anchor="middle" class="command">/topic-discuss</text>
+  <text x="760" y="190" text-anchor="middle" class="command">/topic</text>
   <text x="655" y="207" class="small-text">• 提供3-4个选题方向</text>
   <text x="655" y="221" class="small-text">• 等待用户选择(不自动执行)</text>
   
@@ -86,7 +86,7 @@
   <text x="1060" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">真实素材融入</text>
   
   <rect x="935" y="170" width="250" height="65" rx="5" class="command-box"/>
-  <text x="1060" y="190" text-anchor="middle" class="command">/materials-search</text>
+  <text x="1060" y="190" text-anchor="middle" class="command">/collect</text>
   <text x="945" y="207" class="small-text">• 从即刻/微博CSV搜索关键词(Grep)</text>
   <text x="945" y="221" class="small-text">• 读取主题索引(indexed/*.md)</text>
   
@@ -103,7 +103,7 @@
   <text x="1365" y="155" text-anchor="middle" class="subtitle" style="font-size: 13px;">基于素材创作</text>
   
   <rect x="1245" y="170" width="240" height="65" rx="5" class="command-box"/>
-  <text x="1365" y="190" text-anchor="middle" class="command">/write-draft</text>
+  <text x="1365" y="190" text-anchor="middle" class="command">/write</text>
   <text x="1255" y="207" class="small-text">• 加载全部上下文</text>
   <text x="1255" y="221" class="small-text">• 符合anti-ai-detection规范</text>
   
@@ -121,7 +121,7 @@
   <text x="220" y="420" text-anchor="middle" class="title" style="fill: #C2185B;">第六步：内容审校(第一遍)</text>
   
   <rect x="70" y="440" width="300" height="60" rx="5" class="command-box"/>
-  <text x="220" y="460" text-anchor="middle" class="command">/audit content</text>
+  <text x="220" y="460" text-anchor="middle" class="command">/review content</text>
   <text x="80" y="477" class="small-text">事实准确、逻辑清晰、结构合理</text>
   
   <rect x="70" y="510" width="300" height="135" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
@@ -141,7 +141,7 @@
   <text x="630" y="440" text-anchor="middle" class="subtitle" style="font-size: 13px; fill: #C2185B;">降AI味核心机制</text>
   
   <rect x="440" y="455" width="380" height="60" rx="5" class="command-box"/>
-  <text x="630" y="475" text-anchor="middle" class="command">/audit style</text>
+  <text x="630" y="475" text-anchor="middle" class="command">/review style</text>
   <text x="450" y="492" class="small-text">删除AI痕迹，增加真实感和个性化</text>
   
   <rect x="440" y="525" width="380" height="120" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
@@ -160,7 +160,7 @@
   <text x="1040" y="420" text-anchor="middle" class="title" style="fill: #C2185B;">第八步：细节打磨(第三遍)</text>
   
   <rect x="890" y="440" width="300" height="60" rx="5" class="command-box"/>
-  <text x="1040" y="460" text-anchor="middle" class="command">/audit detail</text>
+  <text x="1040" y="460" text-anchor="middle" class="command">/review detail</text>
   <text x="900" y="477" class="small-text">标点、排版、节奏优化</text>
   
   <rect x="890" y="510" width="300" height="135" rx="5" style="fill: white; stroke: #C2185B; stroke-width: 1.5;"/>
@@ -189,7 +189,7 @@
   <text x="1265" y="573" class="tiny-text">• 使用场景示意图(1-2张)</text>
   
   <rect x="1255" y="590" width="240" height="55" rx="5" class="command-box"/>
-  <text x="1375" y="610" text-anchor="middle" class="command">/final-check</text>
+  <text x="1375" y="610" text-anchor="middle" class="command">/check</text>
   <text x="1265" y="627" class="small-text">• 发布前最后检查</text>
   <text x="1375" y="645" text-anchor="middle" class="small-text" style="fill: #4CAF50;">✅ 准备发布 final.md</text>
 
@@ -276,7 +276,7 @@
   <text x="80" y="1206" class="small-text">A. 新写作任务(有完整brief) → 完整9步流程</text>
   <text x="80" y="1221" class="small-text">B. 新写作任务(无brief) → 先补充brief</text>
   <text x="80" y="1236" class="small-text">C. 修改已有文章 → 简化流程</text>
-  <text x="80" y="1251" class="small-text">D. 文章审校/降AI味 → 跳转/audit命令</text>
+  <text x="80" y="1251" class="small-text">D. 文章审校/降AI味 → 跳转/review命令</text>
   <text x="80" y="1266" class="small-text">E. 快速咨询 → 直接回答(不创建文件)</text>
 
   <!-- 插件系统 -->
@@ -294,7 +294,7 @@
   <text x="610" y="1201" class="small-text" font-weight="bold">2. ai-detector - AI味自检</text>
   <text x="620" y="1216" class="tiny-text">• 利用AI自身能力检测AI生成痕迹</text>
   <text x="620" y="1229" class="tiny-text">• 检测维度：词汇/结构/情感/口语化</text>
-  <text x="620" y="1242" class="tiny-text">• /audit style自动调用</text>
+  <text x="620" y="1242" class="tiny-text">• /review style自动调用</text>
   
   <text x="610" y="1262" class="small-text" font-weight="bold">3. image-generator - 配图生成(可选)</text>
   <text x="620" y="1277" class="tiny-text">• 集成火山引擎图片生成API</text>
@@ -318,7 +318,7 @@
   <text x="1110" y="1241" class="tiny-text" font-weight="bold">4. 审核配置(audit-config.json)</text>
   <text x="1120" y="1256" class="tiny-text" style="font-size: 8px;">连接词/空话/陈词滥调/句长控制...</text>
   
-  <text x="1310" y="1285" text-anchor="middle" class="small-text" style="fill: #C2185B; font-weight: bold;">自动被/audit命令引用</text>
+  <text x="1310" y="1285" text-anchor="middle" class="small-text" style="fill: #C2185B; font-weight: bold;">自动被/review命令引用</text>
 
   <!-- ==================== 箭头连接 ==================== -->
   
@@ -336,7 +336,7 @@
   <path d="M 840 530 L 870 530" class="arrow"/>
   <path d="M 1210 530 L 1240 530" class="arrow"/>
   
-  <!-- 素材库到write-draft的虚线箭头 -->
+  <!-- 素材库到write的虚线箭头 -->
   <path d="M 290 720 Q 780 650 1365 350" class="dashed-arrow"/>
   <text x="780" y="650" text-anchor="middle" class="tiny-text" style="fill: #9E9E9E;">真实素材融入</text>
   
@@ -369,9 +369,9 @@
   <text x="100" y="1496" class="small-text">4. 多工作区适配：公众号/视频/通用三种工作区，自动应用对应规则(字数/段落/AI味标准/敏感词检测)</text>
   
   <text x="80" y="1528" class="text" font-weight="bold" style="fill: #1565C0;">⭐ 九步写作流程：</text>
-  <text x="100" y="1546" class="small-text">brief-save(保存需求) → research(信息搜索) → topic-discuss(选题讨论) → materials-search(素材搜索) ⭐</text>
-  <text x="100" y="1562" class="small-text">→ write-draft(撰写初稿) → audit content(内容审校) → audit style(风格审校-降AI味核心) ⭐⭐⭐ → audit detail(细节打磨)</text>
-  <text x="100" y="1578" class="small-text">→ images+final-check(配图与发布)</text>
+  <text x="100" y="1546" class="small-text">specify(定义需求) → research(信息搜索) → topic(选题讨论) → collect(素材收集) ⭐</text>
+  <text x="100" y="1562" class="small-text">→ write(撰写初稿) → review content(内容审校) → review style(风格审校-降AI味核心) ⭐⭐⭐ → review detail(细节打磨)</text>
+  <text x="100" y="1578" class="small-text">→ images+check(配图与发布)</text>
   
   <text x="80" y="1610" class="text" font-weight="bold" style="fill: #2E7D32;">🎯 核心创新点：</text>
   <text x="100" y="1628" class="small-text">• 个人素材库系统：导入即刻/微博CSV，Grep搜索真实经历，改写融入文章(禁止直接复制)，真实性×个性化×降AI味</text>

@@ -139,7 +139,7 @@ article-writer/
 **问题**: 三遍审校具体怎么做?
 
 **阅读**:
-- [commands-design.md](./commands-design.md) - `/audit` 命令章节
+- [commands-design.md](./commands-design.md) - `/review` 命令章节
 - [technical-design.md](./technical-design.md) - 2.3节 三遍审校机制
 
 **关键技术**:
@@ -155,7 +155,7 @@ article-writer/
 
 **阅读**:
 - [technical-design.md](./technical-design.md) - 2.2节 个人素材库系统
-- [commands-design.md](./commands-design.md) - `/materials-search` 命令
+- [commands-design.md](./commands-design.md) - `/collect` 命令
 
 **核心机制**:
 - 导入即刻/微博CSV
@@ -188,15 +188,15 @@ article-writer/
 - **详见**: [technical-design.md § 2.1](./technical-design.md)
 
 ### 九步写作流程
-1. `/brief-save` - 保存需求
+1. `/specify` - 保存需求
 2. `/research` - 信息搜索
-3. `/topic-discuss` - 选题讨论
+3. `/topic` - 选题讨论
 4. `/collab-doc` - 协作文档
 5. `/style-learn` - 风格学习
-5.5. `/materials-search` - 素材搜索
-6. `/write-draft` - 创作初稿
+5.5. `/collect` - 素材搜索
+6. `/write` - 创作初稿
 7.5. `/style-transform` - 风格转换(可选)
-8. `/audit` - 三遍审校
+8. `/review` - 三遍审校
 9. `/images` - 文章配图
 
 **详见**: [README.md § 九步写作流程](./README.md)
@@ -205,7 +205,7 @@ article-writer/
 - **第一遍**: content - 内容审校(事实/逻辑/结构)
 - **第二遍**: style - 风格审校(删套话/改句式/加细节)
 - **第三遍**: detail - 细节打磨(标点/排版/节奏)
-- **详见**: [commands-design.md § /audit](./commands-design.md)
+- **详见**: [commands-design.md § /review](./commands-design.md)
 
 ### 个人素材库
 - **raw/**: 原始数据(CSV/JSON)

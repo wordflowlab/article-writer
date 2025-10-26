@@ -359,7 +359,7 @@ tree -L 3 "$PROJECT_ROOT/dist/" 2>/dev/null || find "$PROJECT_ROOT/dist/" -type 
 
 echo
 echo "💡 提示:"
-echo "  - Claude 用户: 使用 /content.audit, /content.write-draft 等命令"
-echo "  - Gemini 用户: 使用 /content:audit, /content:write-draft 等命令"
-echo "  - Codex 用户: 使用 /content-audit, /content-write-draft 等命令"
-echo "  - 其他用户: 使用 /audit, /write-draft 等命令"
+echo "  - Claude 用户: 使用 /content.review, /content.write 等命令"
+echo "  - Gemini 用户: 使用 /content:review, /content:write 等命令"
+echo "  - Codex 用户: 使用 /content-review, /content-write 等命令"
+echo "  - 其他用户: 使用 /review, /write 等命令"

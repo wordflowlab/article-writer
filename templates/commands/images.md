@@ -957,7 +957,7 @@ purple and blue color scheme, clean minimal style, high quality
 4. ⏳ 决策树 - 使用 draw.io / excalidraw 绘制 (可选)
 5. 将补充的图片保存到 images/ 目录
 6. draft.md 中的引用无需修改 ✅
-7. /final-check - 最终检查
+7. /check - 最终检查
 
 ⚠️  重要提醒:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
