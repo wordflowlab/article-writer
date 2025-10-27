@@ -62,7 +62,7 @@ export class TencentCOSProvider implements ImageBedProvider {
             FilePath: imagePath,
             SliceSize: 1024 * 1024 * 5, // 超过 5MB 使用分片上传
           },
-          (err, data) => {
+          (err: Error | null, data: any) => {
             if (err) {
               reject(err);
             } else {
@@ -112,7 +112,7 @@ export class TencentCOSProvider implements ImageBedProvider {
             Bucket: this.config.bucket,
             Region: this.config.region,
           },
-          (err, data) => {
+          (err: Error | null, data: any) => {
             resolve(!err && data.statusCode === 200);
           }
         );

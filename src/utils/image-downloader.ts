@@ -122,9 +122,9 @@ export function validateImage(buffer: Buffer): { valid: boolean; format?: string
 }
 
 /**
- * 获取图片信息(不下载完整文件)
+ * 获取远程图片信息(不下载完整文件)
  */
-export async function getImageInfo(url: string): Promise<ImageInfo | null> {
+export async function getRemoteImageInfo(url: string): Promise<ImageInfo | null> {
   try {
     const response = await axios.head(url, {
       timeout: 10000,

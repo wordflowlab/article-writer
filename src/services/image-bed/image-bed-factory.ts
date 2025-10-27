@@ -3,12 +3,12 @@
  * 负责创建和管理各种图床提供者
  */
 
-import type {
-  ImageBedProvider,
+import {
   ImageBedType,
-  ImageBedFactoryConfig,
-  AnyImageBedConfig,
-  UploadResult,
+  type ImageBedProvider,
+  type ImageBedFactoryConfig,
+  type AnyImageBedConfig,
+  type UploadResult,
 } from './types.js';
 
 import { Base64Provider } from './providers/base64-provider.js';
@@ -208,12 +208,9 @@ export class ImageBedFactory {
  */
 export function createDefaultImageBedFactory(): ImageBedFactory {
   return new ImageBedFactory({
-    defaultProvider: 'base64' as ImageBedType,
+    defaultProvider: ImageBedType.BASE64,
     providers: {
-      'base64': {
-        type: 'base64' as ImageBedType,
-        enabled: true,
-      },
+      [ImageBedType.BASE64]: {},
     },
   });
 }
@@ -226,13 +223,10 @@ export function createImageBedFactoryFromConfig(
 ): ImageBedFactory {
   // 合并默认配置
   const fullConfig: ImageBedFactoryConfig = {
-    defaultProvider: config.defaultProvider || ('base64' as ImageBedType),
-    fallbackProviders: config.fallbackProviders || ['base64' as ImageBedType],
+    defaultProvider: config.defaultProvider || ImageBedType.BASE64,
+    fallbackProviders: config.fallbackProviders || [ImageBedType.BASE64],
     providers: {
-      base64: {
-        type: 'base64' as ImageBedType,
-        enabled: true,
-      },
+      [ImageBedType.BASE64]: {},
       ...config.providers,
     },
   };
