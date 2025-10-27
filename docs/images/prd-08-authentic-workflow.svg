@@ -1,0 +1,117 @@
+<svg width="520" height="1120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#5B9BD5" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="520" height="1120" fill="#FFFFFF"/>
+  
+  <!-- Start Ellipse -->
+  <ellipse cx="260" cy="35" rx="60" ry="25" fill="#90EE90" stroke="#90EE90" stroke-width="2"/>
+  <text x="260" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#000000">开始</text>
+  
+  <!-- Arrow 1 -->
+  <line x1="260" y1="60" x2="260" y2="90" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 1: 准备与选题 -->
+  <g id="step1">
+    <circle cx="54" cy="147" r="20" fill="#FFFFFF" stroke="#FFA500" stroke-width="3"/>
+    <text x="54" y="153" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFA500">1</text>
+    
+    <rect x="85" y="100" width="380" height="95" rx="8" fill="#FFA500" stroke="#FFA500" stroke-width="2"/>
+    
+    <text x="275" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000">阶段1: 准备与选题</text>
+    
+    <text x="100" y="140" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /specify - 定义需求，生成brief（含真实经历需求）</text>
+    <text x="100" y="156" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /topic - 选题讨论，AI只给框架，不给内容</text>
+    <text x="100" y="172" font-family="Arial, sans-serif" font-size="11" fill="#000000">• 输出: 需求brief + 选题框架</text>
+    <text x="100" y="188" font-family="Arial, sans-serif" font-size="11" fill="#000000">• AI角色: 理解和结构化（不生成内容）</text>
+  </g>
+  
+  <!-- Arrow 2 with label -->
+  <line x1="260" y1="195" x2="260" y2="235" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="340" y="220" font-family="Arial, sans-serif" font-size="10" fill="#666666">需求明确，选题框架就绪</text>
+  
+  <!-- Step 2: 素材收集 -->
+  <g id="step2">
+    <circle cx="54" cy="285" r="20" fill="#FFFFFF" stroke="#7FC67F" stroke-width="3"/>
+    <text x="54" y="291" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#7FC67F">2</text>
+    
+    <rect x="85" y="238" width="380" height="95" rx="8" fill="#90EE90" stroke="#90EE90" stroke-width="2"/>
+    
+    <text x="275" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000">阶段2: 素材收集（核心）</text>
+    
+    <text x="100" y="278" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /research - 信息搜索（强调必须用自己的话重写）</text>
+    <text x="100" y="294" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /collect - 搜索个人素材库，提供可用性评级</text>
+    <text x="100" y="310" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /extract ⭐ - 扩展真实经历（AI提问引导，用户写细节）</text>
+    <text x="100" y="326" font-family="Arial, sans-serif" font-size="11" fill="#000000">• 输出: 充足的真实素材 + 扩展的经历（结构化）</text>
+  </g>
+  
+  <!-- Arrow 3 with label -->
+  <line x1="260" y1="333" x2="260" y2="373" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="340" y="358" font-family="Arial, sans-serif" font-size="10" fill="#666666">素材充足，经历已扩展</text>
+  
+  <!-- Step 3: AI教练写作 -->
+  <g id="step3">
+    <circle cx="54" cy="423" r="20" fill="#FFFFFF" stroke="#9370DB" stroke-width="3"/>
+    <text x="54" y="429" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#9370DB">3</text>
+    
+    <rect x="85" y="376" width="380" height="95" rx="8" fill="#B19CD9" stroke="#B19CD9" stroke-width="2"/>
+    
+    <text x="275" y="396" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000">阶段3: AI教练写作（核心改造）⭐</text>
+    
+    <text x="100" y="416" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /write - 逐段引导写作</text>
+    <text x="100" y="432" font-family="Arial, sans-serif" font-size="11" fill="#000000">• 流程: AI提问 → 用户写 → AI检查 → 下一段</text>
+    <text x="100" y="448" font-family="Arial, sans-serif" font-size="11" fill="#000000">• 输出: 初稿（用户亲笔，非AI生成）</text>
+    <text x="100" y="464" font-family="Arial, sans-serif" font-size="11" fill="#000000">• AI角色: 教练（提问、检查，不生成可用内容）</text>
+  </g>
+  
+  <!-- Arrow 4 with label -->
+  <line x1="260" y1="471" x2="260" y2="511" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="340" y="496" font-family="Arial, sans-serif" font-size="10" fill="#666666">初稿完成，用户亲笔写作</text>
+  
+  <!-- Step 4: 质量检查 -->
+  <g id="step4">
+    <circle cx="54" cy="561" r="20" fill="#FFFFFF" stroke="#FF6347" stroke-width="3"/>
+    <text x="54" y="567" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FF6347">4</text>
+    
+    <rect x="85" y="514" width="380" height="95" rx="8" fill="#FF6347" stroke="#FF6347" stroke-width="2"/>
+    
+    <text x="275" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000">阶段4: 质量检查（多层）⭐</text>
+    
+    <text x="100" y="554" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /authentic ⭐ - 5维真实性检查（温度、个性、细节、思想、地域）</text>
+    <text x="100" y="570" font-family="Arial, sans-serif" font-size="11" fill="#000000">• /review - 三遍审校（增强真实性验证）</text>
+    <text x="100" y="586" font-family="Arial, sans-serif" font-size="11" fill="#000000">• 输出: 检查报告 + 修改建议</text>
+    <text x="100" y="602" font-family="Arial, sans-serif" font-size="11" fill="#000000">• AI角色: 检查员（识别AI味、假细节）</text>
+  </g>
+  
+  <!-- Arrow 5 with label -->
+  <line x1="260" y1="609" x2="260" y2="649" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="340" y="634" font-family="Arial, sans-serif" font-size="10" fill="#666666">质量达标，真实性通过</text>
+  
+  <!-- Step 5: 发布准备 -->
+  <g id="step5">
+    <circle cx="54" cy="699" r="20" fill="#FFFFFF" stroke="#228B22" stroke-width="3"/>
+    <text x="54" y="705" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#228B22">5</text>
+    
+    <rect x="85" y="652" width="380" height="95" rx="8" fill="#228B22" stroke="#228B22" stroke-width="2"/>
+    
+    <text x="275" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">阶段5: 发布准备</text>
+    
+    <text x="100" y="692" font-family="Arial, sans-serif" font-size="11" fill="#FFFFFF">• /images - 配图建议</text>
+    <text x="100" y="708" font-family="Arial, sans-serif" font-size="11" fill="#FFFFFF">• /check - 发布前检查（含真实性检查项）</text>
+    <text x="100" y="724" font-family="Arial, sans-serif" font-size="11" fill="#FFFFFF">• /publish - 发布指南</text>
+    <text x="100" y="740" font-family="Arial, sans-serif" font-size="11" fill="#FFFFFF">• 输出: 最终文章（80%来自真实经历）</text>
+  </g>
+  
+  <!-- Arrow 6 -->
+  <line x1="260" y1="747" x2="260" y2="787" stroke="#5B9BD5" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- End Ellipse -->
+  <ellipse cx="260" cy="812" rx="60" ry="25" fill="#228B22" stroke="#228B22" stroke-width="2"/>
+  <text x="260" y="819" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">发布完成</text>
+</svg>
+
+

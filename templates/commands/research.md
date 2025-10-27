@@ -3,7 +3,7 @@ description: 基于brief进行信息调研
 argument-hint: [brief文件路径或项目编号或文档URL]
 allowed-tools: Read(//*), Write(//_knowledge_base/**), WebSearch, WebFetch, Bash
 scripts:
-  sh: .specify/scripts/bash/research.sh
+  sh: scripts/bash/research.sh
 ---
 
 # 信息调研

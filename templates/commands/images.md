@@ -3,7 +3,7 @@ description: 生成配图建议(封面/插图/图表)
 argument-hint: [项目路径]
 allowed-tools: Read(//workspaces/**/draft.md), Write(//workspaces/**/images-plan.md)
 scripts:
-  sh: .specify/scripts/bash/images.sh
+  sh: scripts/bash/images.sh
 ---
 
 # 配图系统

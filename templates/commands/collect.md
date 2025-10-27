@@ -3,7 +3,7 @@ description: 搜索个人素材库中的真实经历
 argument-hint: [关键词或主题]
 allowed-tools: Read(//materials/**), Grep(//materials/**), Write(//workspaces/**/materials-found.md)
 scripts:
-  sh: .specify/scripts/bash/collect.sh
+  sh: scripts/bash/collect.sh
 ---
 
 # 素材搜索

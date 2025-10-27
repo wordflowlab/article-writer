@@ -90,13 +90,14 @@ generate_commands() {
     case $ext in
       toml)
         # TOML 格式 (Gemini, Qwen) - 只支持 description 和 prompt
+        # 使用单引号字符串 (literal strings) 以避免转义问题和更好的 Unicode 支持
         local output_file="${namespace}${name}.$ext"
         {
           [[ -n "$description" ]] && echo "description = \"$description\""
           [[ -n "$description" ]] && echo
-          echo "prompt = \"\"\""
+          echo "prompt = '''"
           echo "$prompt_body"
-          echo "\"\"\""
+          echo "'''"
         } > "$output_dir/$output_file"
         ;;
       md|prompt.md)

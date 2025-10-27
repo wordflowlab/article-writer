@@ -1,10 +1,9 @@
 ---
 description: 准备发布(生成各平台格式,自动生成微信富文本)
 argument-hint: [平台] [项目路径] - 平台: wechat|zhihu|all
-allowed-tools: Read(//workspaces/**/draft.md, //.content/config.json), Write(//workspaces/**/publish/**), Bash({SCRIPT})
+allowed-tools: Read(//workspaces/**/draft.md, //.content/config.json), Write(//workspaces/**/publish/**), Bash
 scripts:
-  - name: format-wechat
-    path: {SCRIPT}
+  sh: scripts/bash/format-wechat.sh
 ---
 
 # 发布准备

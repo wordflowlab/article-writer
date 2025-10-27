@@ -3,7 +3,7 @@ description: 三遍审校优化文章(content/style/detail)
 argument-hint: <mode> [项目路径] - mode: content|style|detail
 allowed-tools: Read(//workspaces/**/draft.md), Edit(//workspaces/**/draft.md), Write(//workspaces/**/review-log.md)
 scripts:
-  sh: .specify/scripts/bash/review.sh
+  sh: scripts/bash/review.sh
 ---
 
 # 三遍审校 - 降低AI味的核心系统

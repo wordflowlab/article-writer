@@ -78,4 +78,4 @@ memory/*
 # Windows
 desktop.ini
 
-other/.npm-cache/
+other/

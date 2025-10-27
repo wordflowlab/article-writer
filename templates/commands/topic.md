@@ -3,7 +3,7 @@ description: 讨论选题方向并等待用户选择
 argument-hint: [项目编号或brief文件路径]
 allowed-tools: Read(//*), Write(//_briefs/**), Write(//workspaces/**/specification.md)
 scripts:
-  sh: .specify/scripts/bash/topic.sh
+  sh: scripts/bash/topic.sh
 ---
 
 # 选题讨论
