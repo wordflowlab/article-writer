@@ -1,6 +1,6 @@
 {
   "name": "article-writer-cn",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "type": "module",
   "description": "AI 驱动的智能写作系统 - 专注公众号/自媒体文章创作",
   "keywords": [
@@ -22,6 +22,7 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "chmod +x dist/cli.js",
+    "postinstall": "node scripts/postinstall.cjs",
     "build:commands": "bash scripts/build/generate-commands.sh --agents=claude,gemini,cursor,windsurf,roocode,copilot,qwen,opencode,codex,kilocode,auggie,codebuddy,q --scripts=sh",
     "dev": "tsx src/cli.ts",
     "start": "node dist/cli.js",

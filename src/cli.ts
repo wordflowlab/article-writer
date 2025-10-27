@@ -498,6 +498,48 @@ node_modules/
         }
       }
 
+      // Codex 平台特殊处理：安装 prompts 到用户主目录
+      const isCodexSelected = targetAI.includes('codex') || options.ai === 'codex';
+      if (isCodexSelected) {
+        spinner.text = '配置 Codex 平台...';
+
+        try {
+          const os = await import('os');
+          const codexPromptsDir = path.join(os.homedir(), '.codex', 'prompts');
+          const sourcePromptsDir = path.join(projectPath, '.codex', 'prompts');
+
+          // 检查源目录是否存在
+          if (await fs.pathExists(sourcePromptsDir)) {
+            // 创建目标目录
+            await fs.ensureDir(codexPromptsDir);
+
+            // 检查是否已安装（避免覆盖）
+            const testFile = path.join(codexPromptsDir, 'content-specify.md');
+            if (!await fs.pathExists(testFile)) {
+              // 复制所有 .md 文件到 ~/.codex/prompts/
+              const promptFiles = await fs.readdir(sourcePromptsDir);
+              let installedCount = 0;
+
+              for (const file of promptFiles) {
+                if (file.endsWith('.md')) {
+                  const sourcePath = path.join(sourcePromptsDir, file);
+                  const targetPath = path.join(codexPromptsDir, file);
+                  await fs.copy(sourcePath, targetPath);
+                  installedCount++;
+                }
+              }
+
+              spinner.info(chalk.green(`✓ Codex prompts 已安装到 ~/.codex/prompts/ (${installedCount} 个)`));
+            } else {
+              spinner.info(chalk.yellow('ℹ Codex prompts 已存在，跳过安装'));
+            }
+          }
+        } catch (error: any) {
+          spinner.warn(chalk.yellow(`Codex prompts 安装失败: ${error.message}`));
+          console.log(chalk.gray('  可以稍后手动运行: bash .content/scripts/bash/setup-codex.sh'));
+        }
+      }
+
       spinner.succeed(chalk.green(`文章项目 "${name}" 创建成功！`));
 
       // 显示后续步骤

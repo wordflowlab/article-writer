@@ -206,11 +206,28 @@ mkdir -p workspaces/wechat/articles/my-article/publish
 
 生成微信公众号格式：
 
-```bash
-bash .content/scripts/bash/format-wechat.sh \
-  workspaces/wechat/articles/my-article/draft.md \
-  workspaces/wechat/articles/my-article/publish/wechat.html
-```
+**根据操作系统选择合适的脚本:**
+
+- **macOS/Linux:**
+  ```bash
+  bash .content/scripts/bash/format-wechat.sh \
+    workspaces/wechat/articles/my-article/draft.md \
+    workspaces/wechat/articles/my-article/publish/wechat.html
+  ```
+
+- **Windows PowerShell:**
+  ```powershell
+  pwsh .content/scripts/bash/format-wechat.ps1 \
+    workspaces/wechat/articles/my-article/draft.md \
+    workspaces/wechat/articles/my-article/publish/wechat.html
+  ```
+
+- **跨平台 (Node.js):**
+  ```bash
+  node .content/scripts/format-wechat.js \
+    workspaces/wechat/articles/my-article/draft.md \
+    workspaces/wechat/articles/my-article/publish/wechat.html
+  ```
 
 **生成文件:**
 - ✅ `publish/wechat.html` (交互式 HTML，带一键复制)
