@@ -53,11 +53,21 @@ if [ ! -f "$CONFIG_FILE" ]; then
   THEME="default"
   PRIMARY_COLOR="#3f51b5"
   FONT_SIZE="16px"
+  FONT_FAMILY="-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
+  IS_USE_INDENT="false"
+  IS_USE_JUSTIFY="false"
+  IS_SHOW_LINE_NUMBER="false"
+  CITE_STATUS="true"
 else
   # 读取配置(使用 node 解析 JSON)
   THEME=$(node -p "try { const c = require('$CONFIG_FILE'); c.formatting?.theme || 'default' } catch(e) { 'default' }" 2>/dev/null || echo "default")
   PRIMARY_COLOR=$(node -p "try { const c = require('$CONFIG_FILE'); c.formatting?.primaryColor || '#3f51b5' } catch(e) { '#3f51b5' }" 2>/dev/null || echo "#3f51b5")
   FONT_SIZE=$(node -p "try { const c = require('$CONFIG_FILE'); c.formatting?.fontSize || '16px' } catch(e) { '16px' }" 2>/dev/null || echo "16px")
+  FONT_FAMILY=$(node -p "try { const c = require('$CONFIG_FILE'); c.formatting?.fontFamily || '-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif' } catch(e) { '-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif' }" 2>/dev/null || echo "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif")
+  IS_USE_INDENT=$(node -p "try { const c = require('$CONFIG_FILE'); String(c.formatting?.isUseIndent || false) } catch(e) { 'false' }" 2>/dev/null || echo "false")
+  IS_USE_JUSTIFY=$(node -p "try { const c = require('$CONFIG_FILE'); String(c.formatting?.isUseJustify || false) } catch(e) { 'false' }" 2>/dev/null || echo "false")
+  IS_SHOW_LINE_NUMBER=$(node -p "try { const c = require('$CONFIG_FILE'); String(c.formatting?.isShowLineNumber || false) } catch(e) { 'false' }" 2>/dev/null || echo "false")
+  CITE_STATUS=$(node -p "try { const c = require('$CONFIG_FILE'); String(c.formatting?.citeStatus !== false) } catch(e) { 'true' }" 2>/dev/null || echo "true")
 fi
 
 # 使用 Node.js 调用格式化器
@@ -96,10 +106,11 @@ const options = {
   theme: '$THEME',
   primaryColor: '$PRIMARY_COLOR',
   fontSize: '$FONT_SIZE',
-  isUseIndent: false,
-  isUseJustify: false,
-  isShowLineNumber: false,
-  citeStatus: true
+  fontFamily: '$FONT_FAMILY',
+  isUseIndent: '$IS_USE_INDENT' === 'true',
+  isUseJustify: '$IS_USE_JUSTIFY' === 'true',
+  isShowLineNumber: '$IS_SHOW_LINE_NUMBER' === 'true',
+  citeStatus: '$CITE_STATUS' === 'true'
 };
 
 // 格式化并导出

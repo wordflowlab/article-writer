@@ -1,6 +1,6 @@
 ---
-description: 准备发布(生成各平台格式,自动生成微信富文本)
-argument-hint: [平台] [项目路径] - 平台: wechat|zhihu|all
+description: 准备发布(根据工作区类型自动生成对应平台格式)
+argument-hint: 无需参数,自动识别工作区类型
 allowed-tools: Read(//workspaces/**/draft.md, //.content/config.json), Write(//workspaces/**/publish/**), Bash
 scripts:
   sh: scripts/bash/format-wechat.sh
@@ -10,13 +10,35 @@ scripts:
 
 ## 功能说明
 
-将文章转换为各平台所需格式,自动生成微信公众号富文本 HTML。
+根据工作区配置生成对应平台格式。
+
+## ⚠️ 重要提醒
+
+**在执行任何操作前，必须先完成以下步骤：**
+
+1. **读取 `.content/config.json`**
+2. **检查 `workspace` 字段的值**
+3. **只生成该工作区对应的平台文件**
+
+**禁止行为:**
+- ❌ 不要猜测工作区类型
+- ❌ 不要生成多个平台的文件
+- ❌ 不要为 wechat 工作区生成 zhihu.md
+- ❌ 不要为 video 工作区生成 wechat.html
+- ❌ 不要为 general 工作区生成 wechat.html
+
+**正确做法:**
+- ✅ 先读配置
+- ✅ 根据 `workspace` 字段决定
+- ✅ 只生成对应平台的文件
 
 ---
 
 ## 支持平台
 
-### 1. 公众号 (WeChat) ⭐️ 自动格式化 + 一键复制
+⚠️ **重要**: 根据工作区类型自动生成对应平台格式
+
+### 1. wechat 工作区 → 微信公众号 ⭐️
 
 **自动生成:**
 - ✅ 微信富文本 HTML (可直接复制到公众号后台)
@@ -31,49 +53,86 @@ scripts:
 - `publish/wechat.html` - 交互式 HTML,带一键复制功能
 - `publish/wechat.md` - Markdown 原文(备份)
 
-### 2. 知乎 (Zhihu)
+### 2. video 工作区 → 视频脚本
 
-**格式要求:**
-- Markdown格式(知乎支持基础Markdown)
-- 图片需上传知乎图床或使用外链
-- 代码块使用```标记
+**格式特点:**
+- 口语化表达(AI味<20%)
+- 分镜标注
+- 时长计算(1分钟≈150-180字)
+- Hook设计(前3秒抓人)
 
-**输出文件**: `publish/zhihu.md`
+**输出文件**: `publish/video-script.md`
 
-### 3. 其他平台
+### 3. general 工作区 → 通用格式
 
-- 简书: Markdown
-- Medium: Markdown
-- 个人博客: HTML或Markdown
+**格式特点:**
+- 标准Markdown
+- 灵活配置
+- SEO优化选项
+- 多平台适配
+
+**输出文件**: `publish/article.md`
+
+**可用于:**
+- 知乎、简书、Medium
+- 个人博客
+- 技术文档站
 
 ---
 
 ## 使用方式
 
-### 生成所有平台格式
+### 自动识别工作区类型
+
 ```bash
-/publish all
+/publish
 ```
 
-### 生成指定平台
-```bash
-/publish wechat
-/publish zhihu
-```
+**系统会自动:**
+1. 检查当前工作区类型（wechat/video/general）
+2. 生成对应平台的格式
+3. 不会生成其他平台的格式
+
+**示例:**
+- 在 `workspaces/wechat/` 中执行 → 只生成微信格式
+- 在 `workspaces/video/` 中执行 → 只生成视频脚本格式
+- 在 `workspaces/general/` 中执行 → 只生成通用格式
 
 ---
 
 ## 输出结构
 
+### wechat 工作区
+
 ```
 workspaces/wechat/articles/001-claude-code-评测/
 └── publish/
-    ├── wechat.md          # 公众号格式
-    ├── zhihu.md           # 知乎格式
+    ├── wechat.html        # 微信富文本预览(带一键复制)
+    ├── wechat.md          # Markdown原文备份
     ├── images/            # 复制的图片
     │   ├── cover.png
     │   └── screenshot-1.png
     └── metadata.json      # 元信息(标题/标签/摘要)
+```
+
+### general 工作区
+
+```
+workspaces/general/articles/001-my-article/
+└── publish/
+    ├── article.md         # 通用Markdown格式
+    ├── images/            # 复制的图片
+    └── metadata.json      # 元信息
+```
+
+### video 工作区
+
+```
+workspaces/video/articles/001-my-video/
+└── publish/
+    ├── video-script.md    # 视频脚本
+    ├── images/            # 脚本配图
+    └── metadata.json      # 元信息
 ```
 
 ---
@@ -105,47 +164,47 @@ workspaces/wechat/articles/001-claude-code-评测/
 
 ---
 
-## 平台特殊处理
-
-### 公众号
-
-**样式处理:**
-- 标题居中
-- 引用块特殊样式
-- 代码块语法高亮
-
-**图片处理:**
-- 建议先上传到微信公众平台,获取图片URL
-- 或使用图床(如图壳、SM.MS)
-
-### 知乎
-
-**限制:**
-- 标题不能过长(建议<30字)
-- 不支持部分Markdown语法(如表格嵌套)
-
-**优化:**
-- 添加知乎话题标签
-- 首段总结(提升推荐率)
-
----
-
 ## 执行流程
 
-### 第 1 步: 定位文章文件
+### 第 1 步: 读取工作区配置 ⚠️ 必须
+
+**在生成任何文件前，必须先读取配置！**
+
+```bash
+# 读取 .content/config.json
+cat .content/config.json
+```
+
+**检查 `workspace` 字段:**
+```json
+{
+  "workspace": "wechat"  // 或 "video" 或 "general"
+}
+```
+
+**根据配置决定生成哪些文件:**
+- `"workspace": "wechat"` → 只生成 `wechat.html` 和 `wechat.md`
+- `"workspace": "video"` → 只生成 `video-script.md`
+- `"workspace": "general"` → 只生成 `article.md`
+
+### 第 2 步: 定位文章文件
 
 1. 在当前工作区目录下查找 `draft.md` 或最新的文章文件
 2. 确认文章路径,例如: `workspaces/wechat/articles/my-article/draft.md`
 
-### 第 2 步: 创建发布目录
+### 第 3 步: 创建发布目录
 
 ```bash
 mkdir -p workspaces/wechat/articles/my-article/publish
 ```
 
-### 第 3 步: 生成微信格式化 HTML (自动打开浏览器)
+### 第 4 步: 根据工作区类型生成对应格式
 
-调用格式化脚本:
+**⚠️ 必须根据第1步读取的 `workspace` 配置来决定！**
+
+#### 情况A: workspace = "wechat"
+
+生成微信公众号格式：
 
 ```bash
 bash .content/scripts/bash/format-wechat.sh \
@@ -153,33 +212,41 @@ bash .content/scripts/bash/format-wechat.sh \
   workspaces/wechat/articles/my-article/publish/wechat.html
 ```
 
+**生成文件:**
+- ✅ `publish/wechat.html` (交互式 HTML，带一键复制)
+- ✅ `publish/wechat.md` (Markdown 备份)
+- ❌ 不生成 zhihu.md 或其他平台文件
+
 **脚本会自动:**
-1. 生成交互式 HTML 文件(带一键复制按钮)
-2. 在默认浏览器中打开预览
-3. 显示使用说明
+1. 读取 `.content/config.json` 中的 `formatting` 配置
+2. 生成交互式 HTML 文件(带一键复制按钮)
+3. 在默认浏览器中打开预览
 
-**配置说明**:
+#### 情况B: workspace = "video"
 
-格式化会自动读取 `.content/config.json` 中的 `formatting` 配置:
+生成视频脚本格式：
 
-```json
-{
-  "formatting": {
-    "theme": "default",              // 主题: default | grace | simple
-    "primaryColor": "#3f51b5",       // 主题色
-    "fontSize": "16px",              // 字体大小
-    "isUseIndent": false,            // 首行缩进
-    "isUseJustify": false,           // 两端对齐
-    "isShowLineNumber": false,       // 代码行号
-    "citeStatus": true               // 脚注
-  }
-}
+```bash
+# 复制 draft.md 到 publish/video-script.md
+cp draft.md publish/video-script.md
 ```
 
-### 第 4 步: 生成其他平台格式(可选)
+**生成文件:**
+- ✅ `publish/video-script.md` (视频脚本)
+- ❌ 不生成 wechat.html 或其他平台文件
 
-- 知乎格式: 直接复制 Markdown 原文
-- 其他平台: 根据需要调整
+#### 情况C: workspace = "general"
+
+生成通用Markdown格式：
+
+```bash
+# 复制 draft.md 到 publish/article.md
+cp draft.md publish/article.md
+```
+
+**生成文件:**
+- ✅ `publish/article.md` (通用格式)
+- ❌ 不生成 wechat.html 或其他平台文件
 
 ### 第 5 步: 生成元信息
 
@@ -200,6 +267,8 @@ bash .content/scripts/bash/format-wechat.sh \
 
 ## 输出示例
 
+### wechat 工作区输出
+
 ```
 ✅ 发布文件已生成！
 
@@ -208,7 +277,6 @@ bash .content/scripts/bash/format-wechat.sh \
 📄 生成文件:
 - wechat.html (微信富文本预览, 可在浏览器打开)
 - wechat.md (Markdown原文备份)
-- zhihu.md (知乎格式)
 - metadata.json (元信息)
 
 🎨 格式化配置:
@@ -232,13 +300,41 @@ bash .content/scripts/bash/format-wechat.sh \
 5. 检查格式和图片
 6. 发布!
 
-**知乎发布**:
-1. 复制 `publish/zhihu.md` 内容
-2. 粘贴到知乎编辑器
-3. 上传图片
-4. 发布!
-
 🎉 恭喜完成整个写作流程！
+```
+
+### general 工作区输出
+
+```
+✅ 发布文件已生成！
+
+📦 输出目录: workspaces/general/articles/my-article/publish/
+
+📄 生成文件:
+- article.md (通用Markdown格式)
+- metadata.json (元信息)
+
+💡 下一步:
+1. 根据目标平台调整格式
+2. 上传图片到对应平台
+3. 发布!
+```
+
+### video 工作区输出
+
+```
+✅ 发布文件已生成！
+
+📦 输出目录: workspaces/video/articles/my-video/publish/
+
+📄 生成文件:
+- video-script.md (视频脚本格式)
+- metadata.json (元信息)
+
+💡 下一步:
+1. 根据脚本拍摄视频
+2. 上传到视频平台
+3. 发布!
 ```
 
 ---
