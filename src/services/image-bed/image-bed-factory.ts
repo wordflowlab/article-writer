@@ -210,7 +210,9 @@ export function createDefaultImageBedFactory(): ImageBedFactory {
   return new ImageBedFactory({
     defaultProvider: ImageBedType.BASE64,
     providers: {
-      [ImageBedType.BASE64]: {},
+      [ImageBedType.BASE64]: {
+        type: ImageBedType.BASE64,
+      },
     },
   });
 }
@@ -226,7 +228,9 @@ export function createImageBedFactoryFromConfig(
     defaultProvider: config.defaultProvider || ImageBedType.BASE64,
     fallbackProviders: config.fallbackProviders || [ImageBedType.BASE64],
     providers: {
-      [ImageBedType.BASE64]: {},
+      [ImageBedType.BASE64]: {
+        type: ImageBedType.BASE64,
+      },
       ...config.providers,
     },
   };

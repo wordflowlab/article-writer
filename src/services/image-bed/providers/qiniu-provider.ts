@@ -81,7 +81,7 @@ export class QiniuProvider implements ImageBedProvider {
           key,
           imagePath,
           putExtra,
-          (err: Error | null, respBody: any, respInfo: any) => {
+          (err: Error | undefined, respBody: any, respInfo: any) => {
             if (err) {
               reject(err);
             } else if (respInfo.statusCode === 200) {
@@ -131,7 +131,7 @@ export class QiniuProvider implements ImageBedProvider {
         this.bucketManager.stat(
           this.config.bucket,
           'test-validation-file',
-          (err: Error | null, respBody: any, respInfo: any) => {
+          (err: Error | undefined, respBody: any, respInfo: any) => {
             // 只要能连接到 API 就认为配置有效
             // 404 也是正常的(文件不存在)
             resolve(respInfo.statusCode === 404 || respInfo.statusCode === 200);
