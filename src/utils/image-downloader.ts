@@ -360,3 +360,77 @@ export async function saveDownloadLog(
 
   await fs.writeJson(logPath, log, { spaces: 2 });
 }
+
+/**
+ * 将本地图片文件转换为 Base64 Data URI
+ * 适用于微信公众号一键复制功能
+ *
+ * @param imagePath - 图片文件的绝对路径
+ * @returns Base64 Data URI 字符串 (如: data:image/png;base64,...)
+ * @throws 如果文件不存在或读取失败
+ *
+ * @example
+ * ```typescript
+ * const dataUri = await imageToBase64('/path/to/image.png');
+ * // 返回: "data:image/png;base64,iVBORw0KGgoAAAANS..."
+ * ```
+ */
+export async function imageToBase64(imagePath: string): Promise<string> {
+  // 检查文件是否存在
+  if (!await fs.pathExists(imagePath)) {
+    throw new Error(`图片文件不存在: ${imagePath}`);
+  }
+
+  // 读取图片文件
+  const imageBuffer = await fs.readFile(imagePath);
+
+  // 验证图片格式
+  const validation = validateImage(imageBuffer);
+  if (!validation.valid) {
+    throw new Error(`无效的图片文件: ${imagePath}`);
+  }
+
+  // 转换为 base64
+  const base64 = imageBuffer.toString('base64');
+
+  // 获取 MIME 类型
+  const ext = validation.format || path.extname(imagePath).slice(1);
+  const mimeType = ext === 'jpg' ? 'jpeg' : ext;
+
+  // 返回 Data URI
+  return `data:image/${mimeType};base64,${base64}`;
+}
+
+/**
+ * 判断路径是否为本地文件路径
+ * (非 http/https URL)
+ */
+export function isLocalPath(urlOrPath: string): boolean {
+  return !urlOrPath.startsWith('http://') && !urlOrPath.startsWith('https://');
+}
+
+/**
+ * 获取图片文件的大小(字节)和格式信息
+ */
+export async function getImageInfo(imagePath: string): Promise<ImageInfo | null> {
+  try {
+    if (!await fs.pathExists(imagePath)) {
+      return null;
+    }
+
+    const stats = await fs.stat(imagePath);
+    const buffer = await fs.readFile(imagePath);
+    const validation = validateImage(buffer);
+
+    if (!validation.valid) {
+      return null;
+    }
+
+    return {
+      format: validation.format || 'unknown',
+      size: stats.size,
+    };
+  } catch (error) {
+    return null;
+  }
+}

@@ -53,6 +53,9 @@ export interface FormatOptions {
   isUseJustify?: boolean; // 两端对齐
   isShowLineNumber?: boolean; // 代码行号
   citeStatus?: boolean; // 脚注
+  // 图床配置
+  imageBedFactory?: any; // ImageBedFactory 实例(可选)
+  convertLocalImages?: boolean; // 是否转换本地图片(默认true)
 }
 
 /**
@@ -239,6 +242,8 @@ export class WechatFormatter {
   private theme: WechatTheme;
   private footnotes: Array<[number, string, string]> = [];
   private footnoteIndex: number = 0;
+  private imageBedFactory: any; // ImageBedFactory 实例
+  private localImages: Array<{ originalSrc: string; placeholder: string }> = [];
 
   constructor(options: FormatOptions = {}) {
     this.options = {
@@ -249,9 +254,11 @@ export class WechatFormatter {
       isUseJustify: false,
       isShowLineNumber: false,
       citeStatus: true,
+      convertLocalImages: true, // 默认转换本地图片
       ...options,
     };
 
+    this.imageBedFactory = options.imageBedFactory;
     this.theme = buildTheme(this.options);
 
     // 配置 marked
@@ -312,12 +319,65 @@ export class WechatFormatter {
   }
 
   /**
+   * 判断是否为本地图片路径
+   */
+  private isLocalImagePath(src: string): boolean {
+    // 不是 http/https URL 就认为是本地路径
+    return !src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('data:');
+  }
+
+  /**
+   * 处理本地图片上传
+   */
+  private async processLocalImages(html: string): Promise<string> {
+    if (!this.imageBedFactory || this.localImages.length === 0) {
+      return html;
+    }
+
+    let processedHtml = html;
+
+    // 批量上传所有本地图片
+    for (let i = 0; i < this.localImages.length; i++) {
+      const { originalSrc, placeholder } = this.localImages[i];
+
+      try {
+        // 使用图床工厂上传图片
+        const result = await this.imageBedFactory.uploadWithFallback(originalSrc);
+
+        if (result.success) {
+          // 替换占位符为实际 URL
+          processedHtml = processedHtml.replace(
+            new RegExp(placeholder, 'g'),
+            result.url
+          );
+        } else {
+          console.error(`图片上传失败: ${originalSrc}`, result.error);
+          // 保留原路径
+          processedHtml = processedHtml.replace(
+            new RegExp(placeholder, 'g'),
+            originalSrc
+          );
+        }
+      } catch (error) {
+        console.error(`图片处理异常: ${originalSrc}`, error);
+        processedHtml = processedHtml.replace(
+          new RegExp(placeholder, 'g'),
+          originalSrc
+        );
+      }
+    }
+
+    return processedHtml;
+  }
+
+  /**
    * 格式化 Markdown 为微信 HTML
    */
   public async format(markdown: string): Promise<string> {
-    // 重置脚注
+    // 重置状态
     this.footnotes = [];
     this.footnoteIndex = 0;
+    this.localImages = [];
 
     const self = this;
 
@@ -384,7 +444,24 @@ export class WechatFormatter {
         const captionHtml = caption
           ? `<figcaption style="text-align:center;color:#888;font-size:0.9em;margin-top:0.5em">${caption}</figcaption>`
           : '';
-        return `<figure ${self.getStyles('image')}><img src="${token.href}" alt="${token.text || ''}" ${self.getStyles('image')}/>${captionHtml}</figure>`;
+
+        // 图片 URL 处理:支持本地图片转换
+        let imageSrc = token.href;
+
+        // 如果配置了图床工厂且需要转换本地图片
+        if (self.imageBedFactory && self.options.convertLocalImages !== false) {
+          // 标记需要处理的本地图片
+          // 实际转换将在 format() 方法中异步处理
+          if (self.isLocalImagePath(imageSrc)) {
+            self.localImages.push({
+              originalSrc: imageSrc,
+              placeholder: `__LOCAL_IMAGE_${self.localImages.length}__`,
+            });
+            imageSrc = `__LOCAL_IMAGE_${self.localImages.length - 1}__`;
+          }
+        }
+
+        return `<figure ${self.getStyles('image')}><img src="${imageSrc}" alt="${token.text || ''}" ${self.getStyles('image')}/>${captionHtml}</figure>`;
       }
 
       link(token: Tokens.Link): string {
@@ -449,7 +526,10 @@ export class WechatFormatter {
     content += this.buildFootnotes();
 
     // 包裹容器
-    const container = `<section ${this.getStyles('container')}>${content}</section>`;
+    let container = `<section ${this.getStyles('container')}>${content}</section>`;
+
+    // 处理本地图片上传(如果配置了图床)
+    container = await this.processLocalImages(container);
 
     return container;
   }
