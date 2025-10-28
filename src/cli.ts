@@ -578,7 +578,7 @@ node_modules/
       console.log(`     ${chalk.cyan('/topic')}          - 选题讨论（提供3-4个方向）`);
       console.log(`     ${chalk.cyan('/research')}       - 信息搜索与调研 ⭐ 支持文档爬取`);
       console.log(`     ${chalk.cyan('/collect')}        - 搜索个人素材库`);
-      console.log(`     ${chalk.cyan('/write')}          - 创作初稿`);
+      console.log(`     ${chalk.cyan('/write')}          - 创作初稿 ⭐ 支持三种模式选择`);
       console.log(`     ${chalk.cyan('/review')}         - 三遍审校（降低AI味）`);
       console.log(`     ${chalk.cyan('/images')}         - 配图建议`);
       console.log(`     ${chalk.cyan('/check')}          - 发布前检查`);
@@ -1834,7 +1834,7 @@ program.on('--help', () => {
   console.log('  /topic          - 选题讨论（提供3-4个方向）');
   console.log('  /research       - 信息搜索与调研 ⭐ 支持文档爬取');
   console.log('  /collect        - 搜索个人素材库');
-  console.log('  /write          - 创作初稿');
+  console.log('  /write          - 创作初稿 ⭐ 支持三种模式（教练/快速/混合）');
   console.log('  /review         - 三遍审校（降低AI味）');
   console.log('  /images         - 配图建议');
   console.log('  /check          - 发布前检查');
