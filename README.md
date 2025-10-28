@@ -435,3 +435,8 @@ MIT License
 ---
 
 **Article Writer** - 让 AI 成为你的写作伙伴！ ✨📝
+
+欢迎加入AI 写作群聊
+
+![a0d2e31de7de890243d7387d3966ba74](https://github.com/user-attachments/assets/9b675cb5-855a-46ac-b9d8-a6f946d7ec00)
+
