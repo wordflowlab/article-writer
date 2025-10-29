@@ -61,6 +61,19 @@
 npm install -g article-writer-cn
 ```
 
+**可选功能**（按需安装）：
+
+```bash
+# 如需动态页面爬虫（SPA 网站）
+npm install -g puppeteer
+
+# 如需云存储图床
+npm install -g ali-oss         # 阿里云 OSS
+npm install -g @aws-sdk/client-s3   # AWS S3
+npm install -g cos-nodejs-sdk-v5    # 腾讯云 COS
+npm install -g qiniu           # 七牛云
+```
+
 ### 2. 初始化项目
 
 ```bash

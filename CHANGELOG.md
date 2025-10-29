@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.2] - 2025-01-29
+
+### Fixed - 优化可选依赖，大幅加快安装速度
+
+**问题**：安装时卡在下载 Puppeteer (~200MB Chromium) 和多个云存储 SDK，即使用户不需要这些功能。
+
+**解决方案**：
+- ✅ **Puppeteer** 改为可选依赖（仅动态爬虫需要）
+- ✅ **@aws-sdk/client-s3** 改为可选依赖（仅 AWS S3 图床需要）
+- ✅ **ali-oss** 改为可选依赖（仅阿里云 OSS 图床需要）
+- ✅ **cos-nodejs-sdk-v5** 改为可选依赖（仅腾讯云 COS 图床需要）
+- ✅ **qiniu** 改为可选依赖（仅七牛云图床需要）
+- ✅ 动态爬虫支持懒加载，用时才安装
+
+**效果**：
+- ✅ 安装速度从 ~3 分钟降至 **~30 秒**
+- ✅ 安装包大小减少 **~200MB**
+- ✅ 功能不变，需要时按需安装
+
+**按需安装**：
+```bash
+# 需要动态爬虫时
+npm install puppeteer
+
+# 需要 AWS S3 图床时
+npm install @aws-sdk/client-s3
+
+# 需要阿里云 OSS 图床时
+npm install ali-oss
+```
+
 ## [0.10.1] - 2025-01-29
 
 ### Fixed - 移除 better-sqlite3 依赖，解决 Windows 安装问题

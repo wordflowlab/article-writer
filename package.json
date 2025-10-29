@@ -1,6 +1,6 @@
 {
   "name": "article-writer-cn",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "type": "module",
   "description": "AI 驱动的智能写作系统 - 专注公众号/自媒体文章创作",
   "keywords": [
@@ -32,12 +32,9 @@
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.0.0",
-    "@aws-sdk/client-s3": "^3.700.0",
-    "ali-oss": "^6.21.0",
     "axios": "^1.6.0",
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
-    "cos-nodejs-sdk-v5": "^2.14.9",
     "dotenv": "^16.3.1",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
@@ -49,9 +46,14 @@
     "ora": "^8.0.1",
     "p-limit": "^5.0.0",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^21.6.1",
-    "qiniu": "^7.14.0",
     "turndown": "^7.1.2"
+  },
+  "optionalDependencies": {
+    "puppeteer": "^21.6.1",
+    "@aws-sdk/client-s3": "^3.700.0",
+    "ali-oss": "^6.21.0",
+    "cos-nodejs-sdk-v5": "^2.14.9",
+    "qiniu": "^7.14.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.35",

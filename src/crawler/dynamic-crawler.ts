@@ -2,10 +2,25 @@
  * 动态页面爬虫 - 使用 Puppeteer 处理 JavaScript 渲染的页面
  */
 
-import puppeteer, { Browser, Page } from 'puppeteer';
 import * as cheerio from 'cheerio';
 import type { CrawlerConfig } from './types.js';
 import { DocumentationCrawler } from './doc-crawler.js';
+
+// 动态导入 puppeteer（可选依赖）
+type Browser = any;
+type Page = any;
+
+async function loadPuppeteer() {
+  try {
+    const pptr = await import('puppeteer');
+    return pptr.default || pptr;
+  } catch (err) {
+    throw new Error(
+      '❌ Puppeteer 未安装。请运行: npm install puppeteer\n' +
+      '   或使用静态爬虫（移除 --dynamic 参数）'
+    );
+  }
+}
 
 export class DynamicCrawler extends DocumentationCrawler {
   private browser: Browser | null = null;
@@ -21,6 +36,8 @@ export class DynamicCrawler extends DocumentationCrawler {
   private async initBrowser(): Promise<void> {
     if (this.browser) return;
 
+    const puppeteer = await loadPuppeteer();
+    
     console.log('🌐 启动 Puppeteer 浏览器...');
     this.browser = await puppeteer.launch({
       headless: true,
