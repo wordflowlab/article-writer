@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.8] - 2025-10-29
+
+### Fixed - 修复微信格式化脚本加载问题
+
+**问题描述**：
+- 微信格式化脚本（format-wechat.sh/ps1）报错 `Cannot find module 'article-writer-cn'`
+- 在开发环境和用户工作区中无法正确加载格式化器模块
+
+**根本原因**：
+- 脚本优先尝试从 npm 包加载，但在开发环境应优先使用本地编译的模块
+- 缺少对脚本所在位置的智能检测
+
+**解决方案**：
+- ✅ 调整加载策略优先级：开发环境 > 本地安装 > 全局安装 > 特殊位置
+- ✅ 添加脚本位置检测，自动推导项目根目录
+- ✅ 增加文件存在性检查，避免无效尝试
+- ✅ 支持多种安装场景的兼容性
+
+**影响文件**：
+- `scripts/bash/format-wechat.sh`
+- `scripts/powershell/format-wechat.ps1`
+
+**测试验证**：
+- ✅ 开发环境测试通过
+- ✅ 用户工作区测试通过
+- ✅ HTML 生成功能正常
+
 ## [0.10.7] - 2025-01-29
 
 ### Removed - 移除截稿时间询问
