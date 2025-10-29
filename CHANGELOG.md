@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.7] - 2025-01-29
+
+### Removed - 移除截稿时间询问
+
+**原因**：用户反馈截稿时间询问没有意义，影响使用体验。
+
+**移除内容**：
+- ✅ 所有交互式询问中的截稿时间选项（wechat/video/general 工作区）
+- ✅ Brief 模板中的截稿时间字段
+- ✅ 时间预算检查中的强制询问
+- ✅ 决策调整选项中的"延长截稿时间？"
+- ✅ 示例输出中的截稿时间相关表述
+
+**调整后逻辑**：
+- 时间预算检查：仅在用户主动提供时间约束时评估，否则跳过
+- 时间表述：改为"时间充裕/时间紧张/时间严重不足"等通用表述
+- 建议方案：改为"预留更多准备时间"而非"延长截稿时间"
+
+**影响文件**：
+- `templates/commands/specify.md`
+- `templates/commands/write.md`
+- `templates/commands/research.md`
+- `templates/brief-templates/*.md` (3个文件)
+- `docs/commands-design.md`
+
 ## [0.10.6] - 2025-01-29
 
 ### Fixed - 修复 require.resolve 导致的模块加载错误
