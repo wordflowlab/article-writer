@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.9] - 2025-10-29
+
+### Fixed - 修复全局模块加载问题（紧急修复）
+
+**问题描述**：
+- v0.10.8 的修复在开发环境测试通过，但在用户工作区仍然失败
+- 即使全局安装了 `article-writer-cn@0.10.8`，脚本仍报错 `Cannot find module`
+
+**根本原因**：
+- Node.js 的 `require()` 机制不会自动查找全局 node_modules 路径
+- 之前的相对路径推导在用户工作区中失败（脚本被复制到 `.content/` 目录）
+- 脚本中的 bash 变量替换在 Node.js 字符串中未生效
+
+**解决方案**：
+- ✅ 使用 `npm root -g` 获取全局 node_modules 的**绝对路径**
+- ✅ 调整加载策略优先级：**全局安装** > 本地安装 > 开发环境 > 兜底
+- ✅ 所有策略都使用绝对路径并增加文件存在性检查
+- ✅ 在 bash 层面计算路径，然后传递给 Node.js
+
+**新的加载策略**：
+1. 从全局 node_modules 加载（通过 `npm root -g`）
+2. 从用户项目的 node_modules 加载
+3. 从开发环境加载（article-writer 项目本身）
+4. 通过 require.resolve 查找（兜底）
+
+**影响文件**：
+- `scripts/bash/format-wechat.sh`
+- `scripts/powershell/format-wechat.ps1`
+
+**测试验证**：
+- ✅ 用户工作区测试通过（`/other/a1/.content/scripts/`）
+- ✅ HTML 生成功能正常
+- ✅ 全局安装场景验证通过
+
 ## [0.10.8] - 2025-10-29
 
 ### Fixed - 修复微信格式化脚本加载问题
