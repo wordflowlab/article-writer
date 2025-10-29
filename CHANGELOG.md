@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.6] - 2025-01-29
+
+### Fixed - 修复 require.resolve 导致的模块加载错误
+
+**问题**：用户在未全局安装 `article-writer-cn` 时，格式化脚本直接报错 `Cannot find module 'article-writer-cn'`
+
+**根本原因**：
+- 0.10.5 版本使用 `require.resolve('article-writer-cn')` 作为第一个查找路径
+- 如果包未安装，`require.resolve` 会直接抛出错误，而不是继续尝试其他路径
+- 导致后续的回退策略无法执行
+
+**解决方案**：
+- ✅ 重构加载逻辑为策略模式
+- ✅ 调整策略优先级：
+  1. 直接 require 包名（最可靠，适用于全局安装）
+  2. 项目本地 node_modules（适用于本地安装）
+  3. require.resolve 查找（适用于特殊安装位置）
+- ✅ 确保每个策略都能优雅失败并继续尝试
+- ✅ 改进错误提示，提供清晰的解决方案
+
+**影响范围**：
+- `scripts/bash/format-wechat.sh`
+- `scripts/powershell/format-wechat.ps1`
+
+**用户操作**：
+升级后运行 `npm install -g article-writer-cn@latest` 即可解决
+
 ## [0.10.5] - 2025-01-29
 
 ### Fixed - 修复格式化器加载失败问题

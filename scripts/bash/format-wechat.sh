@@ -75,36 +75,58 @@ node -e "
 const fs = require('fs');
 const path = require('path');
 
-// 查找格式化器的多个可能路径
-const possiblePaths = [
-  // 1. 全局安装的包
-  path.join(require.resolve('article-writer-cn'), '..', 'formatters', 'wechat-formatter.js'),
-  // 2. 项目本地安装
-  path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js'),
-  // 3. 直接从 npm 包加载（最可靠）
-  'article-writer-cn/dist/formatters/wechat-formatter.js'
-];
-
 let formatMarkdown;
 let loadedFrom = '';
 
-for (const formatterPath of possiblePaths) {
-  try {
+// 尝试多种方式加载格式化器
+const loadStrategies = [
+  // 策略1: 直接从 npm 包加载（最可靠，适用于全局安装）
+  () => {
+    const formatter = require('article-writer-cn/dist/formatters/wechat-formatter.js');
+    return formatter.exportWechatHtml;
+  },
+  // 策略2: 从项目本地 node_modules 加载
+  () => {
+    const formatterPath = path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js');
     const formatter = require(formatterPath);
-    formatMarkdown = formatter.exportWechatHtml;
-    loadedFrom = formatterPath;
+    return formatter.exportWechatHtml;
+  },
+  // 策略3: 通过 require.resolve 查找（用于特殊安装位置）
+  () => {
+    try {
+      const pkgPath = require.resolve('article-writer-cn');
+      const formatterPath = path.join(path.dirname(pkgPath), 'formatters', 'wechat-formatter.js');
+      const formatter = require(formatterPath);
+      return formatter.exportWechatHtml;
+    } catch (e) {
+      throw e;
+    }
+  }
+];
+
+for (let i = 0; i < loadStrategies.length; i++) {
+  try {
+    formatMarkdown = loadStrategies[i]();
+    loadedFrom = 'strategy-' + (i + 1);
     break;
   } catch (err) {
-    // 继续尝试下一个路径
-    continue;
+    // 继续尝试下一个策略
+    if (i === loadStrategies.length - 1) {
+      // 所有策略都失败了
+      console.error('错误: 无法加载格式化器');
+      console.error('');
+      console.error('可能的原因:');
+      console.error('  1. article-writer-cn 未安装');
+      console.error('  2. 版本不兼容');
+      console.error('');
+      console.error('解决方案:');
+      console.error('  运行: npm install -g article-writer-cn@latest');
+      console.error('  或者: npm install article-writer-cn@latest');
+      console.error('');
+      console.error('详细错误:', err.message);
+      process.exit(1);
+    }
   }
-}
-
-if (!formatMarkdown) {
-  console.error('错误: 无法加载格式化器');
-  console.error('请确保已安装 article-writer-cn');
-  console.error('运行: npm install -g article-writer-cn');
-  process.exit(1);
 }
 
 // 读取 Markdown
