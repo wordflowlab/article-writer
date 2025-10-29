@@ -470,7 +470,7 @@ MIT License
 
 ## 🙏 致谢
 
-本项目基于 [Novel Writer](https://github.com/wordflowlab/novel-writer) 和 [Spec Kit](https://github.com/sublayerapp/spec-kit) 架构设计，特此感谢！
+本项目基于 [Novel Writer](https://github.com/wordflowlab/novel-writer) 设计，并参考了 [Spec Kit](https://github.com/sublayerapp/spec-kit) 的 Slash Commands 理念，特此感谢！
 
 ---
 

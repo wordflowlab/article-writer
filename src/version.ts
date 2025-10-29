@@ -43,7 +43,7 @@ export function getVersion(): string {
  * @returns 格式化的版本信息
  */
 export function getVersionInfo(): string {
-  return `版本: ${getVersion()} | 基于 Spec Kit 架构 | 增强追踪系统`;
+  return `版本: ${getVersion()} | AI 驱动的智能写作系统`;
 }
 
 /**
