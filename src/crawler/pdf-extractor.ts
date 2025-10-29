@@ -3,9 +3,21 @@
  */
 
 import fs from 'fs-extra';
-import pdfParse from 'pdf-parse';
 import path from 'path';
 import type { PDFExtractionOptions, PDFExtractionResult, CrawledPage } from './types.js';
+
+// 动态导入 pdf-parse（可选依赖）
+async function loadPdfParse() {
+  try {
+    const pdfParse = await import('pdf-parse');
+    return pdfParse.default || pdfParse;
+  } catch (err) {
+    throw new Error(
+      '❌ pdf-parse 未安装。请运行: npm install pdf-parse\n' +
+      '   如果不需要 PDF 功能，可以使用网页爬虫（移除 --pdf 参数）'
+    );
+  }
+}
 
 export class PDFExtractor {
   /**
@@ -16,6 +28,9 @@ export class PDFExtractor {
     options: PDFExtractionOptions = {}
   ): Promise<PDFExtractionResult> {
     console.log(`📄 开始提取 PDF: ${pdfPath}`);
+
+    // 动态加载 pdf-parse
+    const pdfParse = await loadPdfParse();
 
     // 读取 PDF 文件
     const dataBuffer = await fs.readFile(pdfPath);

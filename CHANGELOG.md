@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.3] - 2025-01-29
+
+### Fixed - 再次优化：移除 29MB 的 pdf-parse
+
+**问题**：pdf-parse (29MB) 是最大的依赖包，但只用于 PDF 文档爬取（很少使用）。
+
+**解决方案**：
+- ✅ **pdf-parse (29MB)** 改为可选依赖
+- ✅ PDF 提取器支持懒加载，用时才安装
+- ✅ 不影响网页爬虫功能
+
+**效果**：
+- ✅ 安装大小再减少 **29MB**
+- ✅ 基础安装从 ~50MB 降至 **~21MB**
+
+**按需安装**：
+```bash
+# 如需 PDF 文档爬取
+npm install -g pdf-parse
+```
+
 ## [0.10.2] - 2025-01-29
 
 ### Fixed - 优化可选依赖，大幅加快安装速度
