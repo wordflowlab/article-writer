@@ -98,27 +98,38 @@ $nodeScript = @"
 const fs = require('fs');
 const path = require('path');
 
-// 查找格式化器
+// 查找格式化器的多个可能路径
 const possiblePaths = [
-  path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js'),
-  path.join('$PROJECT_ROOT', 'dist', 'formatters', 'wechat-formatter.js')
+  // 1. 全局安装的包
+  () => path.join(require.resolve('article-writer-cn'), '..', 'formatters', 'wechat-formatter.js'),
+  // 2. 项目本地安装
+  () => path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js'),
+  // 3. 直接从 npm 包加载（最可靠）
+  () => 'article-writer-cn/dist/formatters/wechat-formatter.js'
 ];
 
-let formatterPath = null;
-for (const p of possiblePaths) {
-  if (fs.existsSync(p)) {
-    formatterPath = p;
+let formatMarkdown;
+let loadedFrom = '';
+
+for (const getPath of possiblePaths) {
+  try {
+    const formatterPath = getPath();
+    const formatter = require(formatterPath);
+    formatMarkdown = formatter.exportWechatHtml;
+    loadedFrom = formatterPath;
     break;
+  } catch (err) {
+    // 继续尝试下一个路径
+    continue;
   }
 }
 
-if (!formatterPath) {
-  console.error('错误: 找不到格式化器');
+if (!formatMarkdown) {
+  console.error('错误: 无法加载格式化器');
   console.error('请确保已安装 article-writer-cn');
+  console.error('运行: npm install -g article-writer-cn');
   process.exit(1);
 }
-
-const { formatMarkdown } = require(formatterPath);
 
 // 读取 Markdown
 const markdown = "$markdownEscaped";

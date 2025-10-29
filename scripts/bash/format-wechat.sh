@@ -75,22 +75,35 @@ node -e "
 const fs = require('fs');
 const path = require('path');
 
-// 动态加载格式化器
-const formatterPath = path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js');
+// 查找格式化器的多个可能路径
+const possiblePaths = [
+  // 1. 全局安装的包
+  path.join(require.resolve('article-writer-cn'), '..', 'formatters', 'wechat-formatter.js'),
+  // 2. 项目本地安装
+  path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js'),
+  // 3. 直接从 npm 包加载（最可靠）
+  'article-writer-cn/dist/formatters/wechat-formatter.js'
+];
 
 let formatMarkdown;
-try {
-  if (fs.existsSync(formatterPath)) {
+let loadedFrom = '';
+
+for (const formatterPath of possiblePaths) {
+  try {
     const formatter = require(formatterPath);
     formatMarkdown = formatter.exportWechatHtml;
-  } else {
-    // 开发模式:直接从 src 加载(需要 tsx)
-    const { exportWechatHtml } = require('$PROJECT_ROOT/src/formatters/wechat-formatter.ts');
-    formatMarkdown = exportWechatHtml;
+    loadedFrom = formatterPath;
+    break;
+  } catch (err) {
+    // 继续尝试下一个路径
+    continue;
   }
-} catch (err) {
+}
+
+if (!formatMarkdown) {
   console.error('错误: 无法加载格式化器');
-  console.error(err.message);
+  console.error('请确保已安装 article-writer-cn');
+  console.error('运行: npm install -g article-writer-cn');
   process.exit(1);
 }
 

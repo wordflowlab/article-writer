@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.5] - 2025-01-29
+
+### Fixed - 修复格式化器加载失败问题
+
+**问题**：用户在运行微信格式化命令时报错 "无法加载格式化器"
+
+**根本原因**：
+- `format-wechat.sh` 尝试从用户项目的 `src` 目录加载 TS 源文件（不存在）
+- `format-wechat.ps1` 文件位置错误（应在 `powershell` 目录）
+- 格式化器路径查找逻辑不够健壮
+
+**解决方案**：
+- ✅ 优化格式化器加载逻辑，支持多种路径回退：
+  1. 全局安装的 npm 包（`require.resolve`）
+  2. 项目本地安装（`node_modules`）
+  3. 直接从 npm 包名加载（最可靠）
+- ✅ 移除对用户项目 `src` 目录的依赖
+- ✅ 统一 Bash 和 PowerShell 脚本的加载逻辑
+- ✅ 添加友好的错误提示
+
+**影响范围**：
+- `scripts/bash/format-wechat.sh`
+- `scripts/powershell/format-wechat.ps1`
+
+**测试建议**：
+```bash
+# Gemini/Codex 等平台用户测试
+content init my-test --ai=gemini --workspace=wechat
+cd my-test
+# 创建测试文章后运行
+bash .content/scripts/bash/format-wechat.sh article.md
+```
+
 ## [0.10.4] - 2025-01-29
 
 ### Enhanced - 交互式决策点优化
