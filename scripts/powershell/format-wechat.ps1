@@ -93,6 +93,11 @@ $markdownEscaped = $markdownContent -replace '\\', '\\' -replace '`', '\`' -repl
 # 转义配置值
 $FONT_FAMILY_ESCAPED = $FONT_FAMILY -replace '"', '\"'
 
+# 获取脚本文件路径
+$scriptPath = if ($PSCommandPath) { $PSCommandPath } else { $MyInvocation.MyCommand.Path }
+$scriptDir = Split-Path -Parent $scriptPath
+$devProjectRoot = Split-Path -Parent (Split-Path -Parent $scriptDir)
+
 # 使用 Node.js 执行格式化
 $nodeScript = @"
 const fs = require('fs');
@@ -103,27 +108,32 @@ let loadedFrom = '';
 
 // 尝试多种方式加载格式化器
 const loadStrategies = [
-  // 策略1: 直接从 npm 包加载（最可靠，适用于全局安装）
+  // 策略1: 尝试从脚本所在目录的相对路径加载（开发环境）
   () => {
-    const formatter = require('article-writer-cn/dist/formatters/wechat-formatter.js');
-    return formatter.exportWechatHtml;
+    const formatterPath = path.join('$($devProjectRoot -replace '\\', '\\\\')', 'dist', 'formatters', 'wechat-formatter.js');
+    if (fs.existsSync(formatterPath)) {
+      const formatter = require(formatterPath);
+      return formatter.exportWechatHtml;
+    }
+    throw new Error('Formatter not found in development path');
   },
-  // 策略2: 从项目本地 node_modules 加载
+  // 策略2: 从用户项目的 node_modules 加载
   () => {
     const formatterPath = path.join('$PROJECT_ROOT', 'node_modules', 'article-writer-cn', 'dist', 'formatters', 'wechat-formatter.js');
     const formatter = require(formatterPath);
     return formatter.exportWechatHtml;
   },
-  // 策略3: 通过 require.resolve 查找（用于特殊安装位置）
+  // 策略3: 直接从全局 npm 包加载
   () => {
-    try {
-      const pkgPath = require.resolve('article-writer-cn');
-      const formatterPath = path.join(path.dirname(pkgPath), 'formatters', 'wechat-formatter.js');
-      const formatter = require(formatterPath);
-      return formatter.exportWechatHtml;
-    } catch (e) {
-      throw e;
-    }
+    const formatter = require('article-writer-cn/dist/formatters/wechat-formatter.js');
+    return formatter.exportWechatHtml;
+  },
+  // 策略4: 通过 require.resolve 查找
+  () => {
+    const pkgPath = require.resolve('article-writer-cn');
+    const formatterPath = path.join(path.dirname(pkgPath), 'formatters', 'wechat-formatter.js');
+    const formatter = require(formatterPath);
+    return formatter.exportWechatHtml;
   }
 ];
 
