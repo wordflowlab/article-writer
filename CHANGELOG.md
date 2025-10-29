@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.10] - 2025-10-29
+
+### Fixed - 修复图片样式问题
+
+**问题描述**：
+- `<img>` 标签错误地应用了 `<figure>` 的样式属性
+- 导致样式属性重复，图片可能显示不正确
+
+**解决方案**：
+- ✅ 移除 `<img>` 标签上重复的 `getStyles('image')` 调用
+- ✅ 使用专门的图片样式：`width:100%; height:auto; display:block;`
+- ✅ `<figure>` 容器保持原有样式（居中、圆角等）
+
+**生成的 HTML 结构**：
+```html
+<figure style="display:block;max-width:100%;margin:1em auto;border-radius:4px">
+  <img src="..." alt="..." style="width:100%;height:auto;display:block;"/>
+  <figcaption>...</figcaption>
+</figure>
+```
+
+**影响文件**：
+- `src/formatters/wechat-formatter.ts`
+
+**测试验证**：
+- ✅ 图片 URL 路径正确
+- ✅ 样式不再重复
+- ✅ 图片能正确显示并自适应宽度
+
 ## [0.10.9] - 2025-10-29
 
 ### Fixed - 修复全局模块加载问题（紧急修复）
