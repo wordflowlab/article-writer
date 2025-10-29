@@ -4,23 +4,57 @@
 # 将 Markdown 文章格式化为微信公众号富文本 HTML
 #
 # 使用方法:
-#   bash format-wechat.sh <input-md-file> [output-html-file]
+#   bash format-wechat.sh <input-md-file> [output-html-file] [--base64]
+#
+# 选项:
+#   --base64  将在线图片转换为 base64 编码(方便一键复制)
 #
 # 示例:
 #   bash format-wechat.sh draft.md wechat.html
+#   bash format-wechat.sh draft.md wechat.html --base64
 #
 
 set -e  # 遇到错误立即退出
 
-# 检查参数
-if [ $# -lt 1 ]; then
+# 解析参数
+INPUT_FILE=""
+OUTPUT_FILE="wechat.html"
+CONVERT_TO_BASE64="false"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --base64)
+      CONVERT_TO_BASE64="true"
+      shift
+      ;;
+    --help)
+      echo "使用方法: bash format-wechat.sh <input-md-file> [output-html-file] [--base64]"
+      echo ""
+      echo "选项:"
+      echo "  --base64  将在线图片转换为 base64 编码(方便一键复制)"
+      echo ""
+      echo "示例:"
+      echo "  bash format-wechat.sh draft.md wechat.html"
+      echo "  bash format-wechat.sh draft.md wechat.html --base64"
+      exit 0
+      ;;
+    *)
+      if [ -z "$INPUT_FILE" ]; then
+        INPUT_FILE="$1"
+      elif [ "$OUTPUT_FILE" = "wechat.html" ]; then
+        OUTPUT_FILE="$1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+# 检查输入文件参数
+if [ -z "$INPUT_FILE" ]; then
   echo "错误: 缺少输入文件参数"
-  echo "使用方法: bash format-wechat.sh <input-md-file> [output-html-file]"
+  echo "使用方法: bash format-wechat.sh <input-md-file> [output-html-file] [--base64]"
   exit 1
 fi
-
-INPUT_FILE="$1"
-OUTPUT_FILE="${2:-wechat.html}"
 
 # 检查输入文件是否存在
 if [ ! -f "$INPUT_FILE" ]; then
@@ -168,7 +202,8 @@ const options = {
   isUseIndent: '$IS_USE_INDENT' === 'true',
   isUseJustify: '$IS_USE_JUSTIFY' === 'true',
   isShowLineNumber: '$IS_SHOW_LINE_NUMBER' === 'true',
-  citeStatus: '$CITE_STATUS' === 'true'
+  citeStatus: '$CITE_STATUS' === 'true',
+  convertOnlineImagesToBase64: '$CONVERT_TO_BASE64' === 'true'
 };
 
 // 格式化并导出

@@ -8,6 +8,10 @@ import { marked, Renderer } from 'marked';
 import type { Tokens } from 'marked';
 import hljs from 'highlight.js/lib/core';
 import juice from 'juice';
+import path from 'path';
+import os from 'os';
+import fs from 'fs-extra';
+import { downloadImage, imageToBase64 } from '../utils/image-downloader.js';
 
 // 注册常用编程语言
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -56,6 +60,7 @@ export interface FormatOptions {
   // 图床配置
   imageBedFactory?: any; // ImageBedFactory 实例(可选)
   convertLocalImages?: boolean; // 是否转换本地图片(默认true)
+  convertOnlineImagesToBase64?: boolean; // 是否将在线图片转换为 base64(默认false)
 }
 
 /**
@@ -244,6 +249,8 @@ export class WechatFormatter {
   private footnoteIndex: number = 0;
   private imageBedFactory: any; // ImageBedFactory 实例
   private localImages: Array<{ originalSrc: string; placeholder: string }> = [];
+  private onlineImages: Array<{ originalSrc: string; placeholder: string }> = [];
+  private tempDir: string = '';
 
   constructor(options: FormatOptions = {}) {
     this.options = {
@@ -255,6 +262,7 @@ export class WechatFormatter {
       isShowLineNumber: false,
       citeStatus: true,
       convertLocalImages: true, // 默认转换本地图片
+      convertOnlineImagesToBase64: false, // 默认不转换在线图片
       ...options,
     };
 
@@ -371,6 +379,77 @@ export class WechatFormatter {
   }
 
   /**
+   * 处理在线图片转 Base64
+   */
+  private async processOnlineImages(html: string): Promise<string> {
+    if (!this.options.convertOnlineImagesToBase64 || this.onlineImages.length === 0) {
+      return html;
+    }
+
+    let processedHtml = html;
+
+    // 创建临时目录
+    if (!this.tempDir) {
+      this.tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'wechat-images-'));
+    }
+
+    // 批量处理所有在线图片
+    for (let i = 0; i < this.onlineImages.length; i++) {
+      const { originalSrc, placeholder } = this.onlineImages[i];
+
+      try {
+        // 下载图片到临时目录
+        const fileName = `image-${i}-${Date.now()}${path.extname(originalSrc) || '.png'}`;
+        const savePath = path.join(this.tempDir, fileName);
+
+        const result = await downloadImage({
+          url: originalSrc,
+          savePath,
+          timeout: 15000,
+        });
+
+        if (result.success) {
+          // 转换为 base64
+          const dataUri = await imageToBase64(savePath);
+          
+          // 替换占位符为 base64 数据
+          processedHtml = processedHtml.replace(
+            new RegExp(placeholder, 'g'),
+            dataUri
+          );
+
+          console.log(`✓ 图片转换成功: ${originalSrc.substring(0, 50)}...`);
+        } else {
+          console.error(`图片下载失败: ${originalSrc}`, result.error);
+          // 保留原 URL
+          processedHtml = processedHtml.replace(
+            new RegExp(placeholder, 'g'),
+            originalSrc
+          );
+        }
+      } catch (error) {
+        console.error(`图片处理异常: ${originalSrc}`, error);
+        processedHtml = processedHtml.replace(
+          new RegExp(placeholder, 'g'),
+          originalSrc
+        );
+      }
+    }
+
+    // 清理临时目录
+    try {
+      if (this.tempDir) {
+        await fs.remove(this.tempDir);
+        this.tempDir = '';
+      }
+    } catch (error) {
+      console.warn('清理临时目录失败:', error);
+    }
+
+    return processedHtml;
+  }
+
+  /**
    * 格式化 Markdown 为微信 HTML
    */
   public async format(markdown: string): Promise<string> {
@@ -378,6 +457,7 @@ export class WechatFormatter {
     this.footnotes = [];
     this.footnoteIndex = 0;
     this.localImages = [];
+    this.onlineImages = [];
 
     const self = this;
 
@@ -445,20 +525,26 @@ export class WechatFormatter {
           ? `<figcaption style="text-align:center;color:#888;font-size:0.9em;margin-top:0.5em">${caption}</figcaption>`
           : '';
 
-        // 图片 URL 处理:支持本地图片转换
+        // 图片 URL 处理:支持本地图片转换和在线图片转 base64
         let imageSrc = token.href;
+        const isLocal = self.isLocalImagePath(imageSrc);
+        const isOnline = imageSrc.startsWith('http://') || imageSrc.startsWith('https://');
 
-        // 如果配置了图床工厂且需要转换本地图片
-        if (self.imageBedFactory && self.options.convertLocalImages !== false) {
-          // 标记需要处理的本地图片
-          // 实际转换将在 format() 方法中异步处理
-          if (self.isLocalImagePath(imageSrc)) {
-            self.localImages.push({
-              originalSrc: imageSrc,
-              placeholder: `__LOCAL_IMAGE_${self.localImages.length}__`,
-            });
-            imageSrc = `__LOCAL_IMAGE_${self.localImages.length - 1}__`;
-          }
+        // 处理本地图片上传
+        if (self.imageBedFactory && self.options.convertLocalImages !== false && isLocal) {
+          self.localImages.push({
+            originalSrc: imageSrc,
+            placeholder: `__LOCAL_IMAGE_${self.localImages.length}__`,
+          });
+          imageSrc = `__LOCAL_IMAGE_${self.localImages.length - 1}__`;
+        }
+        // 处理在线图片转 base64
+        else if (self.options.convertOnlineImagesToBase64 && isOnline) {
+          self.onlineImages.push({
+            originalSrc: imageSrc,
+            placeholder: `__ONLINE_IMAGE_${self.onlineImages.length}__`,
+          });
+          imageSrc = `__ONLINE_IMAGE_${self.onlineImages.length - 1}__`;
         }
 
         return `<figure ${self.getStyles('image')}><img src="${imageSrc}" alt="${token.text || ''}" style="width:100%;height:auto;display:block;"/>${captionHtml}</figure>`;
@@ -530,6 +616,9 @@ export class WechatFormatter {
 
     // 处理本地图片上传(如果配置了图床)
     container = await this.processLocalImages(container);
+
+    // 处理在线图片转 base64(如果启用)
+    container = await this.processOnlineImages(container);
 
     return container;
   }
