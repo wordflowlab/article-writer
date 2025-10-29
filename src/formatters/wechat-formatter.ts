@@ -461,7 +461,7 @@ export class WechatFormatter {
           }
         }
 
-        return `<figure ${self.getStyles('image')}><img src="${imageSrc}" alt="${token.text || ''}" ${self.getStyles('image')}/>${captionHtml}</figure>`;
+        return `<figure ${self.getStyles('image')}><img src="${imageSrc}" alt="${token.text || ''}" style="width:100%;height:auto;display:block;"/>${captionHtml}</figure>`;
       }
 
       link(token: Tokens.Link): string {
