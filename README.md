@@ -143,11 +143,11 @@ content init my-article --ai cursor    # Cursor
 **自动完成:**
 - 🔄 爬取 200+ 页文档
 - 📂 智能分类（入门/API/示例等）
-- 🔍 建立全文搜索索引
+- 📝 转换为 Markdown 格式
 - 💾 永久保存到知识库
 
 **写作时自动引用:**  
-AI 会从知识库中查找准确的技术信息，大幅减少错误和编造。
+AI 会直接读取知识库中的 Markdown 文件，查找准确的技术信息，大幅减少错误和编造。
 
 详见：[文档爬虫指南](docs/crawler-guide.md) | [使用示例](docs/crawler-examples.md)
 

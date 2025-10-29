@@ -17,7 +17,6 @@ npm install
 - turndown (HTML 转 Markdown)
 - puppeteer (动态页面支持)
 - pdf-parse (PDF 提取)
-- better-sqlite3 (搜索索引)
 
 ### 2. 爬取第一个文档站
 
@@ -184,17 +183,9 @@ _knowledge_base/indexed/
 └── ...
 ```
 
-### 搜索索引 (`_knowledge_base/cache/`)
-
-SQLite 数据库，支持全文搜索：
-
-```sql
--- 搜索 "Composition API"
-SELECT * FROM pages_fts 
-WHERE pages_fts MATCH 'Composition API'
-ORDER BY rank
-LIMIT 10;
-```
+**AI 如何使用知识库：**
+- AI 写作时会自动读取 `_knowledge_base/indexed/` 下的 Markdown 文件
+- 使用 grep/ripgrep 等工具快速搜索内容
 
 ---
 
@@ -213,17 +204,17 @@ AI 会自动：
 2. 调用爬虫系统
 3. 显示进度
 4. 保存到知识库
-5. 建立搜索索引
+5. 转换为 Markdown 格式
 
 ### 方式 2: AI 自动引用
 
-爬取完成后，在写作时 AI 会自动搜索知识库：
+爬取完成后，在写作时 AI 会自动读取知识库：
 
 ```
 /write
 ```
 
-AI 会自动在 `_knowledge_base/indexed/` 中搜索相关内容并引用。
+AI 会自动读取 `_knowledge_base/indexed/` 目录中的 Markdown 文件并引用相关内容。
 
 ---
 
@@ -271,26 +262,6 @@ await manager.executeCrawl({
   maxPages: 200,
   useDynamic: false
 });
-```
-
-### 搜索 API
-
-```typescript
-import { SearchIndexer } from './src/crawler/search-indexer';
-
-const indexer = new SearchIndexer('./_knowledge_base/cache/search-index.db');
-
-// 搜索
-const results = indexer.search('Composition API', 20);
-
-// 按分类搜索
-const apiResults = indexer.searchByCategory('api', 20);
-
-// 统计信息
-const stats = indexer.getStats();
-console.log(stats.totalPages); // 186
-console.log(stats.categories); // { api: 78, guide: 42, ... }
-```
 
 ---
 
@@ -411,7 +382,7 @@ tar -czf knowledge-backup-$(date +%Y%m%d).tar.gz _knowledge_base/
 - `src/crawler/doc-crawler.ts` - 静态爬虫
 - `src/crawler/dynamic-crawler.ts` - 动态爬虫
 - `src/crawler/crawler-manager.ts` - 管理器
-- `src/crawler/search-indexer.ts` - 搜索 API
+- `src/crawler/knowledge-converter.ts` - Markdown 转换器
 
 ---
 

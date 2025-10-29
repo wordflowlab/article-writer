@@ -20,6 +20,8 @@
 | ~~**品味驱动**~~ | ~~P0~~ | ~~7天~~ | ❌ 已废弃 | [prd-06-taste-driven-workflow.md](./prd-06-taste-driven-workflow.md) |
 | **真实驱动工作流** ⭐ | P0 | 5天 | ✅ 设计完成 | [prd-07-authentic-writing-workflow.md](./prd-07-authentic-writing-workflow.md) |
 | **完整流程重设计** ⭐ | P0 | - | ✅ 设计完成 | [prd-08-complete-workflow-redesign.md](./prd-08-complete-workflow-redesign.md) |
+| **多模式写作系统** ⭐ | P0 | 6天 | ✅ 设计完成 | [prd-09-multi-mode-writing.md](./prd-09-multi-mode-writing.md) |
+| **风格学习与协作增强** ⭐ | P0+P1 | 6天 | 📝 待审核 | [prd-10-style-learning-and-collaboration.md](./prd-10-style-learning-and-collaboration.md) |
 
 **总工作量**: 19 天（代码开发） → **已完成: 14天基础功能 + 完整设计 ✅**
 

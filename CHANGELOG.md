@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2025-01-29
+
+### Fixed - 移除 better-sqlite3 依赖，解决 Windows 安装问题
+
+**问题**：Windows 用户在安装时需要 Visual Studio Build Tools (~6GB)，安装成本极高。
+
+**解决方案**：
+- ✅ 完全移除 `better-sqlite3` 依赖（从未被使用的搜索索引功能）
+- ✅ 删除 `SearchIndexer` 类和相关代码
+- ✅ AI 直接读取 Markdown 文件，无需数据库索引
+- ✅ 简化安装流程，零 C++ 依赖
+
+**影响**：
+- ✅ Windows 用户无需安装 Visual Studio Build Tools
+- ✅ 安装速度更快，跨平台体验一致
+- ✅ 代码更简洁，删除 200+ 行无用代码
+
 ## [0.10.0] - 2025-01-26
 
 ### Added - 多模式写作系统 🎯

@@ -8,7 +8,6 @@ import { DocumentationCrawler } from './doc-crawler.js';
 import { DynamicCrawler } from './dynamic-crawler.js';
 import { PDFExtractor } from './pdf-extractor.js';
 import { KnowledgeConverter } from './knowledge-converter.js';
-import { SearchIndexer } from './search-indexer.js';
 import { ProgressBar } from './progress-bar.js';
 import type { CrawlerConfig, CrawlResult } from './types.js';
 
@@ -126,7 +125,7 @@ export class CrawlerManager {
   }
 
   /**
-   * 转换并建立索引
+   * 转换为知识库
    */
   private async convertAndIndex(
     name: string,
@@ -141,30 +140,6 @@ export class CrawlerManager {
 
     const converter = new KnowledgeConverter();
     await converter.convertToKnowledgeBase(rawDir, indexedDir);
-
-    // 建立搜索索引
-    console.log(`📇 建立搜索索引...`);
-    const cacheDir = path.join(outputDir, 'cache');
-    await fs.ensureDir(cacheDir);
-
-    const dbPath = path.join(cacheDir, 'search-index.db');
-    const indexer = new SearchIndexer(dbPath);
-
-    // 加载页面并索引
-    const summary = await fs.readJSON(path.join(rawDir, 'summary.json'));
-    const pagesDir = path.join(rawDir, 'pages');
-    const files = await fs.readdir(pagesDir);
-    const pages = [];
-
-    for (const file of files) {
-      if (file.endsWith('.json')) {
-        const page = await fs.readJSON(path.join(pagesDir, file));
-        pages.push(page);
-      }
-    }
-
-    await indexer.indexPages(pages);
-    indexer.close();
 
     console.log(`✅ 知识库转换完成`);
   }
@@ -188,12 +163,10 @@ export class CrawlerManager {
     console.log(`\n💾 存储位置:`);
     console.log(`  - 原始数据: ${path.join(options.outputDir, 'raw', options.name)}`);
     console.log(`  - 知识库: ${path.join(options.outputDir, 'indexed')}`);
-    console.log(`  - 搜索索引: ${path.join(options.outputDir, 'cache', 'search-index.db')}`);
 
     console.log(`\n💡 使用方式:`);
     console.log(`  1. 查看索引: cat ${path.join(options.outputDir, 'indexed', options.name)}-index.md`);
-    console.log(`  2. AI 写作时会自动搜索知识库`);
-    console.log(`  3. 可以手动搜索: 使用 SearchIndexer API`);
+    console.log(`  2. AI 写作时会自动读取知识库 Markdown 文件`);
     
     console.log(`\n✅ 任务完成!\n`);
   }
