@@ -5,6 +5,83 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2025-11-27
+
+### Added - 新功能：框架约束模式 (PRD-11)
+
+**核心功能**：新增第 4 种写作模式 - 框架约束模式 (Outline-Constrained Mode)
+
+**适用场景**：
+- 领导给定提纲，按提纲补充内容
+- 强框架约束文档：项目立项报告、开题报告、标书、专利申请
+- 弱框架约束：客户指定几个要点，基于要点拟制方案
+- 需要复用固定模板的重复性文档
+
+**与其他模式对比**：
+
+| 维度 | 教练模式 | 快速模式 | 混合模式 | **框架约束模式** |
+|------|---------|---------|---------|-----------------|
+| AI生成比例 | 0% | 100% | 40% | 60-80% |
+| 框架来源 | AI建议 | AI生成 | AI生成 | **用户提供** |
+| 框架可调 | 可调 | 可调 | 可调 | **严格固定** |
+| 典型场景 | 个人经历文 | 信息整理 | 教程类 | 强约束文档 |
+
+**核心特点**：
+- 框架由用户提供，严格固定不可修改
+- AI 按框架逐章生成内容
+- 支持模板复用（预置 3 个模板 + 自定义模板）
+- 自动进行一致性检查（专有名词、术语、数据）
+
+**新增命令**：
+- `/outline` - 框架约束模式的核心命令
+  - `/outline` - 直接粘贴提纲
+  - `/outline --list` - 查看可用模板
+  - `/outline --template <id>` - 使用预置模板
+  - `/outline --save-template <name>` - 保存自定义模板
+
+**预置模板**：
+- `project-proposal` - 项目立项报告
+- `thesis-opening` - 开题报告
+- `technical-report` - 技术报告
+
+**工作流程**：
+```
+/outline
+    ↓
+Step 1: 输入提纲（文本/模板）
+    ↓
+Step 2: 收集背景信息（项目名、技术路线等）
+    ↓
+Step 3: AI 识别章节类型
+    ├─ 通用章节 → 自动生成
+    └─ 核心章节 → 交互式询问
+    ↓
+Step 4: 逐章节生成/确认
+    ↓
+Step 5: 全局一致性检查
+```
+
+**修改的命令**：
+- `/specify` - 新增"框架来源识别"步骤（第三步）
+- `/write` - 新增模式 4 入口和说明
+
+**新增文件**：
+- `docs/prd/prd-11-outline-constrained-mode.md` - PRD 文档
+- `templates/commands/outline.md` - 命令模板
+- `templates/outlines/project-proposal.yaml` - 项目立项报告模板
+- `templates/outlines/thesis-opening.yaml` - 开题报告模板
+- `templates/outlines/technical-report.yaml` - 技术报告模板
+- `docs/outline-mode/README.md` - 功能概述
+- `docs/outline-mode/quick-start.md` - 快速上手指南
+- `docs/outline-mode/templates-guide.md` - 模板使用指南
+- `docs/outline-mode/best-practices.md` - 最佳实践
+
+**用户价值**：
+- 满足行业内常见的固定框架文档需求
+- 框架可复用，提高效率
+- 自动检查一致性，避免低级错误
+- 支持强约束（固定框架）和弱约束（要点约束）两种模式
+
 ## [0.11.0] - 2025-10-29
 
 ### Added - 新功能：在线图片转 Base64

@@ -1,0 +1,246 @@
+# 项目立项报告模板
+# Project Proposal Template
+# PRD-11: 框架约束模式
+
+id: project-proposal
+name: 项目立项报告
+name_en: Project Proposal
+description: 适用于科研项目、企业项目的立项申报，包含完整的项目论证框架
+category: 项目管理
+tags:
+  - 科研
+  - 企业
+  - 立项
+  - 申报
+
+# 模板结构
+structure:
+  - title: 一、概述
+    type: section
+    children:
+      - title: （一）立项背景
+        type: auto
+        description: 说明项目提出的背景、行业发展趋势、国家政策导向等
+        word_count: 500-800
+        hints:
+          - 描述行业发展现状和趋势
+          - 说明国家/地区相关政策支持
+          - 阐述项目提出的必要性和紧迫性
+      - title: （二）申报依据
+        type: auto
+        description: 列举支持项目申报的政策文件、标准规范等依据
+        word_count: 300-500
+        hints:
+          - 引用相关政策文件
+          - 说明符合的申报条件
+          - 列举技术标准和规范
+
+  - title: 二、需求分析
+    type: interactive
+    description: 分析项目的市场需求、用户需求、技术需求
+    word_count: 800-1200
+    hints:
+      - 描述目标用户群体和使用场景
+      - 分析现有解决方案的不足
+      - 明确项目要解决的核心问题
+    questions:
+      - 项目主要解决什么问题？
+      - 目标用户是谁？有多少潜在用户？
+      - 现有解决方案有哪些？它们的主要不足是什么？
+
+  - title: 三、研究现状
+    type: auto
+    description: 调研国内外相关技术和产品的发展现状
+    word_count: 1000-1500
+    hints:
+      - 综述国内外研究进展
+      - 分析主流技术路线优缺点
+      - 总结技术发展趋势
+
+  - title: 四、主要研究内容及技术指标
+    type: section
+    children:
+      - title: （一）研究目标
+        type: interactive
+        description: 明确项目要达成的核心目标
+        word_count: 300-500
+        questions:
+          - 项目的总体目标是什么？
+          - 有哪些具体的阶段性目标？
+      - title: （二）研究内容
+        type: interactive
+        description: 详细说明项目的研究内容和技术方案
+        word_count: 1000-1500
+        questions:
+          - 项目包含哪些主要研究内容？
+          - 每项内容的技术路线是什么？
+      - title: （三）技术指标
+        type: section
+        children:
+          - title: 1. 功能指标
+            type: interactive
+            description: 列举系统/产品的功能性指标
+            word_count: 300-500
+            questions:
+              - 系统需要实现哪些核心功能？
+              - 每个功能的具体要求是什么？
+          - title: 2. 性能指标
+            type: interactive
+            description: 列举系统/产品的性能指标
+            word_count: 300-500
+            questions:
+              - 系统的性能要求有哪些？
+              - 响应时间、并发量、准确率等具体指标是多少？
+
+  - title: 五、研究方案
+    type: section
+    children:
+      - title: （一）总体架构
+        type: interactive
+        description: 描述系统/方案的整体架构设计
+        word_count: 500-800
+        questions:
+          - 系统采用什么样的架构？
+          - 主要包含哪些模块/组件？
+      - title: （二）系统流程
+        type: interactive
+        description: 说明系统的主要工作流程
+        word_count: 300-500
+        questions:
+          - 系统的核心业务流程是怎样的？
+          - 数据流向是如何设计的？
+      - title: （三）方案组成
+        type: interactive
+        description: 详细描述方案的各个组成部分
+        word_count: 1500-3000
+        dynamic: true
+        hints:
+          - 可根据实际项目调整子系统数量
+          - 每个子系统描述其功能、技术方案、关键技术
+        questions:
+          - 系统包含哪些子系统/模块？
+          - 每个子系统的主要功能和技术方案是什么？
+
+  - title: 六、经费预算
+    type: section
+    children:
+      - title: （一）硬件设备费
+        type: interactive
+        description: 列举项目所需的硬件设备及预算
+        word_count: 200-400
+        questions:
+          - 需要采购哪些硬件设备？
+          - 每项设备的数量和单价是多少？
+      - title: （二）软件设备费
+        type: interactive
+        description: 列举项目所需的软件及预算
+        word_count: 200-400
+        questions:
+          - 需要采购哪些软件/服务？
+          - 软件许可费用是多少？
+      - title: （三）其他费用
+        type: interactive
+        description: 其他相关费用
+        word_count: 200-300
+        optional: true
+        questions:
+          - 还有哪些其他费用？如培训、差旅、会议等
+
+  - title: 七、进度安排
+    type: auto
+    description: 制定项目的时间计划和里程碑
+    word_count: 300-500
+    hints:
+      - 按季度或月份划分阶段
+      - 明确每个阶段的主要任务和交付物
+      - 标注关键里程碑节点
+
+  - title: 八、预期成果
+    type: auto
+    description: 说明项目预期产出的成果
+    word_count: 300-500
+    optional: true
+    hints:
+      - 技术成果（专利、软著、论文等）
+      - 产品成果（系统、平台、原型等）
+      - 经济效益和社会效益
+
+  - title: 九、风险分析
+    type: auto
+    description: 分析项目实施过程中可能面临的风险
+    word_count: 300-500
+    optional: true
+    hints:
+      - 技术风险及应对措施
+      - 进度风险及应对措施
+      - 其他风险及应对措施
+
+# 必填信息（背景信息收集时询问）
+required_info:
+  - key: projectName
+    label: 项目名称
+    required: true
+    example: 基于大语言模型的智能应用系统平台
+  - key: projectSummary
+    label: 项目简介（一句话）
+    required: true
+    example: 构建面向企业的智能化办公辅助平台
+  - key: organization
+    label: 申报单位
+    required: true
+    example: XX科技有限公司
+  - key: projectLeader
+    label: 项目负责人
+    required: false
+  - key: coreTechnology
+    label: 核心技术/方案
+    required: true
+    example: 大语言模型、知识图谱、RAG检索增强
+  - key: budget
+    label: 预算范围
+    required: true
+    example: 500万元
+  - key: duration
+    label: 项目周期
+    required: true
+    example: 24个月
+  - key: targetUsers
+    label: 目标用户
+    required: false
+    example: 企业内部员工、政府工作人员
+
+# 一致性检查规则
+consistency_rules:
+  - type: proper_noun
+    description: 项目名称一致性
+    sources:
+      - projectName
+    check_frequency: per_section
+  - type: proper_noun
+    description: 申报单位名称一致性
+    sources:
+      - organization
+  - type: terminology
+    description: 技术术语统一
+    mappings:
+      AI: 人工智能
+      LLM: 大语言模型
+      NLP: 自然语言处理
+  - type: data_consistency
+    description: 经费数据一致性
+    check: budget_total_equals_sum
+  - type: data_consistency
+    description: 时间数据一致性
+    check: schedule_within_duration
+
+# 生成建议
+generation_hints:
+  tone: 正式、专业、严谨
+  avoid:
+    - 过于口语化的表达
+    - 不确定的描述（如"大概"、"可能"）
+    - 过度夸大的承诺
+  prefer:
+    - 使用具体数据和指标
+    - 引用权威来源
+    - 采用被动语态或第三人称

@@ -1,0 +1,281 @@
+# 技术报告模板
+# Technical Report Template
+# PRD-11: 框架约束模式
+
+id: technical-report
+name: 技术报告
+name_en: Technical Report
+description: 适用于技术方案、可行性分析、技术调研等报告
+category: 技术文档
+tags:
+  - 技术方案
+  - 可行性分析
+  - 技术调研
+  - 设计文档
+
+# 模板结构
+structure:
+  - title: 一、概述
+    type: section
+    children:
+      - title: 1.1 背景介绍
+        type: auto
+        description: 说明技术报告的背景和目的
+        word_count: 300-500
+        hints:
+          - 描述项目或需求的背景
+          - 说明编写本报告的目的
+          - 简述报告的主要内容
+      - title: 1.2 术语定义
+        type: auto
+        description: 定义报告中使用的专业术语和缩写
+        word_count: 200-400
+        optional: true
+        hints:
+          - 列出关键术语及其定义
+          - 说明缩写词的全称
+      - title: 1.3 参考资料
+        type: auto
+        description: 列出相关参考文档和资料
+        word_count: 100-200
+        optional: true
+
+  - title: 二、需求分析
+    type: section
+    children:
+      - title: 2.1 业务需求
+        type: interactive
+        description: 描述业务层面的需求
+        word_count: 400-600
+        questions:
+          - 要解决什么业务问题？
+          - 业务的核心诉求是什么？
+          - 期望达成什么业务目标？
+      - title: 2.2 功能需求
+        type: interactive
+        description: 列举具体的功能性需求
+        word_count: 500-800
+        questions:
+          - 需要实现哪些具体功能？
+          - 每个功能的输入输出是什么？
+          - 功能之间有什么依赖关系？
+      - title: 2.3 非功能需求
+        type: interactive
+        description: 说明性能、安全、可用性等非功能需求
+        word_count: 300-500
+        questions:
+          - 性能要求（响应时间、吞吐量等）？
+          - 安全要求？
+          - 可用性和可靠性要求？
+
+  - title: 三、技术调研
+    type: section
+    children:
+      - title: 3.1 技术现状
+        type: auto
+        description: 调研相关技术的发展现状
+        word_count: 600-1000
+        hints:
+          - 综述相关技术的发展历程
+          - 分析主流技术方案
+          - 对比不同技术的优缺点
+      - title: 3.2 技术选型分析
+        type: interactive
+        description: 对候选技术方案进行对比分析
+        word_count: 800-1200
+        questions:
+          - 有哪些候选技术方案？
+          - 每种方案的优缺点是什么？
+          - 评估的主要维度有哪些（性能、成本、易用性等）？
+        hints:
+          - 建议使用表格对比
+          - 给出量化的评估指标
+      - title: 3.3 技术选型结论
+        type: interactive
+        description: 给出技术选型的结论和理由
+        word_count: 300-500
+        questions:
+          - 最终选择哪种技术方案？
+          - 选择的主要理由是什么？
+          - 有哪些风险和应对措施？
+
+  - title: 四、技术方案
+    type: section
+    children:
+      - title: 4.1 总体架构
+        type: interactive
+        description: 描述系统/方案的整体架构
+        word_count: 500-800
+        questions:
+          - 系统的整体架构是怎样的？
+          - 包含哪些主要组件/模块？
+          - 组件之间如何交互？
+        hints:
+          - 建议配合架构图说明
+          - 说明各层/模块的职责
+      - title: 4.2 核心模块设计
+        type: interactive
+        description: 详细描述核心模块的设计
+        word_count: 1000-2000
+        dynamic: true
+        questions:
+          - 系统有哪些核心模块？
+          - 每个模块的功能和接口是什么？
+          - 模块的内部实现逻辑是什么？
+        hints:
+          - 可根据实际模块数量调整
+          - 每个模块描述：功能、接口、流程、数据结构
+      - title: 4.3 数据设计
+        type: interactive
+        description: 描述数据模型和存储方案
+        word_count: 400-800
+        questions:
+          - 系统需要存储哪些数据？
+          - 数据模型是怎样的？
+          - 使用什么存储方案？
+        optional: true
+      - title: 4.4 接口设计
+        type: interactive
+        description: 定义系统对外/对内接口
+        word_count: 400-800
+        questions:
+          - 系统提供哪些接口？
+          - 接口的请求/响应格式是什么？
+        optional: true
+        hints:
+          - 建议使用表格或伪代码描述接口
+
+  - title: 五、可行性分析
+    type: section
+    children:
+      - title: 5.1 技术可行性
+        type: auto
+        description: 分析技术方案的可行性
+        word_count: 300-500
+        hints:
+          - 技术是否成熟可靠
+          - 团队是否有能力实现
+          - 是否有成功案例参考
+      - title: 5.2 资源可行性
+        type: interactive
+        description: 分析资源（人力、时间、资金）的可行性
+        word_count: 300-500
+        questions:
+          - 需要多少人力资源？
+          - 预计需要多长时间？
+          - 预算是多少？
+      - title: 5.3 风险分析
+        type: interactive
+        description: 识别和分析潜在风险
+        word_count: 400-600
+        questions:
+          - 有哪些潜在的技术风险？
+          - 有哪些项目管理风险？
+          - 如何规避或应对这些风险？
+
+  - title: 六、实施计划
+    type: section
+    children:
+      - title: 6.1 里程碑规划
+        type: auto
+        description: 制定项目里程碑和时间表
+        word_count: 300-500
+        hints:
+          - 划分主要阶段
+          - 明确每个阶段的交付物
+          - 标注关键节点
+      - title: 6.2 任务分解
+        type: interactive
+        description: 将工作分解为具体任务
+        word_count: 400-600
+        questions:
+          - 项目可以分解为哪些任务？
+          - 任务之间的依赖关系是什么？
+          - 每个任务的预估工作量？
+        optional: true
+      - title: 6.3 资源需求
+        type: interactive
+        description: 明确所需的人力和其他资源
+        word_count: 300-500
+        questions:
+          - 需要哪些角色参与？
+          - 每个角色的工作量是多少？
+          - 需要什么软硬件资源？
+        optional: true
+
+  - title: 七、总结与建议
+    type: auto
+    description: 总结报告要点，给出建议
+    word_count: 300-500
+    hints:
+      - 总结技术方案要点
+      - 给出实施建议
+      - 说明后续工作计划
+
+  - title: 附录
+    type: auto
+    description: 补充材料（可选）
+    word_count: 不限
+    optional: true
+    hints:
+      - 详细的技术规格
+      - 接口文档
+      - 测试用例
+      - 其他参考资料
+
+# 必填信息
+required_info:
+  - key: reportTitle
+    label: 报告标题
+    required: true
+    example: XX系统技术方案报告
+  - key: projectName
+    label: 项目名称
+    required: true
+  - key: version
+    label: 版本号
+    required: false
+    example: V1.0
+  - key: author
+    label: 作者/编写人
+    required: false
+  - key: date
+    label: 日期
+    required: false
+  - key: department
+    label: 部门/团队
+    required: false
+  - key: targetAudience
+    label: 目标读者
+    required: false
+    example: 技术评审委员会、项目经理
+
+# 一致性检查规则
+consistency_rules:
+  - type: proper_noun
+    description: 项目名称一致性
+    sources:
+      - projectName
+    check_frequency: per_section
+  - type: terminology
+    description: 技术术语统一
+    mappings:
+      API: 接口  # 或统一使用 API
+      DB: 数据库
+  - type: version_consistency
+    description: 版本号一致性
+    sources:
+      - version
+
+# 生成建议
+generation_hints:
+  tone: 专业、清晰、有条理
+  avoid:
+    - 模糊不清的描述
+    - 缺乏依据的结论
+    - 过于冗长的叙述
+  prefer:
+    - 使用图表辅助说明
+    - 给出具体数据和指标
+    - 逻辑清晰、层次分明
+    - 提供可操作的建议

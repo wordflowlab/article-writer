@@ -1,0 +1,228 @@
+# 开题报告模板
+# Thesis Opening Report Template
+# PRD-11: 框架约束模式
+
+id: thesis-opening
+name: 开题报告
+name_en: Thesis Opening Report
+description: 适用于硕士、博士学位论文开题，包含完整的研究计划框架
+category: 学术研究
+tags:
+  - 硕士
+  - 博士
+  - 开题
+  - 学术
+
+# 模板结构
+structure:
+  - title: 一、选题背景与意义
+    type: section
+    children:
+      - title: （一）选题背景
+        type: auto
+        description: 说明研究课题提出的背景和研究现状
+        word_count: 800-1200
+        hints:
+          - 描述研究领域的发展历程
+          - 说明当前研究的热点和趋势
+          - 阐述问题的提出过程
+      - title: （二）研究意义
+        type: section
+        children:
+          - title: 1. 理论意义
+            type: interactive
+            description: 阐述研究对理论发展的贡献
+            word_count: 300-500
+            questions:
+              - 本研究可能对哪些理论有所贡献？
+              - 是否填补了某个理论空白？
+          - title: 2. 实践意义
+            type: interactive
+            description: 阐述研究对实践应用的价值
+            word_count: 300-500
+            questions:
+              - 研究成果可以应用于哪些实际场景？
+              - 对行业/社会有什么具体帮助？
+
+  - title: 二、国内外研究现状
+    type: section
+    children:
+      - title: （一）国外研究现状
+        type: auto
+        description: 综述国外相关研究进展
+        word_count: 1000-1500
+        hints:
+          - 按时间线或主题分类综述
+          - 引用代表性研究成果
+          - 分析主要研究方法和结论
+      - title: （二）国内研究现状
+        type: auto
+        description: 综述国内相关研究进展
+        word_count: 800-1200
+        hints:
+          - 与国外研究对比
+          - 分析国内研究特点
+          - 指出研究差距
+      - title: （三）研究述评
+        type: interactive
+        description: 对现有研究进行评价，指出不足和机会
+        word_count: 500-800
+        questions:
+          - 现有研究的主要贡献是什么？
+          - 存在哪些不足或空白？
+          - 本研究的切入点是什么？
+
+  - title: 三、研究内容与方法
+    type: section
+    children:
+      - title: （一）研究目标
+        type: interactive
+        description: 明确研究要达成的目标
+        word_count: 300-500
+        questions:
+          - 总体研究目标是什么？
+          - 有哪些具体的子目标？
+      - title: （二）研究内容
+        type: interactive
+        description: 详细说明研究的主要内容
+        word_count: 1000-1500
+        questions:
+          - 研究包含哪几个主要部分？
+          - 每个部分的核心问题是什么？
+          - 各部分之间有什么逻辑关系？
+      - title: （三）研究方法
+        type: interactive
+        description: 说明研究采用的方法论和具体方法
+        word_count: 600-1000
+        questions:
+          - 采用什么研究范式（定量/定性/混合）？
+          - 具体使用哪些研究方法？
+          - 数据如何收集和分析？
+      - title: （四）技术路线
+        type: interactive
+        description: 描述研究的技术路线图
+        word_count: 400-600
+        questions:
+          - 研究的整体技术路线是怎样的？
+          - 关键技术节点有哪些？
+
+  - title: 四、研究重点与难点
+    type: section
+    children:
+      - title: （一）研究重点
+        type: interactive
+        description: 说明研究的重点内容
+        word_count: 400-600
+        questions:
+          - 研究中最核心、最重要的内容是什么？
+          - 为什么这些内容是重点？
+      - title: （二）研究难点
+        type: interactive
+        description: 分析研究中的难点和挑战
+        word_count: 400-600
+        questions:
+          - 研究中可能遇到哪些困难？
+          - 计划如何解决这些难点？
+
+  - title: 五、创新点
+    type: interactive
+    description: 阐述研究的创新之处
+    word_count: 500-800
+    questions:
+      - 研究在理论上有什么创新？
+      - 研究在方法上有什么创新？
+      - 研究在应用上有什么创新？
+    hints:
+      - 可从理论创新、方法创新、应用创新等角度阐述
+      - 创新点要具体、可验证
+      - 避免空泛的表述
+
+  - title: 六、研究计划与进度安排
+    type: auto
+    description: 制定详细的研究时间表
+    word_count: 400-600
+    hints:
+      - 按学期或季度划分阶段
+      - 明确每阶段的具体任务
+      - 预留论文撰写和修改时间
+
+  - title: 七、预期成果
+    type: auto
+    description: 说明研究预期产出
+    word_count: 300-500
+    hints:
+      - 学位论文
+      - 学术论文发表计划
+      - 其他成果（专利、软著等）
+
+  - title: 八、参考文献
+    type: auto
+    description: 列出主要参考文献
+    word_count: 不限
+    hints:
+      - 按学科规范格式排列
+      - 近5年文献占比应较高
+      - 外文文献和中文文献比例适当
+
+# 必填信息
+required_info:
+  - key: thesisTitle
+    label: 论文题目
+    required: true
+    example: 基于深度学习的自然语言处理技术研究
+  - key: studentName
+    label: 学生姓名
+    required: true
+  - key: studentId
+    label: 学号
+    required: false
+  - key: supervisorName
+    label: 导师姓名
+    required: true
+  - key: major
+    label: 专业
+    required: true
+    example: 计算机科学与技术
+  - key: degree
+    label: 学位类型
+    required: true
+    options:
+      - 学术硕士
+      - 专业硕士
+      - 博士
+  - key: researchField
+    label: 研究方向
+    required: true
+    example: 自然语言处理、深度学习
+  - key: keywords
+    label: 关键词
+    required: true
+    example: 深度学习; 自然语言处理; 文本分类
+
+# 一致性检查规则
+consistency_rules:
+  - type: proper_noun
+    description: 论文题目一致性
+    sources:
+      - thesisTitle
+    check_frequency: per_section
+  - type: terminology
+    description: 学术术语统一
+    mappings:
+      深度学习: 深度学习  # 不要简写为DL
+      自然语言处理: 自然语言处理  # 可简写为NLP，但要先定义
+  - type: reference_style
+    description: 参考文献格式统一
+    style: GB/T 7714-2015  # 或 APA, MLA 等
+
+# 生成建议
+generation_hints:
+  tone: 学术、严谨、客观
+  avoid:
+    - 第一人称表述（使用"本研究"替代"我"）
+    - 绝对化表述（"一定"、"必然"）
+    - 口语化表达
+  prefer:
+    - 使用学术规范表达
+    - 适当引用文献支撑
+    - 逻辑清晰、层次分明
