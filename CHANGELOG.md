@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.1] - 2025-11-27
+
+### Fixed - 修复 /write 模式选择界面不显示问题
+
+**问题描述**：
+- 用户反馈执行 `/write` 命令时，AI 没有显示模式选择界面（1/2/3/4 选项）
+- AI 直接跳到了"AI教练逐段引导写作"模式
+
+**根本原因**：
+- 模板中的"等待用户选择"指令不够强
+- AI 可能根据 brief 中的推荐直接执行了某个模式
+
+**修复内容**：
+- 在 `/write` 命令开头添加"核心约束"部分，明确禁止跳过模式选择
+- 增强"等待用户选择"指令的强度，使用 ⛔ 符号和明确的禁止/必须列表
+- 更新命令描述，强调"必须选择模式"
+
+**影响文件**：
+- `templates/commands/write.md`
+
 ## [0.12.0] - 2025-11-27
 
 ### Added - 新功能：框架约束模式 (PRD-11)
